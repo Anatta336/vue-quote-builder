@@ -34,21 +34,16 @@ export default {
     },
     methods: {
         formSubmit() {
-            axios.post('/api/product/add', {
+            axios.post('/api/product', {
                     'name': this.productName,
                     'price_pounds': this.pricePounds,
-                    // 'price_pence': Math.round(this.pricePounds * 100),
                 }
             ).then((response) => {
                 console.log(response);
 
-                // redirect to the product index route
+                // on success redirect to the product index route
                 this.$router.push({ name: 'product.index' });
             }).catch((error) => {
-                // console.log("error object's keys:");
-                // Object.keys(error).forEach(key => {
-                //     console.log(key);
-                // });
                 console.log(error.response);
                 console.log(error.response.data.errors);
                 if (error?.response?.data?.errors) {

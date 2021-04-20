@@ -38,7 +38,7 @@ class ProductController extends Controller
         $created = new Product($validated);
         $created->save();
 
-        return new Response('Product created.', 202);
+        return new Response('', Response::HTTP_CREATED);
     }
 
     /**
@@ -72,6 +72,8 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //TODO
+        $product->delete();
+
+        return new Response('', Response::HTTP_NO_CONTENT);
     }
 }
