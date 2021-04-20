@@ -1975,7 +1975,8 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post('/api/product/add', {
         'name': this.productName,
-        'price_pence': Math.round(this.pricePounds * 100)
+        'price_pounds': this.pricePounds // 'price_pence': Math.round(this.pricePounds * 100),
+
       }).then(function (response) {
         console.log(response); // redirect to the product index route
 
@@ -2089,7 +2090,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     ProductAddForm: _components_ProductAddForm_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
-  }
+  } //TODO: make the "ProductAddForm" into a general purpose product form,
+  // with the submission and filling handled externally (i.e. here).
+  // So it can be used both for creation and editing.
+
 });
 
 /***/ }),
@@ -2707,7 +2711,7 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
-          _c("error-list", { attrs: { errors: _vm.errors["price_pence"] } })
+          _c("error-list", { attrs: { errors: _vm.errors["price_pounds"] } })
         ],
         1
       ),

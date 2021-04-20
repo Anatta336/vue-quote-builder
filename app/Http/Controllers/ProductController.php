@@ -31,6 +31,10 @@ class ProductController extends Controller
     {
         $validated = $request->validated();
 
+        // API receives price_pounds, but it's stored as price_pence
+        $validated['price_pence'] = round($validated['price_pounds'] * 100);
+        unset($validated['price_pounds']);
+
         $created = new Product($validated);
         $created->save();
 

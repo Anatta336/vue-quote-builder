@@ -12,7 +12,7 @@
                 Price (£)
                 <input v-model="pricePounds" type="text">
             </label>
-            <error-list :errors="errors['price_pence']"/>
+            <error-list :errors="errors['price_pounds']"/>
         </div>
         <button>Submit</button>
     </form>
@@ -36,7 +36,8 @@ export default {
         formSubmit() {
             axios.post('/api/product/add', {
                     'name': this.productName,
-                    'price_pence': Math.round(this.pricePounds * 100),
+                    'price_pounds': this.pricePounds,
+                    // 'price_pence': Math.round(this.pricePounds * 100),
                 }
             ).then((response) => {
                 console.log(response);
