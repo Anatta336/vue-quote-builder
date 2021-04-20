@@ -1,21 +1,24 @@
 <template>
-    <form @submit.prevent="formSubmit">
-        <div>
-            <label>
-                Name
-                <input v-model="productName" type="text">
-            </label>
-            <error-list v-if="errors" :errors="errors['name']"/>
-        </div>
-        <div>
-            <label>
-                Price (£)
-                <input v-model="pricePounds" type="text">
-            </label>
-            <error-list v-if="errors" :errors="errors['price_pounds']"/>
-        </div>
-        <button>Edit</button>
-    </form>
+    <div class="product-edit">
+        <h1>Edit Product</h1>
+        <form @submit.prevent="formSubmit">
+            <div>
+                <label>
+                    Name
+                    <input v-model="productName" type="text">
+                </label>
+                <error-list v-if="errors" :errors="errors['name']"/>
+            </div>
+            <div>
+                <label>
+                    Price (£)
+                    <input v-model="pricePounds" type="text">
+                </label>
+                <error-list v-if="errors" :errors="errors['price_pounds']"/>
+            </div>
+            <button>Edit</button>
+        </form>
+    </div>
 </template>
 <script>
 import ErrorList from '../components/ErrorList.vue';

@@ -72,12 +72,12 @@ I tested that it's now possible to delete Products, and that the deletion is ref
 I reviewed how changes flow from parent to child components through props. Changes on a child component will not flow back up to the parent, so how I had planned to structure components to reuse one for both editing and creating a product will need some adapting.
 
 I reworked the add product front end to work with a reusable product form.
-
-
+I began creating the edit product front end with the reusable form, but found that reusing a fairly small amount of template code needed a lot of much more complex script code. So I changed how the components are structured so there's just two separate forms for creating and editing a product. The more complex tasks such as validation are still shared.
+I created the frontend component for editing a product.
+I added the backend route and controller actions to fetch information for a single product and to edit a product.
+I confirmed that products can now be listed, created, edited, and deleted, all from the Vue single page application.
 
 ## To Do
-Form to edit existing products.
-
 Frontend force the price field to only take numbers (and decimals.)
 
 Do some basic styling. Don't think we need Bootstrap (and jQuery), if we can be efficient about things.

@@ -1,6 +1,6 @@
 <template>
     <div class="product-index">
-        <router-link :to="{ name: 'product.add' }">Add</router-link>
+        <router-link :to="{ name: 'product.add' }">Create</router-link>
         <product-list></product-list>
     </div>
 </template>
