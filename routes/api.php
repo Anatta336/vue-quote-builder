@@ -25,5 +25,11 @@ Route::get('/product', 'ProductController@index')
 Route::post('/product', 'ProductController@store')
     ->name('product.add');
 
+Route::get('/product/{product}', 'ProductController@show')
+    ->name('product.show');
+
+Route::put('/product/{product}', 'ProductController@update')
+    ->name('product.update');
+
 Route::delete('/product/{product}', 'ProductController@destroy')
     ->name('product.delete');

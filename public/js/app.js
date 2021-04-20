@@ -2024,6 +2024,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "product-list",
   data: function data() {
@@ -2039,6 +2041,16 @@ __webpack_require__.r(__webpack_exports__);
         _this.products = response.data;
       })["catch"](function (error) {
         console.error(error);
+      });
+    },
+    editProduct: function editProduct(product) {
+      console.log('attempt to edit product.');
+      console.log(product);
+      this.$router.push({
+        name: 'product.edit',
+        params: {
+          id: product.id
+        }
       });
     },
     deleteProduct: function deleteProduct(product) {
@@ -2157,7 +2169,21 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_ProductAddForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/ProductAddForm.vue */ "./resources/js/components/ProductAddForm.vue");
+/* harmony import */ var _components_ErrorList_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/ErrorList.vue */ "./resources/js/components/ErrorList.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2166,11 +2192,51 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    ProductAddForm: _components_ProductAddForm_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
-  } //TODO: make the "ProductAddForm" into a general purpose product form,
-  // with the submission and filling handled externally (i.e. here).
-  // So it can be used both for creation and editing.
+    ErrorList: _components_ErrorList_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      id: this.$route.params.id,
+      productName: '',
+      pricePounds: 0,
+      errors: {}
+    };
+  },
+  methods: {
+    getDetails: function getDetails() {
+      var _this = this;
 
+      axios.get("/api/product/".concat(this.id)).then(function (response) {
+        _this.productName = response.data.name;
+        _this.pricePounds = (response.data.price_pence / 100).toFixed(2);
+      })["catch"](function (error) {
+        console.error(error);
+      });
+    },
+    formSubmit: function formSubmit() {
+      var _this2 = this;
+
+      axios.put("/api/product/".concat(this.id), {
+        'name': this.productName,
+        'price_pounds': this.pricePounds
+      }).then(function () {
+        //TODO: display a "product edited" success message
+        // redirect to the product index route
+        _this2.$router.push({
+          name: 'product.index'
+        });
+      })["catch"](function (error) {
+        var _error$response, _error$response$data;
+
+        if (error !== null && error !== void 0 && (_error$response = error.response) !== null && _error$response !== void 0 && (_error$response$data = _error$response.data) !== null && _error$response$data !== void 0 && _error$response$data.errors) {
+          _this2.errors = error.response.data.errors;
+        }
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.getDetails();
+  }
 });
 
 /***/ }),
@@ -2848,6 +2914,18 @@ var render = function() {
               {
                 on: {
                   click: function($event) {
+                    return _vm.editProduct(product)
+                  }
+                }
+              },
+              [_vm._v("Edit")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                on: {
+                  click: function($event) {
                     return _vm.deleteProduct(product)
                   }
                 }
@@ -2974,7 +3052,90 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "product-edit" })
+  return _c(
+    "form",
+    {
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.formSubmit($event)
+        }
+      }
+    },
+    [
+      _c(
+        "div",
+        [
+          _c("label", [
+            _vm._v("\n            Name\n            "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.productName,
+                  expression: "productName"
+                }
+              ],
+              attrs: { type: "text" },
+              domProps: { value: _vm.productName },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.productName = $event.target.value
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _vm.errors
+            ? _c("error-list", { attrs: { errors: _vm.errors["name"] } })
+            : _vm._e()
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        [
+          _c("label", [
+            _vm._v("\n            Price (£)\n            "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.pricePounds,
+                  expression: "pricePounds"
+                }
+              ],
+              attrs: { type: "text" },
+              domProps: { value: _vm.pricePounds },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.pricePounds = $event.target.value
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _vm.errors
+            ? _c("error-list", {
+                attrs: { errors: _vm.errors["price_pounds"] }
+              })
+            : _vm._e()
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("button", [_vm._v("Edit")])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -18401,17 +18562,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ErrorList_vue_vue_type_template_id_48c089eb___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
-
-/***/ }),
-
-/***/ "./resources/js/components/ProductAddForm.vue":
-/*!****************************************************!*\
-  !*** ./resources/js/components/ProductAddForm.vue ***!
-  \****************************************************/
-/*! exports provided: default */
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed (from ./node_modules/vue-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'D:\\Reflections\\vue-reflection\\resources\\js\\components\\ProductAddForm.vue'");
 
 /***/ }),
 

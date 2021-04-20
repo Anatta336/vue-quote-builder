@@ -22,6 +22,25 @@ class ProductController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  \App\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Product $product)
+    {
+        // could just return $product which will JSONify all its properties,
+        // but want to only provide specific data.
+        return response()
+            ->json([
+                'id' => $product->id,
+                'name' => $product->name,
+                'price_pence' => $product->price_pence,
+            ])
+            -> setStatusCode(Response::HTTP_OK);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\UpdateProduct  $request
@@ -30,38 +49,29 @@ class ProductController extends Controller
     public function store(UpdateProduct $request)
     {
         $validated = $request->validated();
-
-        // API receives price_pounds, but it's stored as price_pence
-        $validated['price_pence'] = round($validated['price_pounds'] * 100);
-        unset($validated['price_pounds']);
+        $this->pricePoundsToPence($validated);
 
         $created = new Product($validated);
         $created->save();
 
-        return new Response('', Response::HTTP_CREATED);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
-    {
-        //TODO
+        return response('', Response::HTTP_CREATED);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UpdateProduct  $request
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(UpdateProduct $request, Product $product)
     {
-        //TODO
+        $validated = $request->validated();
+        $this->pricePoundsToPence($validated);
+
+        $product->update($validated);
+
+        return response('', Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -74,6 +84,20 @@ class ProductController extends Controller
     {
         $product->delete();
 
-        return new Response('', Response::HTTP_NO_CONTENT);
+        return response('', Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * Modifies the given array (which is passed by reference) to remove the
+     * 'price_pounds' value on it, and add a 'price_pence' using that value.
+     *
+     * @param array $data Validated data as an associative array that includes
+     *                    'prince_pounds' as a key.
+     *
+     * @return void
+     */
+    protected function pricePoundsToPence(&$data) {
+        $data['price_pence'] = round($data['price_pounds'] * 100);
+        unset($data['price_pounds']);
     }
 }
