@@ -50,10 +50,24 @@ I created sample routes and views using Vue.
 I added a SpaController and a catch-all route in Laravel that directs all requests to the front end's single page application.
 I added the component that fetches and displays a list of products to a Vue view.
 
+I added an API end point and controller action for adding a product.
+I added validation rules for creating a product.
+I created a basic Vue form for creating a new product, which submits the data as a POST request to the correct endpoint on the Laravel API.
 
+The Vue frontend can add products and have them listed without the page ever needing to reload, but it doesn't handle validation errors it receives back from the backend. I'll be working on that next.
+
+I examined the object provided by Axios when a request results in an error, and found how to access any validation error messages.
+I added to the ProductAdd Vue component so it can extract and display validation errors next to the relevant form field.
+I extracted the error display into its own Vue component.
+Found an issue where entering a product price of "abc" displays the validation error that a product price is required, rather than the specific "must be a number" check.
 
 ## To Do
-Form to add new products.
+Display validation errors in the Vue side.
+Test if the validation is actually working.
+
+Pull out error listing to separate component.
+
+Frontend force the price field to only take numbers (and decimals.)
 
 Form to edit existing products.
 

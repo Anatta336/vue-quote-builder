@@ -1,24 +1,18 @@
-import Hello from './views/Hello'
-import Home from './views/Home'
-import Products from './views/Products'
+import ProductIndex from './views/ProductIndex'
+import ProductAdd from './views/ProductAdd'
 
 const routes = {
     mode: 'history',
     routes: [
         {
-            path: '/',
-            name: 'home',
-            component: Home,
-        },
-        {
-            path: '/hello',
-            name: 'hello',
-            component: Hello,
-        },
-        {
             path: '/product',
-            name: 'products',
-            component: Products,
+            name: 'product.index',
+            component: ProductIndex,
+        },
+        {
+            path: '/product/add',
+            name: 'product.add',
+            component: ProductAdd,
         },
     ],
 };

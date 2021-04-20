@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Http\Requests\UpdateProduct;
 
 class ProductController extends Controller
 {
@@ -23,17 +24,17 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UpdateProduct  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UpdateProduct $request)
     {
         $validated = $request->validated();
 
         $created = new Product($validated);
         $created->save();
 
-        return new Response('', 202);
+        return new Response('Product created.', 202);
     }
 
     /**

@@ -1,13 +1,14 @@
 <template>
-<ul class="product-list">
-    <li v-for="product in products" :key="product.id">
-        {{ product.name }}
-    </li>
-</ul>
+    <ul>
+        <li v-for="product in products" :key="product.id">
+            {{ product.name }} £{{ (product.price_pence / 100).toFixed(2) }}
+        </li>
+    </ul>
 </template>
 
 <script>
     export default {
+        name: "product-list",
         data() {
             return {
                 products: [],

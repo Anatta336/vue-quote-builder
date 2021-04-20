@@ -1,10 +1,8 @@
 <template>
     <div>
-        <h1>Vue Router Demo App</h1>
+        <h1>Build'o'matic</h1>
         <p>
-            <router-link :to="{ name: 'home' }">Home</router-link> |
-            <router-link :to="{ name: 'products' }">Products</router-link> |
-            <router-link :to="{ name: 'hello' }">Hello World</router-link>
+            <router-link :to="{ name: 'product.index' }">Products</router-link>
         </p>
         <div class="container">
             <router-view></router-view>
