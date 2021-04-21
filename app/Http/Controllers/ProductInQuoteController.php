@@ -8,7 +8,6 @@ use App\ProductInQuote;
 use App\Quote;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
 
 class ProductInQuoteController extends Controller
 {
@@ -53,23 +52,20 @@ class ProductInQuoteController extends Controller
     }
 
     /**
-     * Add a product to the quote, when the product doesn't
+     * Add a product to the quote, only allowed when the product doesn't
      * exist on the quote.
      *
      * @param  \App\Http\Requests\UpdateProductInQuote  $request
-     * @param  \App\Quote                               $quote
+     * @param  \App\Quote                               $productInQuote
+     * @param  \App\Product                             $product
      * @return \Illuminate\Http\Response
      */
-    public function store(UpdateProductInQuote $request, Quote $quote)
+    public function store(UpdateProductInQuote $request, Quote $quote, Product $product)
     {
         $validated = $request->validated();
 
-        if (ProductInQuote::select()
-            ->where('quote_id', $quote->id)
-            ->where('product_id', $validated['product_id'])
-            ->first()
-        ) {
-            // product is already in the quote, so respond with a validation-like error
+        if ($quote->products->find($product->id)) {
+            // product is already in the quote, so respond with an error
             return response([
                 'data' => [
                     'errors' => [
@@ -82,22 +78,11 @@ class ProductInQuoteController extends Controller
         $productInQuote = new ProductInQuote([
             'count' => $validated['count'],
             'quote_id' => $quote->id,
-            'product_id' => $validated['product_id'],
+            'product_id' => $product->id,
         ]);
         $productInQuote->save();
 
         return response('', Response::HTTP_CREATED);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\ProductInQuote  $productInQuote
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ProductInQuote $productInQuote)
-    {
-        // TODO?
     }
 
     /**
@@ -106,34 +91,40 @@ class ProductInQuoteController extends Controller
      * ProductInQuote and then add a new one.
      *
      * @param  \App\Http\Requests\UpdateProductInQuote  $request
-     * @param  \App\Quote  $productInQuote
+     * @param  \App\Quote                               $productInQuote
+     * @param  \App\Product                             $product
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProductInQuote $request, Quote $quote)
+    public function update(UpdateProductInQuote $request, Quote $quote, Product $product)
     {
         $validated = $request->validated();
-        $productInQuote = ProductInQuote::where('quote_id', $quote->id)
-            ->where('product_id', $validated['product_id'])
-            ->first();
 
         // if updating to a count of zero, instead remove
         if ($validated['count'] <= 0) {
-            return $this->destroy($productInQuote);
+            return $this->destroy($quote, $product);
         }
 
+        $productInQuote = $quote->productsInQuote
+            ->where('product_id', $product->id)
+            ->first();
         $productInQuote->count = $validated['count'];
         $productInQuote->save();
+
+        return response('', Response::HTTP_NO_CONTENT);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\ProductInQuote  $productInQuote
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProductInQuote $productInQuote)
+    public function destroy(Quote $quote, Product $product)
     {
-        $productInQuote->delete();
+        $quote->productsInQuote
+            ->where('product_id', $product->id)
+            ->first()
+            ->delete();
 
         return response('', Response::HTTP_NO_CONTENT);
     }

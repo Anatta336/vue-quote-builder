@@ -10,7 +10,7 @@
         </tr>
         <tr v-for="product in products" :key="product.id">
             <td>{{ product.name }}</td>
-            <td>£{{ (product.price_pence / 100).toFixed(2) }}</td>
+            <td><price-from-pence :pence="product.price_pence" />
             <td>
                 <button @click="editProduct(product)">Edit</button>
                 <button @click="deleteProduct(product)">Delete</button>
@@ -19,7 +19,9 @@
     </table>
 </template>
 <script>
+import PriceFromPence from './PriceFromPence.vue';
 export default {
+  components: { PriceFromPence },
     name: "product-list",
     data() {
         return {
@@ -28,7 +30,7 @@ export default {
     },
     methods: {
         getProducts() {
-            axios.get('/api/product').then((response) => {
+            axios.get('/api/products').then((response) => {
                 this.products = response.data;
             }).catch((error) => {
                 console.error(error);
@@ -45,7 +47,7 @@ export default {
         deleteProduct(product) {
             //TODO: confirm deletion
 
-            axios.delete(`/api/product/${product.id}`).then((response) => {
+            axios.delete(`/api/products/${product.id}`).then((response) => {
                 // refresh list of products as it should have changed
                 this.getProducts();
             }).catch((error) => {

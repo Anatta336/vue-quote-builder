@@ -1969,6 +1969,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PriceFromPence_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PriceFromPence.vue */ "./resources/js/components/PriceFromPence.vue");
 //
 //
 //
@@ -1989,7 +1990,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    PriceFromPence: _PriceFromPence_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   name: "product-list",
   data: function data() {
     return {
@@ -2000,7 +2005,7 @@ __webpack_require__.r(__webpack_exports__);
     getProducts: function getProducts() {
       var _this = this;
 
-      axios.get('/api/product').then(function (response) {
+      axios.get('/api/products').then(function (response) {
         _this.products = response.data;
       })["catch"](function (error) {
         console.error(error);
@@ -2018,7 +2023,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       //TODO: confirm deletion
-      axios["delete"]("/api/product/".concat(product.id)).then(function (response) {
+      axios["delete"]("/api/products/".concat(product.id)).then(function (response) {
         // refresh list of products as it should have changed
         _this2.getProducts();
       })["catch"](function (error) {
@@ -2074,7 +2079,7 @@ __webpack_require__.r(__webpack_exports__);
     getQuotes: function getQuotes() {
       var _this = this;
 
-      axios.get('/api/quote').then(function (response) {
+      axios.get('/api/quotes').then(function (response) {
         _this.quotes = response.data;
       })["catch"](function (error) {
         console.error(error);
@@ -2100,7 +2105,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       //TODO: confirm deletion
-      axios["delete"]("/api/quote/".concat(quote.id)).then(function (response) {
+      axios["delete"]("/api/quotes/".concat(quote.id)).then(function (response) {
         // refresh list of quotes as it should have changed
         _this2.getQuotes();
       })["catch"](function (error) {
@@ -2189,7 +2194,7 @@ __webpack_require__.r(__webpack_exports__);
     formSubmit: function formSubmit() {
       var _this = this;
 
-      axios.post('/api/product', {
+      axios.post('/api/products', {
         'name': this.productName,
         'price_pounds': this.pricePounds
       }).then(function () {
@@ -2261,7 +2266,7 @@ __webpack_require__.r(__webpack_exports__);
     getDetails: function getDetails() {
       var _this = this;
 
-      axios.get("/api/product/".concat(this.id)).then(function (response) {
+      axios.get("/api/products/".concat(this.id)).then(function (response) {
         _this.productName = response.data.name;
         _this.pricePounds = (response.data.price_pence / 100).toFixed(2);
       })["catch"](function (error) {
@@ -2271,7 +2276,7 @@ __webpack_require__.r(__webpack_exports__);
     formSubmit: function formSubmit() {
       var _this2 = this;
 
-      axios.patch("/api/product/".concat(this.id), {
+      axios.patch("/api/products/".concat(this.id), {
         'name': this.productName,
         'price_pounds': this.pricePounds
       }).then(function () {
@@ -2371,7 +2376,7 @@ __webpack_require__.r(__webpack_exports__);
     formSubmit: function formSubmit() {
       var _this = this;
 
-      axios.post('/api/quote', {
+      axios.post('/api/quotes', {
         'customer_name': this.customerName,
         'customer_email': this.customerEmail
       }).then(function () {
@@ -2443,7 +2448,7 @@ __webpack_require__.r(__webpack_exports__);
     getDetails: function getDetails() {
       var _this = this;
 
-      axios.get("/api/quote/".concat(this.id)).then(function (response) {
+      axios.get("/api/quotes/".concat(this.id)).then(function (response) {
         _this.customerName = response.data.customer_name;
         _this.customerEmail = response.data.customer_email;
       })["catch"](function (error) {
@@ -2453,7 +2458,7 @@ __webpack_require__.r(__webpack_exports__);
     formSubmit: function formSubmit() {
       var _this2 = this;
 
-      axios.patch("/api/quote/".concat(this.id), {
+      axios.patch("/api/quotes/".concat(this.id), {
         'customer_name': this.customerName,
         'customer_email': this.customerEmail
       }).then(function () {
@@ -2500,22 +2505,6 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     QuoteList: _components_QuoteList_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
-  /* TODO: move to add product to quote component
-  methods: {
-      formSubmit() {
-          axios.post('/api/quote/2', {
-                  'product_id': this.productId,
-                  'count': this.count,
-              }
-          ).then((response) => {
-              console.log(response);
-          }).catch((error) => {
-              console.error(error);
-          });
-      }
-  }
-  */
-
 });
 
 /***/ }),
@@ -2585,7 +2574,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "product-list",
@@ -2598,12 +2586,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       productsInQuote: [],
       allProducts: [],
       productsCouldAdd: [],
-      toAdd: {
-        id: -1,
-        count: 0,
-        pricePence: 0
-      }
+      toAddProduct: null,
+      toAddCount: 1
     };
+  },
+  computed: {
+    toAddPricePerItem: function toAddPricePerItem() {
+      if (!this.toAddProduct) {
+        return 0;
+      }
+
+      return this.toAddProduct.price_pence;
+    },
+    toAddPricePence: function toAddPricePence() {
+      return this.toAddCount * this.toAddPricePerItem;
+    }
+  },
+  watch: {
+    toAddCount: function toAddCount(value) {
+      if (value < 1) {
+        this.toAddCount = 1;
+      }
+    }
   },
   methods: {
     getAllProducts: function getAllProducts() {
@@ -2617,7 +2621,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return axios.get('/api/product');
+                return axios.get('/api/products');
 
               case 3:
                 response = _context.sent;
@@ -2649,7 +2653,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return axios.get("/api/quote/".concat(_this2.quoteId, "/products"));
+                return axios.get("/api/quotes/".concat(_this2.quoteId, "/products"));
 
               case 3:
                 response = _context2.sent;
@@ -2690,8 +2694,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context3.prev = 0;
                 _context3.next = 3;
-                return axios.patch("/api/quote/".concat(_this4.quoteId, "/products"), {
-                  'product_id': productInQuote.product_id,
+                return axios.patch("/api/quotes/".concat(_this4.quoteId, "/products/").concat(productInQuote.product_id), {
                   'count': parseInt(productInQuote.count) + 1
                 });
 
@@ -2724,8 +2727,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context4.prev = 0;
                 _context4.next = 3;
-                return axios.patch("/api/quote/".concat(_this5.quoteId, "/products"), {
-                  'product_id': productInQuote.product_id,
+                return axios.patch("/api/quotes/".concat(_this5.quoteId, "/products/").concat(productInQuote.product_id), {
                   'count': parseInt(productInQuote.count) - 1
                 });
 
@@ -2752,51 +2754,112 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee4, null, [[0, 8]]);
       }))();
     },
-    addProduct: function addProduct() {
+    remove: function remove(productInQuote) {
       var _this6 = this;
 
-      //TODO: implement me
-      _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                _context5.next = 2;
-                return _this6.getProductsInQuote();
-
-              case 2:
-                _this6.updateProductsCouldAdd();
+                _context5.prev = 0;
+                _context5.next = 3;
+                return axios["delete"]("/api/quotes/".concat(_this6.quoteId, "/products/").concat(productInQuote.product_id));
 
               case 3:
+                _context5.next = 5;
+                return _this6.getProductsInQuote();
+
+              case 5:
+                _this6.updateProductsCouldAdd();
+
+                _context5.next = 11;
+                break;
+
+              case 8:
+                _context5.prev = 8;
+                _context5.t0 = _context5["catch"](0);
+                console.error(_context5.t0);
+
+              case 11:
               case "end":
                 return _context5.stop();
             }
           }
-        }, _callee5);
+        }, _callee5, null, [[0, 8]]);
+      }))();
+    },
+    addProduct: function addProduct() {
+      var _this7 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                if (_this7.toAddProduct) {
+                  _context6.next = 2;
+                  break;
+                }
+
+                return _context6.abrupt("return");
+
+              case 2:
+                _context6.prev = 2;
+                _context6.next = 5;
+                return axios.post("/api/quotes/".concat(_this7.quoteId, "/products/").concat(_this7.toAddProduct.id), {
+                  'count': _this7.toAddCount
+                });
+
+              case 5:
+                // reset form
+                _this7.toAddProduct = null;
+                _this7.toAddCount = 1; // update list of products
+
+                _context6.next = 9;
+                return _this7.getProductsInQuote();
+
+              case 9:
+                _this7.updateProductsCouldAdd();
+
+                _context6.next = 15;
+                break;
+
+              case 12:
+                _context6.prev = 12;
+                _context6.t0 = _context6["catch"](2);
+                console.error(_context6.t0);
+
+              case 15:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6, null, [[2, 12]]);
       }))();
     }
   },
   mounted: function mounted() {
-    var _this7 = this;
+    var _this8 = this;
 
-    _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+    _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
         while (1) {
-          switch (_context6.prev = _context6.next) {
+          switch (_context7.prev = _context7.next) {
             case 0:
-              _context6.next = 2;
-              return Promise.all([_this7.getProductsInQuote(), _this7.getAllProducts()]);
+              _context7.next = 2;
+              return Promise.all([_this8.getProductsInQuote(), _this8.getAllProducts()]);
 
             case 2:
               // once both requests are done, can use their data
-              _this7.updateProductsCouldAdd();
+              _this8.updateProductsCouldAdd();
 
             case 3:
             case "end":
-              return _context6.stop();
+              return _context7.stop();
           }
         }
-      }, _callee6);
+      }, _callee7);
     }))();
   }
 });
@@ -4119,10 +4182,11 @@ var render = function() {
         return _c("tr", { key: product.id }, [
           _c("td", [_vm._v(_vm._s(product.name))]),
           _vm._v(" "),
-          _c("td", [
-            _vm._v("£" + _vm._s((product.price_pence / 100).toFixed(2)))
-          ]),
-          _vm._v(" "),
+          _c(
+            "td",
+            [_c("price-from-pence", { attrs: { pence: product.price_pence } })],
+            1
+          ),
           _c("td", [
             _c(
               "button",
@@ -4894,6 +4958,18 @@ var render = function() {
                 }
               },
               [_vm._v("-")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                on: {
+                  click: function($event) {
+                    return _vm.remove(product)
+                  }
+                }
+              },
+              [_vm._v("Remove")]
             )
           ])
         ])
@@ -4908,8 +4984,8 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.toAdd.id,
-                  expression: "toAdd.id"
+                  value: _vm.toAddProduct,
+                  expression: "toAddProduct"
                 }
               ],
               on: {
@@ -4922,23 +4998,21 @@ var render = function() {
                       var val = "_value" in o ? o._value : o.value
                       return val
                     })
-                  _vm.$set(
-                    _vm.toAdd,
-                    "id",
-                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                  )
+                  _vm.toAddProduct = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
                 }
               }
             },
             [
-              _c("option", { attrs: { value: "-1" } }, [
+              _c("option", { domProps: { value: null } }, [
                 _vm._v("\n                    ----\n                ")
               ]),
               _vm._v(" "),
               _vm._l(_vm.productsCouldAdd, function(product) {
                 return _c(
                   "option",
-                  { key: product.id, domProps: { value: product.id } },
+                  { key: product.id, domProps: { value: product } },
                   [
                     _vm._v(
                       "\n                    " +
@@ -4959,18 +5033,18 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.toAdd.count,
-                expression: "toAdd.count"
+                value: _vm.toAddCount,
+                expression: "toAddCount"
               }
             ],
-            attrs: { type: "number" },
-            domProps: { value: _vm.toAdd.count },
+            attrs: { type: "number", min: "1", step: "1" },
+            domProps: { value: _vm.toAddCount },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.toAdd, "count", $event.target.value)
+                _vm.toAddCount = $event.target.value
               }
             }
           })
@@ -4978,11 +5052,18 @@ var render = function() {
         _vm._v(" "),
         _c(
           "td",
-          [_c("price-from-pence", { attrs: { pence: _vm.toAdd.pricePence } })],
+          [
+            _c("price-from-pence", {
+              staticClass: "preview",
+              attrs: { pence: _vm.toAddPricePence }
+            })
+          ],
           1
         ),
         _vm._v(" "),
-        _vm._m(1)
+        _c("td", [
+          _c("button", { on: { click: _vm.addProduct } }, [_vm._v("Add")])
+        ])
       ])
     ],
     2
@@ -5002,12 +5083,6 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Actions")])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [_c("button", [_vm._v("Add")])])
   }
 ]
 render._withStripped = true

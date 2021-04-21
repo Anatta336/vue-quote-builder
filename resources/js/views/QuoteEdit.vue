@@ -38,7 +38,7 @@ export default {
     },
     methods: {
         getDetails() {
-            axios.get(`/api/quote/${this.id}`).then((response) => {
+            axios.get(`/api/quotes/${this.id}`).then((response) => {
                 this.customerName = response.data.customer_name;
                 this.customerEmail = response.data.customer_email;
             }).catch((error) => {
@@ -46,7 +46,7 @@ export default {
             });
         },
         formSubmit() {
-            axios.patch(`/api/quote/${this.id}`, {
+            axios.patch(`/api/quotes/${this.id}`, {
                     'customer_name': this.customerName,
                     'customer_email': this.customerEmail,
                 }

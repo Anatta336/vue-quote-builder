@@ -37,7 +37,7 @@ export default {
     },
     methods: {
         formSubmit() {
-            axios.post('/api/product', {
+            axios.post('/api/products', {
                     'name': this.productName,
                     'price_pounds': this.pricePounds,
                 }

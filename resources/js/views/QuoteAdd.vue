@@ -37,7 +37,7 @@ export default {
     },
     methods: {
         formSubmit() {
-            axios.post('/api/quote', {
+            axios.post('/api/quotes', {
                     'customer_name': this.customerName,
                     'customer_email': this.customerEmail,
                 }

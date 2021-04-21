@@ -13,7 +13,14 @@ class Quote extends Model
 
     public function products()
     {
-        return $this->hasManyThrough(Product::class, ProductInQuote::class);
+        return $this->hasManyThrough(
+            Product::class,
+            ProductInQuote::class,
+            'quote_id',   // foreign key on intermediate
+            'id',         // foreign key on final
+            'id',         // local key
+            'product_id', // local key on intermediate
+        );
     }
 
     public function productsInQuote()

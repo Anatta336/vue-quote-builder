@@ -29,7 +29,7 @@ export default {
     },
     methods: {
         getQuotes() {
-            axios.get('/api/quote').then((response) => {
+            axios.get('/api/quotes').then((response) => {
                 this.quotes = response.data;
             }).catch((error) => {
                 console.error(error);
@@ -54,7 +54,7 @@ export default {
         deleteQuote(quote) {
             //TODO: confirm deletion
 
-            axios.delete(`/api/quote/${quote.id}`).then((response) => {
+            axios.delete(`/api/quotes/${quote.id}`).then((response) => {
                 // refresh list of quotes as it should have changed
                 this.getQuotes();
             }).catch((error) => {

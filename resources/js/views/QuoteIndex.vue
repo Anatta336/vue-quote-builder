@@ -12,20 +12,5 @@ export default {
     components: {
         QuoteList,
     },
-    /* TODO: move to add product to quote component
-    methods: {
-        formSubmit() {
-            axios.post('/api/quote/2', {
-                    'product_id': this.productId,
-                    'count': this.count,
-                }
-            ).then((response) => {
-                console.log(response);
-            }).catch((error) => {
-                console.error(error);
-            });
-        }
-    }
-    */
 }
 </script>

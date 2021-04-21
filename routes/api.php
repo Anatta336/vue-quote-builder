@@ -20,25 +20,31 @@ use Illuminate\Support\Facades\Route;
 // });
 
 // ---- Product
-Route::get('/product', 'ProductController@index')->name('product.index');
-Route::get('/product/{product}', 'ProductController@show')->name('product.show');
-Route::post('/product', 'ProductController@store')->name('product.add');
-Route::patch('/product/{product}', 'ProductController@update')->name('product.update');
-Route::delete('/product/{product}', 'ProductController@destroy')->name('product.delete');
+Route::get('/products', 'ProductController@index')->name('product.index');
+Route::get('/products/{product}', 'ProductController@show')->name('product.show');
+Route::post('/products', 'ProductController@store')->name('product.add');
+Route::patch('/products/{product}', 'ProductController@update')->name('product.update');
+Route::delete('/products/{product}', 'ProductController@destroy')->name('product.delete');
 
 
 // ---- Quote
-Route::get('/quote', 'QuoteController@index')->name('quote.index');
-Route::get('/quote/{quote}', 'QuoteController@show')->name('quote.show');
-Route::post('/quote', 'QuoteController@store')->name('quote.add');
-Route::patch('/quote/{quote}', 'QuoteController@update')->name('quote.update');
-Route::delete('/quote/{quote}', 'QuoteController@destroy')->name('quote.delete');
+Route::get('/quotes', 'QuoteController@index')->name('quote.index');
+Route::get('/quotes/{quote}', 'QuoteController@show')->name('quote.show');
+Route::post('/quotes', 'QuoteController@store')->name('quote.add');
+Route::patch('/quotes/{quote}', 'QuoteController@update')->name('quote.update');
+Route::delete('/quotes/{quote}', 'QuoteController@destroy')->name('quote.delete');
 
 // ---- ProductInQuote
-Route::get('/quote/{quote}/products', 'ProductInQuoteController@index');
+Route::get('/quotes/{quote}/products', 'ProductInQuoteController@index');
 
 // add product to quote, where product doesn't yet exist on the quote
-Route::post('/quote/{quote}', 'ProductInQuoteController@store');
+Route::post('/quotes/{quote}/products/{product}', 'ProductInQuoteController@store');
+
+// remove product from the quote, whatever its count was
+Route::delete('/quotes/{quote}/products/{product}', 'ProductInQuoteController@destroy');
 
 // change count of product in quote
-Route::patch('/quote/{quote}/products', 'ProductInQuoteController@update');
+Route::patch('/quotes/{quote}/products/{product}', 'ProductInQuoteController@update');
+
+//TODO:
+// added {product} to route for productinquote update

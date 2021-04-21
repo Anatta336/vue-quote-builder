@@ -38,7 +38,7 @@ export default {
     },
     methods: {
         getDetails() {
-            axios.get(`/api/product/${this.id}`).then((response) => {
+            axios.get(`/api/products/${this.id}`).then((response) => {
                 this.productName = response.data.name;
                 this.pricePounds = (response.data.price_pence / 100).toFixed(2);
             }).catch((error) => {
@@ -46,7 +46,7 @@ export default {
             });
         },
         formSubmit() {
-            axios.patch(`/api/product/${this.id}`, {
+            axios.patch(`/api/products/${this.id}`, {
                     'name': this.productName,
                     'price_pounds': this.pricePounds,
                 }

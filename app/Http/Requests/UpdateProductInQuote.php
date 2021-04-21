@@ -25,7 +25,6 @@ class UpdateProductInQuote extends FormRequest
     {
         return [
             'count' => 'required|numeric|integer|min:0',
-            'product_id' => 'required|exists:products,id',
         ];
     }
 
@@ -36,8 +35,6 @@ class UpdateProductInQuote extends FormRequest
             'count.numeric' => 'Product count must be a number.',
             'count.integer' => 'Product count must be a whole number.',
             'count.min' => 'Product count cannot be negative.',
-            'product_id.required' => 'Product ID is required.',
-            'product_id.exists' => 'Could not find product matching give product ID.',
         ];
     }
 }

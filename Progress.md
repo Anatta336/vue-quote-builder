@@ -110,15 +110,13 @@ I added a filter to only show the products which aren't already in the quote. As
 
 I added validation for use when updating the products in a quote.
 I added the ability to add and subtract from the count of a product in the quote. On reaching zero count it is handled on the backend as a removal.
+I added a button to directly remove a product from the quote.
+I added some validation in addition to the backend validation to avoid entering a negative or fractional count for a product being added.
+I used computed values in Vue to show a live-preview of the updated line price when preparing to add a product to the quote.
+I added the ability to add a new product to the quote after selecting it from a dropdown menu and picking a quantity to add.
 
 ## To Do
-anywhere that's displaying price_pence, use the vue component
-
-line price isn't actually showing line price - it's showing cost for one item.
-
 quote:
-    assign and remove products
-    increase and decrease line item quantity
     sub-total, vat total and total
 
 factory to generate some sample ProductInQuote instances
