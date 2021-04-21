@@ -1,7 +1,7 @@
 <template>
     <div class="product-index">
-        <router-link :to="{ name: 'products.add' }">Create</router-link>
         <product-list></product-list>
+        <router-link class="button" :to="{ name: 'products.add' }">Create</router-link>
     </div>
 </template>
 <script>

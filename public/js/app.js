@@ -2146,7 +2146,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
@@ -4209,6 +4208,7 @@ var render = function() {
             _c(
               "button",
               {
+                staticClass: "danger",
                 on: {
                   click: function($event) {
                     return _vm.deleteProduct(product)
@@ -4302,6 +4302,7 @@ var render = function() {
             _c(
               "button",
               {
+                staticClass: "danger",
                 on: {
                   click: function($event) {
                     return _vm.deleteQuote(quote)
@@ -4354,8 +4355,6 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("header", [
-      _c("h1", [_vm._v("Build'o'matic")]),
-      _vm._v(" "),
       _c(
         "nav",
         [
@@ -4622,11 +4621,13 @@ var render = function() {
     "div",
     { staticClass: "product-index" },
     [
-      _c("router-link", { attrs: { to: { name: "products.add" } } }, [
-        _vm._v("Create")
-      ]),
+      _c("product-list"),
       _vm._v(" "),
-      _c("product-list")
+      _c(
+        "router-link",
+        { staticClass: "button", attrs: { to: { name: "products.add" } } },
+        [_vm._v("Create")]
+      )
     ],
     1
   )
@@ -4883,11 +4884,13 @@ var render = function() {
     "div",
     { staticClass: "quote-index" },
     [
-      _c("router-link", { attrs: { to: { name: "quotes.add" } } }, [
-        _vm._v("Create")
-      ]),
+      _c("quote-list"),
       _vm._v(" "),
-      _c("quote-list")
+      _c(
+        "router-link",
+        { staticClass: "button", attrs: { to: { name: "quotes.add" } } },
+        [_vm._v("Create")]
+      )
     ],
     1
   )
@@ -4971,6 +4974,7 @@ var render = function() {
             _c(
               "button",
               {
+                staticClass: "danger",
                 on: {
                   click: function($event) {
                     return _vm.remove(product)

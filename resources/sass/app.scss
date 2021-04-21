@@ -1,4 +1,35 @@
 @use 'font';
 @use 'variables';
 @use 'base';
+@use 'mixins/card';
+@use 'mixins/button';
+@use 'nav';
+@use 'form';
+@use 'table';
 
+#app {
+    @include card.card;
+}
+
+.button, button {
+    @include button.button(variables.$nav-colour);
+    width: 6rem;
+
+    &.danger {
+        @include button.button(variables.$danger-colour);
+    }
+}
+
+.money {
+    display: block;
+    text-align: right;
+}
+
+.preview {
+    color: variables.$preview-colour;
+}
+
+.count {
+    display: block;
+    text-align: center;
+}

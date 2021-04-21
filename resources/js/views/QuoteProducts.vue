@@ -17,7 +17,7 @@
                 <button @click="increaseCount(product)">+</button>
                 <span class="count">{{ product.count }}</span>
                 <button @click="decreaseCount(product)">-</button>
-                <button @click="remove(product)">Remove</button>
+                <button class="danger" @click="remove(product)">Remove</button>
             </td>
         </tr>
 

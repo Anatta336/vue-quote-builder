@@ -1,0 +1,20 @@
+@use 'sass:color';
+@use 'variables';
+@use 'mixins/button';
+
+nav {
+    display: flex;
+    flex-direction: row;
+
+    a {
+        @include button.button(variables.$nav-colour);
+
+        color: variables.$text-colour;
+        text-decoration: none;
+        margin: 0 5px;
+
+        &.router-link-active {
+            border-top: 5px solid color.adjust(variables.$nav-colour, $lightness: +25%);
+        }
+    }
+}

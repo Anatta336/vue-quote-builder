@@ -1,7 +1,6 @@
 <template>
     <div>
         <header>
-            <h1>Build'o'matic</h1>
             <nav>
                 <router-link :to="{ name: 'products.index' }">
                 Products

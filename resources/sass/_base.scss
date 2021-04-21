@@ -1,4 +1,15 @@
+@use 'variables';
+
 body {
-    width: 100vw;
-    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    background-color: variables.$page-background;
+
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: variables.$text-colour;
 }

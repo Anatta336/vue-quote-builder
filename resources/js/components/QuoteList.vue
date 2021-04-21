@@ -14,7 +14,7 @@
             <td>
                 <button @click="editQuote(quote)">Edit Customer</button>
                 <button @click="editQuoteProducts(quote)">Edit Products</button>
-                <button @click="deleteQuote(quote)">Delete</button>
+                <button class="danger" @click="deleteQuote(quote)">Delete</button>
             </td>
         </tr>
     </table>

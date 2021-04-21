@@ -13,7 +13,7 @@
             <td><price-from-pence :pence="product.price_pence" />
             <td>
                 <button @click="editProduct(product)">Edit</button>
-                <button @click="deleteProduct(product)">Delete</button>
+                <button class="danger" @click="deleteProduct(product)">Delete</button>
                 </td>
         </tr>
     </table>

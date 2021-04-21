@@ -125,8 +125,6 @@ Stuff like totals could be functions on the Quote model?
 
 Frontend force the price field to only take numbers (with decimal)
 
-Do some basic styling. Don't think it'll need Bootstrap (and jQuery), if we can be efficient and simple.
-
 Load products from some external source (CSV?)
 
 "Resources" may be useful? https://laravel.com/docs/7.x/eloquent-resources
@@ -149,6 +147,12 @@ Run the seeder:
 ```
 php artisan migrate:refresh --seed
 ```
+
+Removed (dev) dependences:
+"bootstrap": "^4.0.0",
+"jquery": "^3.2",
+"lodash": "^4.17.13",
+"popper.js": "^1.12",
 
 ## Some reference sources
 https://www.youtube.com/watch?v=hbq2CAHNRZM

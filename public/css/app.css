@@ -1,5 +1,156 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);body {
-  width: 100vw;
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #f8fafc;
+  font-family: "Nunito", sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #27272b;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+}
+
+nav a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 5px 0;
+  background-color: #82c0d8;
+  width: 6rem;
+  height: auto;
+  border-radius: 5px;
+  color: #27272b;
+  text-decoration: none;
+  cursor: pointer;
+  color: #27272b;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+nav a:hover {
+  background-color: #48a3c6;
+}
+
+nav a.router-link-active {
+  border-top: 5px solid #e3f1f6;
+}
+
+label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+label > * {
+  flex: 1 1 auto;
+}
+
+input,
+select {
+  border-radius: 4px;
+  padding: 5px;
+  border: none;
+  min-width: 14rem;
+  margin: 5px 0 5px 5px;
+}
+
+input[type=number] {
+  min-width: 5rem;
+  width: 5rem;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 5px 0;
+  width: 45rem;
+}
+
+table tr:nth-child(2n+0) {
+  background-color: #d9e6e2;
+}
+
+table tr:nth-child(2n+1) {
+  background-color: #c6dde0;
+}
+
+table td {
+  padding: 7px;
+}
+
+table td > * {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#app {
+  background-color: #d8d1df;
+  border-radius: 3px;
+  padding: 20px;
+  box-shadow: 0px 0px 15px -5px #000;
+}
+
+.button,
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 5px 0;
+  background-color: #82c0d8;
+  width: 6rem;
+  height: auto;
+  border-radius: 5px;
+  color: #27272b;
+  text-decoration: none;
+  cursor: pointer;
+  width: 6rem;
+}
+
+.button:hover,
+button:hover {
+  background-color: #48a3c6;
+}
+
+.button.danger,
+button.danger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 5px 0;
+  background-color: #d34b68;
+  width: 6rem;
+  height: auto;
+  border-radius: 5px;
+  color: #27272b;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button.danger:hover,
+button.danger:hover {
+  background-color: #a82944;
+}
+
+.money {
+  display: block;
+  text-align: right;
+}
+
+.preview {
+  color: #9393a1;
+}
+
+.count {
+  display: block;
+  text-align: center;
 }
 
