@@ -16,7 +16,7 @@
                 </label>
                 <error-list v-if="errors" :errors="errors['price_pounds']"/>
             </div>
-            <button>Edit</button>
+            <button>Save</button>
         </form>
     </div>
 </template>
@@ -24,6 +24,7 @@
 import ErrorList from '../components/ErrorList.vue';
 
 export default {
+    name: 'product-edit',
     components: {
         ErrorList,
     },
@@ -37,8 +38,7 @@ export default {
     },
     methods: {
         getDetails() {
-            axios.get(`/api/product/${this.id}`)
-            .then((response) => {
+            axios.get(`/api/product/${this.id}`).then((response) => {
                 this.productName = response.data.name;
                 this.pricePounds = (response.data.price_pence / 100).toFixed(2);
             }).catch((error) => {
@@ -46,7 +46,7 @@ export default {
             });
         },
         formSubmit() {
-            axios.put(`/api/product/${this.id}`, {
+            axios.patch(`/api/product/${this.id}`, {
                     'name': this.productName,
                     'price_pounds': this.pricePounds,
                 }

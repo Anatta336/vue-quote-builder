@@ -1,31 +1,18 @@
 <template>
     <div class="quote-index">
-        <!-- TODO: remove me, just testing -->
-        <form @submit.prevent="formSubmit">
-            <label>
-                Product ID
-                <input v-model="productId" type="number">
-            </label>
-            <label>
-                Count
-                <input v-model="count" type="number">
-            </label>
-            <button>Add</button>
-        </form>
+        <router-link :to="{ name: 'quote.add' }">Create</router-link>
+        <quote-list />
     </div>
 </template>
 <script>
+import QuoteList from '../components/QuoteList.vue';
 
 export default {
+    name: 'quote-index',
     components: {
-
+        QuoteList,
     },
-    data() {
-        return {
-            productId: 2,
-            count: 1,
-        }
-    },
+    /* TODO: move to add product to quote component
     methods: {
         formSubmit() {
             axios.post('/api/quote/2', {
@@ -39,5 +26,6 @@ export default {
             });
         }
     }
+    */
 }
 </script>

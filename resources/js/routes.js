@@ -2,6 +2,8 @@ import ProductIndex from './views/ProductIndex'
 import ProductAdd from './views/ProductAdd'
 import ProductEdit from './views/ProductEdit'
 import QuoteIndex from './views/QuoteIndex'
+import QuoteAdd from './views/QuoteAdd'
+import QuoteEdit from './views/QuoteEdit'
 
 const routes = {
     mode: 'history',
@@ -26,6 +28,17 @@ const routes = {
             name: 'quote.index',
             component: QuoteIndex,
         },
+        {
+            path: '/quote/add',
+            name: 'quote.add',
+            component: QuoteAdd,
+        },
+        {
+            path: '/quote',
+            name: 'quote.edit',
+            component: QuoteEdit,
+        },
+
     ],
 };
 

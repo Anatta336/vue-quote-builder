@@ -98,6 +98,8 @@ I reviewed the work remaining on this task and attempted to make some time estim
 - Generate an email giving quote details to the customer. Will need to do research on generating (using Blade?) and sending emails from within Laravel. Estimate 3 hours.
 - Daily cron that emails out a summary of quotes. Will need research on creating cron jobs from Laravel. Estimate 3 hours.
 
+I added frontend support for listing all existing quotes.
+I added frontend support and backend routes for creating, editing, and deleting quotes.
 
 
 ## To Do

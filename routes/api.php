@@ -21,16 +21,19 @@ use Illuminate\Support\Facades\Route;
 
 // ---- Product
 Route::get('/product', 'ProductController@index')->name('product.index');
-Route::post('/product', 'ProductController@store')->name('product.add');
 Route::get('/product/{product}', 'ProductController@show')->name('product.show');
-Route::put('/product/{product}', 'ProductController@update')->name('product.update');
+Route::post('/product', 'ProductController@store')->name('product.add');
+Route::patch('/product/{product}', 'ProductController@update')->name('product.update');
 Route::delete('/product/{product}', 'ProductController@destroy')->name('product.delete');
 
 
 // ---- Quote
-// get all quotes, summarised to customer and total price
-// get single quote, including details of products on it and price breakdown
-// create new quote, giving customer name and email
+Route::get('/quote', 'QuoteController@index')->name('quote.index');
+Route::get('/quote/{quote}', 'QuoteController@show')->name('quote.show');
+Route::post('/quote', 'QuoteController@store')->name('quote.add');
+Route::patch('/quote/{quote}', 'QuoteController@update')->name('quote.update');
+Route::delete('/quote/{quote}', 'QuoteController@destroy')->name('quote.delete');
+
 // edit quote's customer name and email
 // add product to quote, which may already be present
 // remove product from quote, which may leave some count remaining

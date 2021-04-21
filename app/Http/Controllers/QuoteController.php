@@ -58,6 +58,9 @@ class QuoteController extends Controller
      *      }
      *  }
      *
+     * TODO: It's a bit lopsided having this list products when the
+     * presence of those products is handled by ProductInQuoteController.
+     *
      * @param  \App\Quote  $quote
      * @return \Illuminate\Http\Response
      */
@@ -81,8 +84,9 @@ class QuoteController extends Controller
     }
 
     /**
-     * Update the quote itself - that is the customer details.
-     * This is NOT used to update what products are in the quote.
+     * Update the quote itself changing customer details.
+     * This is NOT used to update what products are in the quote,
+     * see ProductInQuoteController for that functionality.
      *
      * @param  \App\Http\Requests\UpdateQuote;  $request
      * @param  \App\Quote  $quote

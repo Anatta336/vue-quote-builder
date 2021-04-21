@@ -24,6 +24,7 @@
 import ErrorList from '../components/ErrorList.vue';
 
 export default {
+    name: 'product-add',
     components: {
         ErrorList,
     },
