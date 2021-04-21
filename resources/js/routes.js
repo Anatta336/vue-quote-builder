@@ -10,38 +10,38 @@ const routes = {
     mode: 'history',
     routes: [
         {
-            path: '/product',
-            name: 'product.index',
+            path: '/products',
+            name: 'products.index',
             component: ProductIndex,
         },
         {
-            path: '/product/add',
-            name: 'product.add',
+            path: '/products/add',
+            name: 'products.add',
             component: ProductAdd,
         },
         {
-            path: '/product/:id',
-            name: 'product.edit',
+            path: '/products/:id',
+            name: 'products.edit',
             component: ProductEdit,
         },
         {
-            path: '/quote',
-            name: 'quote.index',
+            path: '/quotes',
+            name: 'quotes.index',
             component: QuoteIndex,
         },
         {
-            path: '/quote/add',
-            name: 'quote.add',
+            path: '/quotes/add',
+            name: 'quotes.add',
             component: QuoteAdd,
         },
         {
-            path: '/quote/:id',
-            name: 'quote.edit',
+            path: '/quotes/:id',
+            name: 'quotes.edit',
             component: QuoteEdit,
         },
         {
             // TODO: names don't quite match here - is it viewing or editing?
-            path: '/quote/:id/products',
+            path: '/quotes/:id/products',
             name: 'quoteProducts.edit',
             component: QuoteProducts,
         }

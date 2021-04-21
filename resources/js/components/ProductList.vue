@@ -38,7 +38,7 @@ export default {
         },
         editProduct(product) {
             this.$router.push({
-                name: 'product.edit',
+                name: 'products.edit',
                 params: {
                     id: product.id,
                 },

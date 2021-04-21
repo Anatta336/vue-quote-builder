@@ -37,7 +37,7 @@ export default {
         },
         editQuote(quote) {
             this.$router.push({
-                name: 'quote.edit',
+                name: 'quotes.edit',
                 params: {
                     id: quote.id,
                 },

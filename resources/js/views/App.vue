@@ -1,10 +1,16 @@
 <template>
     <div>
-        <h1>Build'o'matic</h1>
-        <p>
-            <router-link :to="{ name: 'product.index' }">Products</router-link>
-            <router-link :to="{ name: 'quote.index' }">Quotes</router-link>
-        </p>
+        <header>
+            <h1>Build'o'matic</h1>
+            <nav>
+                <router-link :to="{ name: 'products.index' }">
+                Products
+                </router-link>
+                <router-link :to="{ name: 'quotes.index' }">
+                Quotes
+                </router-link>
+            </nav>
+        </header>
         <div class="container">
             <router-view></router-view>
         </div>

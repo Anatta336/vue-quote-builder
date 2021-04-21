@@ -1,6 +1,6 @@
 <template>
     <div class="quote-index">
-        <router-link :to="{ name: 'quote.add' }">Create</router-link>
+        <router-link :to="{ name: 'quotes.add' }">Create</router-link>
         <quote-list />
     </div>
 </template>

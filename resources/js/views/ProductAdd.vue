@@ -45,7 +45,7 @@ export default {
                 //TODO: display a "product added" message?
 
                 // redirect to the product index route
-                this.$router.push({ name: 'product.index' });
+                this.$router.push({ name: 'products.index' });
             }).catch((error) => {
                 if (error?.response?.data?.errors) {
                     this.errors = error.response.data.errors;

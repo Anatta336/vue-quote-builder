@@ -2013,7 +2013,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     editProduct: function editProduct(product) {
       this.$router.push({
-        name: 'product.edit',
+        name: 'products.edit',
         params: {
           id: product.id
         }
@@ -2087,7 +2087,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     editQuote: function editQuote(quote) {
       this.$router.push({
-        name: 'quote.edit',
+        name: 'quotes.edit',
         params: {
           id: quote.id
         }
@@ -2129,6 +2129,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2201,7 +2207,7 @@ __webpack_require__.r(__webpack_exports__);
         //TODO: display a "product added" message?
         // redirect to the product index route
         _this.$router.push({
-          name: 'product.index'
+          name: 'products.index'
         });
       })["catch"](function (error) {
         var _error$response, _error$response$data;
@@ -2283,7 +2289,7 @@ __webpack_require__.r(__webpack_exports__);
         //TODO: display a "product edited" success message
         // redirect to the product index route
         _this2.$router.push({
-          name: 'product.index'
+          name: 'products.index'
         });
       })["catch"](function (error) {
         var _error$response, _error$response$data;
@@ -2383,7 +2389,7 @@ __webpack_require__.r(__webpack_exports__);
         //TODO: display a "quote added" message?
         // redirect to the quote index route
         _this.$router.push({
-          name: 'quote.index'
+          name: 'quotes.index'
         });
       })["catch"](function (error) {
         var _error$response, _error$response$data;
@@ -2465,7 +2471,7 @@ __webpack_require__.r(__webpack_exports__);
         //TODO: display a "quote added" message?
         // redirect to the quote index route
         _this2.$router.push({
-          name: 'quote.index'
+          name: 'quotes.index'
         });
       })["catch"](function (error) {
         var _error$response, _error$response$data;
@@ -4347,21 +4353,23 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h1", [_vm._v("Build'o'matic")]),
-    _vm._v(" "),
-    _c(
-      "p",
-      [
-        _c("router-link", { attrs: { to: { name: "product.index" } } }, [
-          _vm._v("Products")
-        ]),
-        _vm._v(" "),
-        _c("router-link", { attrs: { to: { name: "quote.index" } } }, [
-          _vm._v("Quotes")
-        ])
-      ],
-      1
-    ),
+    _c("header", [
+      _c("h1", [_vm._v("Build'o'matic")]),
+      _vm._v(" "),
+      _c(
+        "nav",
+        [
+          _c("router-link", { attrs: { to: { name: "products.index" } } }, [
+            _vm._v("\n            Products\n            ")
+          ]),
+          _vm._v(" "),
+          _c("router-link", { attrs: { to: { name: "quotes.index" } } }, [
+            _vm._v("\n            Quotes\n            ")
+          ])
+        ],
+        1
+      )
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "container" }, [_c("router-view")], 1)
   ])
@@ -4614,7 +4622,7 @@ var render = function() {
     "div",
     { staticClass: "product-index" },
     [
-      _c("router-link", { attrs: { to: { name: "product.add" } } }, [
+      _c("router-link", { attrs: { to: { name: "products.add" } } }, [
         _vm._v("Create")
       ]),
       _vm._v(" "),
@@ -4875,7 +4883,7 @@ var render = function() {
     "div",
     { staticClass: "quote-index" },
     [
-      _c("router-link", { attrs: { to: { name: "quote.add" } } }, [
+      _c("router-link", { attrs: { to: { name: "quotes.add" } } }, [
         _vm._v("Create")
       ]),
       _vm._v(" "),
@@ -20402,7 +20410,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   components: {
     App: _views_App__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
-  router: new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"](_routes__WEBPACK_IMPORTED_MODULE_3__["default"]) // make this.$router and this.$route available
+  router: new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"](_routes__WEBPACK_IMPORTED_MODULE_3__["default"]) // makes this.$router and this.$route available
 
 });
 
@@ -20550,15 +20558,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*************************************************!*\
   !*** ./resources/js/components/ProductList.vue ***!
   \*************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ProductList_vue_vue_type_template_id_438ffe92___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProductList.vue?vue&type=template&id=438ffe92& */ "./resources/js/components/ProductList.vue?vue&type=template&id=438ffe92&");
 /* harmony import */ var _ProductList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProductList.vue?vue&type=script&lang=js& */ "./resources/js/components/ProductList.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _ProductList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _ProductList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -20588,7 +20595,7 @@ component.options.__file = "resources/js/components/ProductList.vue"
 /*!**************************************************************************!*\
   !*** ./resources/js/components/ProductList.vue?vue&type=script&lang=js& ***!
   \**************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20711,32 +20718,32 @@ __webpack_require__.r(__webpack_exports__);
 var routes = {
   mode: 'history',
   routes: [{
-    path: '/product',
-    name: 'product.index',
+    path: '/products',
+    name: 'products.index',
     component: _views_ProductIndex__WEBPACK_IMPORTED_MODULE_0__["default"]
   }, {
-    path: '/product/add',
-    name: 'product.add',
+    path: '/products/add',
+    name: 'products.add',
     component: _views_ProductAdd__WEBPACK_IMPORTED_MODULE_1__["default"]
   }, {
-    path: '/product/:id',
-    name: 'product.edit',
+    path: '/products/:id',
+    name: 'products.edit',
     component: _views_ProductEdit__WEBPACK_IMPORTED_MODULE_2__["default"]
   }, {
-    path: '/quote',
-    name: 'quote.index',
+    path: '/quotes',
+    name: 'quotes.index',
     component: _views_QuoteIndex__WEBPACK_IMPORTED_MODULE_3__["default"]
   }, {
-    path: '/quote/add',
-    name: 'quote.add',
+    path: '/quotes/add',
+    name: 'quotes.add',
     component: _views_QuoteAdd__WEBPACK_IMPORTED_MODULE_4__["default"]
   }, {
-    path: '/quote/:id',
-    name: 'quote.edit',
+    path: '/quotes/:id',
+    name: 'quotes.edit',
     component: _views_QuoteEdit__WEBPACK_IMPORTED_MODULE_5__["default"]
   }, {
     // TODO: names don't quite match here - is it viewing or editing?
-    path: '/quote/:id/products',
+    path: '/quotes/:id/products',
     name: 'quoteProducts.edit',
     component: _views_QuoteProducts__WEBPACK_IMPORTED_MODULE_6__["default"]
   }]

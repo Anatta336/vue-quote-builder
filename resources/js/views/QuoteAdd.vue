@@ -45,7 +45,7 @@ export default {
                 //TODO: display a "quote added" message?
 
                 // redirect to the quote index route
-                this.$router.push({ name: 'quote.index' });
+                this.$router.push({ name: 'quotes.index' });
             }).catch((error) => {
                 if (error?.response?.data?.errors) {
                     this.errors = error.response.data.errors;

@@ -14,5 +14,5 @@ Vue.use(VueRouter)
 const app = new Vue({
     el: '#app',
     components: { App },
-    router: new VueRouter(Routes), // make this.$router and this.$route available
+    router: new VueRouter(Routes), // makes this.$router and this.$route available
 });
