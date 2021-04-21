@@ -35,11 +35,10 @@ Route::patch('/quote/{quote}', 'QuoteController@update')->name('quote.update');
 Route::delete('/quote/{quote}', 'QuoteController@destroy')->name('quote.delete');
 
 // ---- ProductInQuote
-Route::get('/quote/{quote}/products', 'ProductInQuoteController@index')->name('productInQuote.index');
-
-// edit quote's customer name and email
-// add product to quote, which may already be present
-// remove product from quote, which may leave some count remaining
+Route::get('/quote/{quote}/products', 'ProductInQuoteController@index');
 
 // add product to quote, where product doesn't yet exist on the quote
 Route::post('/quote/{quote}', 'ProductInQuoteController@store');
+
+// change count of product in quote
+Route::patch('/quote/{quote}/products', 'ProductInQuoteController@update');

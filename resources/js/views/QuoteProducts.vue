@@ -91,16 +91,34 @@ export default {
                 });
             });
         },
-        increaseCount(product) {
-            //TODO: implement me
+        async increaseCount(productInQuote) {
+            try {
+                await axios.patch(
+                    `/api/quote/${this.quoteId}/products`,
+                    {
+                        'product_id': productInQuote.product_id,
+                        'count': parseInt(productInQuote.count) + 1,
+                    }
+                );
+                this.getProductsInQuote();
+            } catch (error) {
+                console.error(error);
+            }
         },
-        decreaseCount(product) {
-
-            // get updated data
-            (async () => {
+        async decreaseCount(productInQuote) {
+            try {
+                await axios.patch(
+                    `/api/quote/${this.quoteId}/products`,
+                    {
+                        'product_id': productInQuote.product_id,
+                        'count': parseInt(productInQuote.count) - 1,
+                    }
+                );
                 await this.getProductsInQuote();
                 this.updateProductsCouldAdd();
-            })();
+            } catch (error) {
+                console.error(error);
+            }
         },
         addProduct() {
             //TODO: implement me

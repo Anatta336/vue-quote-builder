@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateProductInQuote;
 use App\Product;
 use App\ProductInQuote;
 use App\Quote;
@@ -55,30 +56,20 @@ class ProductInQuoteController extends Controller
      * Add a product to the quote, when the product doesn't
      * exist on the quote.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Quote                $quote
+     * @param  \App\Http\Requests\UpdateProductInQuote  $request
+     * @param  \App\Quote                               $quote
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Quote $quote)
+    public function store(UpdateProductInQuote $request, Quote $quote)
     {
-        //TODO: this should surely be in a dedicated validation class
-        $product = DB::table('products')->find($request->input('product_id'));
-        if (empty($product)) {
-            return response([
-                'data' => [
-                    'errors' => [
-                        'product_id' => 'Product not found.'
-                    ],
-                ],
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
+        $validated = $request->validated();
 
-        if (DB::table('product_in_quotes')
+        if (ProductInQuote::select()
             ->where('quote_id', $quote->id)
-            ->where('product_id', $product->id)
-            ->first('id')
+            ->where('product_id', $validated['product_id'])
+            ->first()
         ) {
-            // product is already in the quote
+            // product is already in the quote, so respond with a validation-like error
             return response([
                 'data' => [
                     'errors' => [
@@ -89,9 +80,9 @@ class ProductInQuoteController extends Controller
         }
 
         $productInQuote = new ProductInQuote([
-            'count' => $request->input('count'),
+            'count' => $validated['count'],
             'quote_id' => $quote->id,
-            'product_id' => $product->id,
+            'product_id' => $validated['product_id'],
         ]);
         $productInQuote->save();
 
@@ -106,19 +97,32 @@ class ProductInQuoteController extends Controller
      */
     public function show(ProductInQuote $productInQuote)
     {
-        //
+        // TODO?
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the count of a product in a quote.
+     * Doesn't allow changing the product. To do that delete this
+     * ProductInQuote and then add a new one.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ProductInQuote  $productInQuote
+     * @param  \App\Http\Requests\UpdateProductInQuote  $request
+     * @param  \App\Quote  $productInQuote
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProductInQuote $productInQuote)
+    public function update(UpdateProductInQuote $request, Quote $quote)
     {
-        //TODO: if update to a count of zero, instead remove
+        $validated = $request->validated();
+        $productInQuote = ProductInQuote::where('quote_id', $quote->id)
+            ->where('product_id', $validated['product_id'])
+            ->first();
+
+        // if updating to a count of zero, instead remove
+        if ($validated['count'] <= 0) {
+            return $this->destroy($productInQuote);
+        }
+
+        $productInQuote->count = $validated['count'];
+        $productInQuote->save();
     }
 
     /**
@@ -129,6 +133,8 @@ class ProductInQuoteController extends Controller
      */
     public function destroy(ProductInQuote $productInQuote)
     {
-        //
+        $productInQuote->delete();
+
+        return response('', Response::HTTP_NO_CONTENT);
     }
 }

@@ -108,6 +108,8 @@ Next I will be adding support for manipulating the products in a quote.
 I added frontend logic for creating a dropdown menu listing all the existing products.
 I added a filter to only show the products which aren't already in the quote. As this depends on data that has to first be fetched, async/await and Promise.all is used to make sure the filtered list is generated only after the data is available.
 
+I added validation for use when updating the products in a quote.
+I added the ability to add and subtract from the count of a product in the quote. On reaching zero count it is handled on the backend as a removal.
 
 ## To Do
 anywhere that's displaying price_pence, use the vue component
@@ -170,3 +172,7 @@ How best to distribute the work/logic for handling this cart/quote system. Feels
 When taking input for creating a "product in quote" it'll receive an ID for each. Should FormRequest-type validation handle checking that those IDs exist on the relevant tables? It'll get checked by the database-level foreign key enforcement. But would be nice to have a more human-friendly check first. Remember (and note in comment) that some other user could be logged in that deleted a product/quote in the time between a dropdown being populated and the dropdown being used.
 
 I define some relationships in ProductInQuote, am I doing that in some way the wrong way around? Feels like if I defined it from the direction, I wouldn't have to specify column names for the columns.
+
+Which is better API design?
+- Separate endpoints for adding an item, removing an item, and changing the item's count
+- Single endpoint for setting item count, which adds or removes as necessary.

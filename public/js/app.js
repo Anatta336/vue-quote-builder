@@ -2680,76 +2680,123 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         });
       });
     },
-    increaseCount: function increaseCount(product) {//TODO: implement me
-    },
-    decreaseCount: function decreaseCount(product) {
+    increaseCount: function increaseCount(productInQuote) {
       var _this4 = this;
 
-      // get updated data
-      _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _context3.next = 2;
-                return _this4.getProductsInQuote();
-
-              case 2:
-                _this4.updateProductsCouldAdd();
+                _context3.prev = 0;
+                _context3.next = 3;
+                return axios.patch("/api/quote/".concat(_this4.quoteId, "/products"), {
+                  'product_id': productInQuote.product_id,
+                  'count': parseInt(productInQuote.count) + 1
+                });
 
               case 3:
+                _this4.getProductsInQuote();
+
+                _context3.next = 9;
+                break;
+
+              case 6:
+                _context3.prev = 6;
+                _context3.t0 = _context3["catch"](0);
+                console.error(_context3.t0);
+
+              case 9:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3);
+        }, _callee3, null, [[0, 6]]);
       }))();
     },
-    addProduct: function addProduct() {
+    decreaseCount: function decreaseCount(productInQuote) {
       var _this5 = this;
 
-      //TODO: implement me
-      _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _context4.next = 2;
-                return _this5.getProductsInQuote();
-
-              case 2:
-                _this5.updateProductsCouldAdd();
+                _context4.prev = 0;
+                _context4.next = 3;
+                return axios.patch("/api/quote/".concat(_this5.quoteId, "/products"), {
+                  'product_id': productInQuote.product_id,
+                  'count': parseInt(productInQuote.count) - 1
+                });
 
               case 3:
+                _context4.next = 5;
+                return _this5.getProductsInQuote();
+
+              case 5:
+                _this5.updateProductsCouldAdd();
+
+                _context4.next = 11;
+                break;
+
+              case 8:
+                _context4.prev = 8;
+                _context4.t0 = _context4["catch"](0);
+                console.error(_context4.t0);
+
+              case 11:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4);
+        }, _callee4, null, [[0, 8]]);
+      }))();
+    },
+    addProduct: function addProduct() {
+      var _this6 = this;
+
+      //TODO: implement me
+      _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return _this6.getProductsInQuote();
+
+              case 2:
+                _this6.updateProductsCouldAdd();
+
+              case 3:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
       }))();
     }
   },
   mounted: function mounted() {
-    var _this6 = this;
+    var _this7 = this;
 
-    _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+    _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
         while (1) {
-          switch (_context5.prev = _context5.next) {
+          switch (_context6.prev = _context6.next) {
             case 0:
-              _context5.next = 2;
-              return Promise.all([_this6.getProductsInQuote(), _this6.getAllProducts()]);
+              _context6.next = 2;
+              return Promise.all([_this7.getProductsInQuote(), _this7.getAllProducts()]);
 
             case 2:
               // once both requests are done, can use their data
-              _this6.updateProductsCouldAdd();
+              _this7.updateProductsCouldAdd();
 
             case 3:
             case "end":
-              return _context5.stop();
+              return _context6.stop();
           }
         }
-      }, _callee5);
+      }, _callee6);
     }))();
   }
 });

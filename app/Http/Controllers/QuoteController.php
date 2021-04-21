@@ -36,51 +36,19 @@ class QuoteController extends Controller
     }
 
     /**
-     * Fetch data for this quote. Includes customer name and email,
-     * as well as what products are in the quote.
-     *
-     * Sample output (JSON):
-     *  {
-     *      'customer_name': 'Bob',
-     *      'customer_email: 'bob@example.com',
-     *      'products':
-     *      {
-     *          {
-     *              'name': 'Plank',
-     *              'count': 12,
-     *              'price_pence_each': 50,
-     *          },
-     *          {
-     *              'name': 'Nail',
-     *              'count': 300,
-     *              'price_pence_each': 1,
-     *          }
-     *      }
-     *  }
-     *
-     * TODO: It's a bit lopsided having this list products when the
-     * presence of those products is handled by ProductInQuoteController.
+     * Fetch data for this quote. Provides customer name and email,
+     * if the products are needed then use ProductInQuoteController.
      *
      * @param  \App\Quote  $quote
      * @return \Illuminate\Http\Response
      */
     public function show(Quote $quote)
     {
-        $data['customer_name'] = $quote->customer_name;
-        $data['customer_email'] = $quote->customer_email;
-        $data['products'] = [];
-
-        /** @var \App\ProductInQuote $productInQuote */
-        foreach ($quote->productsInQuote() as $productInQuote) {
-            $product = $productInQuote->product();
-            $data['products'][] = [
-                'name' => $product->name,
-                'count' => $productInQuote->count,
-                'price_pence_each' => $product->price_pence,
-            ];
-        }
-
-        return response()->json($data, Response::HTTP_OK);
+        return response()->json([
+            'id' => $quote->id,
+            'customer_name' => $quote->customer_name,
+            'customer_email' => $quote->customer_email,
+        ])-> setStatusCode(Response::HTTP_OK);
     }
 
     /**
