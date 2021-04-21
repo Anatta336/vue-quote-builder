@@ -19,17 +19,21 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::get('/product', 'ProductController@index')
-    ->name('product.index');
+// ---- Product
+Route::get('/product', 'ProductController@index')->name('product.index');
+Route::post('/product', 'ProductController@store')->name('product.add');
+Route::get('/product/{product}', 'ProductController@show')->name('product.show');
+Route::put('/product/{product}', 'ProductController@update')->name('product.update');
+Route::delete('/product/{product}', 'ProductController@destroy')->name('product.delete');
 
-Route::post('/product', 'ProductController@store')
-    ->name('product.add');
 
-Route::get('/product/{product}', 'ProductController@show')
-    ->name('product.show');
+// ---- Quote
+// get all quotes, summarised to customer and total price
+// get single quote, including details of products on it and price breakdown
+// create new quote, giving customer name and email
+// edit quote's customer name and email
+// add product to quote, which may already be present
+// remove product from quote, which may leave some count remaining
 
-Route::put('/product/{product}', 'ProductController@update')
-    ->name('product.update');
-
-Route::delete('/product/{product}', 'ProductController@destroy')
-    ->name('product.delete');
+// add product to quote, where product doesn't yet exist on the quote
+Route::post('/quote/{quote}', 'ProductInQuoteController@store');

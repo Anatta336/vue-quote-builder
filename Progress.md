@@ -15,18 +15,18 @@ Build a quote wizard builder with the following functionality
     cron that runs at the end of the day to give an overview of the quotes created that day with totals via email
 
 ## Plan
-Models:
-    Products
-    Quote
-
 Product:
     Name
     Price
 
+Quote:
+    Customer name
+    Customer email
+
 ProductInQuote:
     Product (ref)
     Quote (ref)
-    ProductCount
+    Count
 
 
 A quote has many products, each product
@@ -77,30 +77,67 @@ I created the frontend component for editing a product.
 I added the backend route and controller actions to fetch information for a single product and to edit a product.
 I confirmed that products can now be listed, created, edited, and deleted, all from the Vue single page application.
 
-## To Do
-Frontend force the price field to only take numbers (and decimals.)
+I created migrations for quotes and "products_in_quotes" tables that will be used to store quotes, each made up of a number of products.
+I created the models for quote and productInQuote, with relationships which link the quote to products in a many to many relationship with a per-item count value also stored.
+I began work on the controller for the quote.
 
-Do some basic styling. Don't think we need Bootstrap (and jQuery), if we can be efficient about things.
+Now that I have products working from the frontend to the back, I will be moving to creating the quote next.
+
+I created a factory and seeder for quοtes.
+I created controller actions for quοtes, which handle the quοte itself rather than the products attached to that quote.
+I found an issue with the database migrations, where refreshing the migration would fail.
+Solved migration issue, which was caused by a migration's "down" method trying to remove the wrong table.
+I added an action to the ProductsInQuotes controller to add a new product to a quote.
+I began testing the controller, and found an issue where the ProductInQuote model doesn't seem to have the fields expected of it, which is preventing it being able to be stored in the product_in_quotes table.
+
+I resolved the issue with creating new ProductInQuotes. The API can now add products to a quote, setting a count for the product in that quote.
+
+I reviewed the work remaining on this task and attempted to make some time estimates:
+- Complete the backend support for managing products in a quote including price totals. At least some automated feature tests. Estimate about 5 hours.
+- Add frontend support for managing quotes and products in quotes. Mostly reusing concepts from the Product frontend. About 2 hours. An extra hour to add some basic styling.
+- Generate an email giving quote details to the customer. Will need to do research on generating (using Blade?) and sending emails from within Laravel. Estimate 3 hours.
+- Daily cron that emails out a summary of quotes. Will need research on creating cron jobs from Laravel. Estimate 3 hours.
+
+
+
+## To Do
+quote:
+    assign and remove products
+    increase and decrease line item quantity
+    sub-total, vat total and total
+
+Frontend force the price field to only take numbers (with decimal)
+
+Do some basic styling. Don't think it'll need Bootstrap (and jQuery), if we can be efficient and simple.
 
 Load products from some external source (CSV?)
-
-Work out how exactly the "cart" is going to work.
-Separate table for ProductInCart makes sense to me. Refers to product and quote, and count of product.
 
 "Resources" may be useful? https://laravel.com/docs/7.x/eloquent-resources
 Seems to define a mapping between Eloquent model and JSON, or other representation.
 ...although for basic models that's automatically done so not much advantage.
 
+email a quote to the customer (send this to mailtrap)
+
+cron that runs at the end of the day to give an overview of the quotes created that day with totals sent via email
+
 ## Notes
 To access database directly:
 ```
 & "C:/Program Files/sqlite3/sqlite3" database/database.sqlite
+.headers on
+.mode column
 ```
 
 Run the seeder:
 ```
 php artisan migrate:refresh --seed
 ```
+
+## Some reference sources
+https://www.youtube.com/watch?v=hbq2CAHNRZM
+https://laravel-news.com/using-vue-router-laravel
+https://vuejs.org/v2/guide/
+https://laravel.com/docs/7.x
 
 ## Questions
 What's the deal with naming Vue components? I seem to be able to use <product-list> and <ProductList> interchangably.
@@ -109,3 +146,8 @@ What's the deal with naming Vue components? I seem to be able to use <product-li
 What more can I do with the Vue.use() static method? Currently used for telling it to use vue-router
 
 On success, what should Laravel be returning as a response?
+    Been doing stuff like: return response('', Response::HTTP_NO_CONTENT);
+
+How best to distribute the work/logic for handling this cart/quote system. Feels like I'm doing too much on the QuoteController.
+
+When taking input for creating a "product in quote" it'll receive an ID for each. Should FormRequest-type validation handle checking that those IDs exist on the relevant tables? It'll get checked by the database-level foreign key enforcement. But would be nice to have a more human-friendly check first. Remember (and note in comment) that some other user could be logged in that deleted a product/quote in the time between a dropdown being populated and the dropdown being used.

@@ -2,84 +2,110 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateQuote;
 use App\Quote;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class QuoteController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Fetch a summary of all quotes.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        return Quote::all('id', 'customer_name', 'customer_email');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Create a new quote, with a customer name and email, but
+     * no products.
      *
+     * @param  \App\Http\Requests\UpdateQuote;  $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function store(UpdateQuote $request)
     {
-        //
+        $validated = $request->validated();
+        $quote = new Quote($validated);
+        $quote->save();
+
+        return response('', Response::HTTP_CREATED);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Fetch data for this quote. Includes customer name and email,
+     * as well as what products are in the quote.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
+     * Sample output (JSON):
+     *  {
+     *      'customer_name': 'Bob',
+     *      'customer_email: 'bob@example.com',
+     *      'products':
+     *      {
+     *          {
+     *              'name': 'Plank',
+     *              'count': 12,
+     *              'price_pence_each': 50,
+     *          },
+     *          {
+     *              'name': 'Nail',
+     *              'count': 300,
+     *              'price_pence_each': 1,
+     *          }
+     *      }
+     *  }
      *
      * @param  \App\Quote  $quote
      * @return \Illuminate\Http\Response
      */
     public function show(Quote $quote)
     {
-        //
+        $data['customer_name'] = $quote->customer_name;
+        $data['customer_email'] = $quote->customer_email;
+        $data['products'] = [];
+
+        /** @var \App\ProductInQuote $productInQuote */
+        foreach ($quote->productsInQuote() as $productInQuote) {
+            $product = $productInQuote->product();
+            $data['products'][] = [
+                'name' => $product->name,
+                'count' => $productInQuote->count,
+                'price_pence_each' => $product->price_pence,
+            ];
+        }
+
+        return response()->json($data, Response::HTTP_OK);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Update the quote itself - that is the customer details.
+     * This is NOT used to update what products are in the quote.
      *
+     * @param  \App\Http\Requests\UpdateQuote;  $request
      * @param  \App\Quote  $quote
      * @return \Illuminate\Http\Response
      */
-    public function edit(Quote $quote)
+    public function update(UpdateQuote $request, Quote $quote)
     {
-        //
+        $validated = $request->validated();
+        $quote->update($validated);
+
+        return response('', Response::HTTP_NO_CONTENT);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Quote  $quote
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Quote $quote)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
+     * Delete the quote.
      *
      * @param  \App\Quote  $quote
      * @return \Illuminate\Http\Response
      */
     public function destroy(Quote $quote)
     {
-        //
+        $quote->delete();
+
+        return response('', Response::HTTP_NO_CONTENT);
     }
 }

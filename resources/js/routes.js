@@ -1,6 +1,7 @@
 import ProductIndex from './views/ProductIndex'
 import ProductAdd from './views/ProductAdd'
 import ProductEdit from './views/ProductEdit'
+import QuoteIndex from './views/QuoteIndex'
 
 const routes = {
     mode: 'history',
@@ -19,6 +20,11 @@ const routes = {
             path: '/product/:id',
             name: 'product.edit',
             component: ProductEdit,
+        },
+        {
+            path: '/quote',
+            name: 'quote.index',
+            component: QuoteIndex,
         },
     ],
 };
