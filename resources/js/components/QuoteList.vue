@@ -12,7 +12,8 @@
             <td>{{ quote.customer_name }}</td>
             <td>{{ quote.customer_email }}</td>
             <td>
-                <button @click="editQuote(quote)">Edit</button>
+                <button @click="editQuote(quote)">Edit Customer</button>
+                <button @click="editQuoteProducts(quote)">Edit Products</button>
                 <button @click="deleteQuote(quote)">Delete</button>
             </td>
         </tr>
@@ -37,6 +38,14 @@ export default {
         editQuote(quote) {
             this.$router.push({
                 name: 'quote.edit',
+                params: {
+                    id: quote.id,
+                },
+            });
+        },
+        editQuoteProducts(quote) {
+            this.$router.push({
+                name: 'quoteProducts.edit',
                 params: {
                     id: quote.id,
                 },

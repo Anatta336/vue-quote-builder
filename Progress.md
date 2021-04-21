@@ -98,8 +98,14 @@ I reviewed the work remaining on this task and attempted to make some time estim
 - Generate an email giving quote details to the customer. Will need to do research on generating (using Blade?) and sending emails from within Laravel. Estimate 3 hours.
 - Daily cron that emails out a summary of quotes. Will need research on creating cron jobs from Laravel. Estimate 3 hours.
 
-I added frontend support for listing all existing quotes.
-I added frontend support and backend routes for creating, editing, and deleting quotes.
+I added frontend support for showing a list of all quotes.
+I added frontend support along with the backend routes they use for creating, editing, and deleting quotes.
+I resolved some issues with how the relationship between a quote and its products was being resolved.
+I added basic frontend support for listing the products that are in a quote. Confirmed that a quote created in the database appears correctly in the frontend.
+
+Next I will be adding support for manipulating the products in a quote.
+
+
 
 
 ## To Do
@@ -107,6 +113,10 @@ quote:
     assign and remove products
     increase and decrease line item quantity
     sub-total, vat total and total
+
+factory to generate some sample ProductInQuote instances
+
+Stuff like totals could be functions on the Quote model?
 
 Frontend force the price field to only take numbers (with decimal)
 
@@ -118,7 +128,7 @@ Load products from some external source (CSV?)
 Seems to define a mapping between Eloquent model and JSON, or other representation.
 ...although for basic models that's automatically done so not much advantage.
 
-email a quote to the customer (send this to mailtrap)
+email a quote to the customer (send to mailtrap)
 
 cron that runs at the end of the day to give an overview of the quotes created that day with totals sent via email
 
@@ -153,3 +163,5 @@ On success, what should Laravel be returning as a response?
 How best to distribute the work/logic for handling this cart/quote system. Feels like I'm doing too much on the QuoteController.
 
 When taking input for creating a "product in quote" it'll receive an ID for each. Should FormRequest-type validation handle checking that those IDs exist on the relevant tables? It'll get checked by the database-level foreign key enforcement. But would be nice to have a more human-friendly check first. Remember (and note in comment) that some other user could be logged in that deleted a product/quote in the time between a dropdown being populated and the dropdown being used.
+
+I define some relationships in ProductInQuote, am I doing that in some way the wrong way around? Feels like if I defined it from the direction, I wouldn't have to specify column names for the columns.

@@ -12,13 +12,40 @@ use Illuminate\Support\Facades\DB;
 class ProductInQuoteController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Fetch list of all products for a given quote.
      *
+     * Sample output (JSON):
+     *  [
+     *      {
+     *          'name': 'Plank',
+     *          'price_pence': 50,
+     *          'count': 12,
+     *      },
+     *      {
+     *          'name': 'Nail',
+     *          'price_pence': 1,
+     *          'count': 300,
+     *      }
+     *  ]
+     *
+     * @param  \App\Quote  $quote
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Quote $quote)
     {
-        //TODO?
+        $data = [];
+
+        /** @var \App\ProductInQuote $productInQuote */
+        foreach ($quote->productsInQuote()->get() as $productInQuote) {
+            $product = $productInQuote->product()->first();
+            $data[] = [
+                'name' => $product->name,
+                'price_pence' => $product->price_pence,
+                'count' => $productInQuote->count,
+            ];
+        }
+
+        return response()->json($data, Response::HTTP_OK);
     }
 
     /**
