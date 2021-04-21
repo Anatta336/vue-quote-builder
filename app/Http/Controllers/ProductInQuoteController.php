@@ -17,11 +17,13 @@ class ProductInQuoteController extends Controller
      * Sample output (JSON):
      *  [
      *      {
+     *          'product_id': 1,
      *          'name': 'Plank',
      *          'price_pence': 50,
      *          'count': 12,
      *      },
      *      {
+     *          'product_id': 4,
      *          'name': 'Nail',
      *          'price_pence': 1,
      *          'count': 300,
@@ -39,6 +41,7 @@ class ProductInQuoteController extends Controller
         foreach ($quote->productsInQuote()->get() as $productInQuote) {
             $product = $productInQuote->product()->first();
             $data[] = [
+                'product_id' => $product->id,
                 'name' => $product->name,
                 'price_pence' => $product->price_pence,
                 'count' => $productInQuote->count,

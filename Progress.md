@@ -105,10 +105,15 @@ I added basic frontend support for listing the products that are in a quote. Con
 
 Next I will be adding support for manipulating the products in a quote.
 
-
+I added frontend logic for creating a dropdown menu listing all the existing products.
+I added a filter to only show the products which aren't already in the quote. As this depends on data that has to first be fetched, async/await and Promise.all is used to make sure the filtered list is generated only after the data is available.
 
 
 ## To Do
+anywhere that's displaying price_pence, use the vue component
+
+line price isn't actually showing line price - it's showing cost for one item.
+
 quote:
     assign and remove products
     increase and decrease line item quantity
