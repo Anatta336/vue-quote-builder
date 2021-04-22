@@ -13,41 +13,22 @@
             </tr>
 
             <template
-                v-for="productInQuote in productsInQuote"
+                v-for="product in productsInQuote"
             >
                 <quote-line-item
-                    :key="productInQuote.id"
-                    v-bind="productInQuote"
-                    @change-count="onCountChange"
-                    @remove="onRemove"
+                    :key="product.id"
+                    :product="product"
+                    @change-count="changeCount"
+                    @remove="removeProduct"
                 />
             </template>
 
-            <!-- row at the bottom for adding new product to quote -->
-            <!-- TODO: this could be moved into its own component -->
-            <tr>
-                <td>
-                    <select v-model="toAddProduct">
-                        <option :value="null">
-                            ----
-                        </option>
-                        <option v-for="product in productsCouldAdd" :key="product.id" :value="product">
-                            {{ product.name }}
-                        </option>
-                    </select>
-                </td>
-                <td class="count"><div>
-                    <input v-model="toAddCount" type="number" min="1" step="1">
-                </div></td>
-                <td>
-                    <price-from-pence class="preview" :pence="toAddPricePence"/>
-                </td>
-                <td>
-                    <button :disabled="!toAddProduct" @click="addProduct">
-                        Add
-                    </button>
-                </td>
-            </tr>
+            <quote-add-product
+                :allProducts="allProducts"
+                :productsInQuote="productsInQuote"
+                @addProduct="addProduct"
+            />
+
         </table>
         <quote-totals
             :productsInQuote="productsInQuote"
@@ -66,6 +47,7 @@
 import PriceFromPence from '../components/PriceFromPence.vue';
 import QuoteLineItem from '../components/QuoteLineItem.vue';
 import QuoteTotals from '../components/QuoteTotals.vue';
+import QuoteAddProduct from '../components/QuoteAddProduct.vue';
 
 export default {
     name: "product-list",
@@ -73,17 +55,18 @@ export default {
         PriceFromPence,
         QuoteLineItem,
         QuoteTotals,
+        QuoteAddProduct,
     },
     data() {
         return {
-            quoteId: this.$route.params.id,
-            productsInQuote: [],
+            quoteId: this.$route.params.id, //TODO: will not be needed, instead have quote object
+
             allProducts: [],
-            productsCouldAdd: [],
-            toAddProduct: null,
-            toAddCount: 1,
+            productsInQuote: [],
+
             vatRate: 0.2,
-            customerEmail: 'example@example.com', //TODO: get this!
+
+            customerEmail: 'example@example.com', //TODO: get this! (will use quote object's properties)
             isAwaitingEmailSend: false,
             emailFeedback: ''
         };
@@ -99,15 +82,8 @@ export default {
             return this.toAddCount * this.toAddPricePerItem;
         },
     },
-    watch: {
-        toAddCount: function(value) {
-            if (value < 1) {
-                this.toAddCount = 1;
-            }
-        }
-    },
     methods: {
-        async getAllProducts() {
+        async fetchAllProducts() {
             try {
                 const response = await axios.get('/api/products')
                 this.allProducts = response.data;
@@ -115,7 +91,7 @@ export default {
                 console.error(error);
             }
         },
-        async getProductsInQuote() {
+        async fetchProductsInQuote() {
             try {
                 const response = await axios.get(`/api/quotes/${this.quoteId}/products`);
                 this.productsInQuote = response.data;
@@ -123,67 +99,40 @@ export default {
                 console.error(error);
             }
         },
-        updateProductsCouldAdd() {
-            // only include products that aren't already in the quote
-            this.productsCouldAdd = this.allProducts.filter((product) => {
-                return !this.productsInQuote.some((inQuote) => {
-                    return product.id === inQuote.product_id;
-                });
-            });
-        },
-        async onCountChange(product_id, count) {
-            // find the product that changed
-            const productInQuote = this.getProductInQuoteById(product_id);
-            if (!productInQuote) {
+        async changeCount(product, count) {
+            if (!product) {
                 return;
             }
 
             // update on frontend
-            productInQuote.count = count;
+            product.count = count;
             const isProductRemoved = (count <= 0);
             if (isProductRemoved) {
-                this.removeProductFromLocalQuote(product_id);
-                this.updateProductsCouldAdd();
+                this.removeProductFromLocalQuote(product);
             }
 
             // send update to backend
             try {
                 await axios.patch(
-                    `/api/quotes/${this.quoteId}/products/${product_id}`,
+                    `/api/quotes/${this.quoteId}/products/${product.product_id}`,
                     { 'count': count }
                 );
             } catch (error) {
                 console.error(error);
             }
         },
-        async onRemove(product_id) {
-            this.removeProductFromLocalQuote(product_id);
-            this.updateProductsCouldAdd();
+        async removeProduct(product) {
+            this.removeProductFromLocalQuote(product);
 
             try {
-                await axios.delete(`/api/quotes/${this.quoteId}/products/${product_id}`);
+                await axios.delete(`/api/quotes/${this.quoteId}/products/${product.product_id}`);
             } catch (error) {
                 console.error(error);
             }
         },
-        getProductInQuoteById(id) {
-            return this.productsInQuote.find((product) => product.product_id === id);
-        },
-        async addProduct() {
-            if (!this.toAddProduct) {
-                // TODO: display a "please select a product" warning.
-                // or, disable the "add" button when no product is selected (style it too)
-                return;
-            }
-
+        async addProduct(product, count) {
             try {
-                const product = this.toAddProduct;
-                const count = this.toAddCount;
-
-                // reset form
-                this.toAddProduct = null;
-                this.toAddCount = 1;
-
+                // add product in frontend
                 this.productsInQuote.push({
                     product_id: product.id,
                     name: product.name,
@@ -195,17 +144,13 @@ export default {
                 await axios.post(`/api/quotes/${this.quoteId}/products/${product.id}`, {
                     'count': count,
                 });
-
-                // update list of products
-                await this.getProductsInQuote();
-                this.updateProductsCouldAdd();
             } catch (error) {
                 console.error(error);
             }
         },
-        removeProductFromLocalQuote(idToRemove) {
+        removeProductFromLocalQuote(toRemove) {
             this.productsInQuote = this.productsInQuote.filter((productInQuote) => {
-                return productInQuote.product_id !== idToRemove;
+                return productInQuote.product_id !== toRemove.product_id;
             });
         },
         async emailToCustomer() {
@@ -230,15 +175,8 @@ export default {
         },
     },
     mounted() {
-        (async () => {
-            await Promise.all([
-                this.getProductsInQuote(),
-                this.getAllProducts(),
-            ]);
-
-            // once both requests are done, can use their data
-            this.updateProductsCouldAdd();
-        })();
+        this.fetchProductsInQuote();
+        this.fetchAllProducts();
     }
 }
 </script>

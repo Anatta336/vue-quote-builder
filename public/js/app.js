@@ -2038,6 +2038,108 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/QuoteAddProduct.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/QuoteAddProduct.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PriceFromPence_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PriceFromPence.vue */ "./resources/js/components/PriceFromPence.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'quote-add-product',
+  components: {
+    PriceFromPence: _PriceFromPence_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: {
+    allProducts: {
+      type: Array,
+      required: true
+    },
+    productsInQuote: {
+      type: Array,
+      required: true
+    }
+  },
+  data: function data() {
+    return {
+      product: null,
+      count: 1
+    };
+  },
+  computed: {
+    linePrice: function linePrice() {
+      if (!this.product) {
+        return 0;
+      }
+
+      return this.product.price_pence * this.count;
+    },
+    productsCouldAdd: function productsCouldAdd() {
+      var _this = this;
+
+      return this.allProducts.filter(function (product) {
+        return !_this.productsInQuote.some(function (inQuote) {
+          return product.id === inQuote.product_id;
+        });
+      });
+    }
+  },
+  watch: {
+    count: function count(value) {
+      // force to be integer
+      value = Math.round(value); // force to be positive
+
+      if (value < 1) {
+        this.count = 1;
+      }
+    }
+  },
+  methods: {
+    addProduct: function addProduct() {
+      if (!this.product) {
+        return;
+      } // send event
+
+
+      this.$emit('addProduct', this.product, this.count); // reset form
+
+      this.product = null;
+      this.count = 1;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/QuoteLineItem.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/QuoteLineItem.vue?vue&type=script&lang=js& ***!
@@ -2069,32 +2171,32 @@ __webpack_require__.r(__webpack_exports__);
     PriceFromPence: _PriceFromPence_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: {
-    product_id: [String, Number],
-    name: String,
-    count: [String, Number],
-    price_pence: [String, Number]
+    product: {
+      type: Object,
+      required: true
+    }
   },
   data: function data() {
     return {
-      localCount: this.count
+      localCount: this.product.count
     };
   },
   computed: {
     line_price: function line_price() {
-      return this.price_pence * this.localCount;
+      return this.product.price_pence * this.localCount;
     }
   },
   methods: {
     increaseCount: function increaseCount() {
       this.localCount++;
-      this.$emit('change-count', this.product_id, this.localCount);
+      this.$emit('change-count', this.product, this.localCount);
     },
     decreaseCount: function decreaseCount() {
       this.localCount = Math.max(0, this.localCount - 1);
-      this.$emit('change-count', this.product_id, this.localCount);
+      this.$emit('change-count', this.product, this.localCount);
     },
     remove: function remove() {
-      this.$emit('remove', this.product_id);
+      this.$emit('remove', this.product);
     }
   }
 });
@@ -2647,6 +2749,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_PriceFromPence_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/PriceFromPence.vue */ "./resources/js/components/PriceFromPence.vue");
 /* harmony import */ var _components_QuoteLineItem_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/QuoteLineItem.vue */ "./resources/js/components/QuoteLineItem.vue");
 /* harmony import */ var _components_QuoteTotals_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/QuoteTotals.vue */ "./resources/js/components/QuoteTotals.vue");
+/* harmony import */ var _components_QuoteAddProduct_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/QuoteAddProduct.vue */ "./resources/js/components/QuoteAddProduct.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2698,25 +2801,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
@@ -2725,19 +2810,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   components: {
     PriceFromPence: _components_PriceFromPence_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     QuoteLineItem: _components_QuoteLineItem_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    QuoteTotals: _components_QuoteTotals_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    QuoteTotals: _components_QuoteTotals_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    QuoteAddProduct: _components_QuoteAddProduct_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   data: function data() {
     return {
       quoteId: this.$route.params.id,
-      productsInQuote: [],
+      //TODO: will not be needed, instead have quote object
       allProducts: [],
-      productsCouldAdd: [],
-      toAddProduct: null,
-      toAddCount: 1,
+      productsInQuote: [],
       vatRate: 0.2,
       customerEmail: 'example@example.com',
-      //TODO: get this!
+      //TODO: get this! (will use quote object's properties)
       isAwaitingEmailSend: false,
       emailFeedback: ''
     };
@@ -2754,15 +2838,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return this.toAddCount * this.toAddPricePerItem;
     }
   },
-  watch: {
-    toAddCount: function toAddCount(value) {
-      if (value < 1) {
-        this.toAddCount = 1;
-      }
-    }
-  },
   methods: {
-    getAllProducts: function getAllProducts() {
+    fetchAllProducts: function fetchAllProducts() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -2794,7 +2871,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee, null, [[0, 7]]);
       }))();
     },
-    getProductsInQuote: function getProductsInQuote() {
+    fetchProductsInQuote: function fetchProductsInQuote() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
@@ -2826,133 +2903,98 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2, null, [[0, 7]]);
       }))();
     },
-    updateProductsCouldAdd: function updateProductsCouldAdd() {
+    changeCount: function changeCount(product, count) {
       var _this3 = this;
 
-      // only include products that aren't already in the quote
-      this.productsCouldAdd = this.allProducts.filter(function (product) {
-        return !_this3.productsInQuote.some(function (inQuote) {
-          return product.id === inQuote.product_id;
-        });
-      });
-    },
-    onCountChange: function onCountChange(product_id, count) {
-      var _this4 = this;
-
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var productInQuote, isProductRemoved;
+        var isProductRemoved;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                // find the product that changed
-                productInQuote = _this4.getProductInQuoteById(product_id);
-
-                if (productInQuote) {
-                  _context3.next = 3;
+                if (product) {
+                  _context3.next = 2;
                   break;
                 }
 
                 return _context3.abrupt("return");
 
-              case 3:
+              case 2:
                 // update on frontend
-                productInQuote.count = count;
+                product.count = count;
                 isProductRemoved = count <= 0;
 
                 if (isProductRemoved) {
-                  _this4.removeProductFromLocalQuote(product_id);
-
-                  _this4.updateProductsCouldAdd();
+                  _this3.removeProductFromLocalQuote(product);
                 } // send update to backend
 
 
-                _context3.prev = 6;
-                _context3.next = 9;
-                return axios.patch("/api/quotes/".concat(_this4.quoteId, "/products/").concat(product_id), {
+                _context3.prev = 5;
+                _context3.next = 8;
+                return axios.patch("/api/quotes/".concat(_this3.quoteId, "/products/").concat(product.product_id), {
                   'count': count
                 });
 
-              case 9:
-                _context3.next = 14;
+              case 8:
+                _context3.next = 13;
                 break;
 
-              case 11:
-                _context3.prev = 11;
-                _context3.t0 = _context3["catch"](6);
+              case 10:
+                _context3.prev = 10;
+                _context3.t0 = _context3["catch"](5);
                 console.error(_context3.t0);
 
-              case 14:
+              case 13:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[6, 11]]);
+        }, _callee3, null, [[5, 10]]);
       }))();
     },
-    onRemove: function onRemove(product_id) {
-      var _this5 = this;
+    removeProduct: function removeProduct(product) {
+      var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _this5.removeProductFromLocalQuote(product_id);
+                _this4.removeProductFromLocalQuote(product);
 
-                _this5.updateProductsCouldAdd();
+                _context4.prev = 1;
+                _context4.next = 4;
+                return axios["delete"]("/api/quotes/".concat(_this4.quoteId, "/products/").concat(product.product_id));
 
-                _context4.prev = 2;
-                _context4.next = 5;
-                return axios["delete"]("/api/quotes/".concat(_this5.quoteId, "/products/").concat(product_id));
-
-              case 5:
-                _context4.next = 10;
+              case 4:
+                _context4.next = 9;
                 break;
 
-              case 7:
-                _context4.prev = 7;
-                _context4.t0 = _context4["catch"](2);
+              case 6:
+                _context4.prev = 6;
+                _context4.t0 = _context4["catch"](1);
                 console.error(_context4.t0);
 
-              case 10:
+              case 9:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4, null, [[2, 7]]);
+        }, _callee4, null, [[1, 6]]);
       }))();
     },
-    getProductInQuoteById: function getProductInQuoteById(id) {
-      return this.productsInQuote.find(function (product) {
-        return product.product_id === id;
-      });
-    },
-    addProduct: function addProduct() {
-      var _this6 = this;
+    addProduct: function addProduct(product, count) {
+      var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var product, count;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                if (_this6.toAddProduct) {
-                  _context5.next = 2;
-                  break;
-                }
+                _context5.prev = 0;
 
-                return _context5.abrupt("return");
-
-              case 2:
-                _context5.prev = 2;
-                product = _this6.toAddProduct;
-                count = _this6.toAddCount; // reset form
-
-                _this6.toAddProduct = null;
-                _this6.toAddCount = 1;
-
-                _this6.productsInQuote.push({
+                // add product in frontend
+                _this5.productsInQuote.push({
                   product_id: product.id,
                   name: product.name,
                   price_pence: product.price_pence,
@@ -2960,41 +3002,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }); // request to add the product on backend
 
 
-                _context5.next = 10;
-                return axios.post("/api/quotes/".concat(_this6.quoteId, "/products/").concat(product.id), {
+                _context5.next = 4;
+                return axios.post("/api/quotes/".concat(_this5.quoteId, "/products/").concat(product.id), {
                   'count': count
                 });
 
-              case 10:
-                _context5.next = 12;
-                return _this6.getProductsInQuote();
-
-              case 12:
-                _this6.updateProductsCouldAdd();
-
-                _context5.next = 18;
+              case 4:
+                _context5.next = 9;
                 break;
 
-              case 15:
-                _context5.prev = 15;
-                _context5.t0 = _context5["catch"](2);
+              case 6:
+                _context5.prev = 6;
+                _context5.t0 = _context5["catch"](0);
                 console.error(_context5.t0);
 
-              case 18:
+              case 9:
               case "end":
                 return _context5.stop();
             }
           }
-        }, _callee5, null, [[2, 15]]);
+        }, _callee5, null, [[0, 6]]);
       }))();
     },
-    removeProductFromLocalQuote: function removeProductFromLocalQuote(idToRemove) {
+    removeProductFromLocalQuote: function removeProductFromLocalQuote(toRemove) {
       this.productsInQuote = this.productsInQuote.filter(function (productInQuote) {
-        return productInQuote.product_id !== idToRemove;
+        return productInQuote.product_id !== toRemove.product_id;
       });
     },
     emailToCustomer: function emailToCustomer() {
-      var _this7 = this;
+      var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
         var response, date;
@@ -3002,17 +3038,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                _this7.isAwaitingEmailSend = true;
-                _this7.emailFeedback = 'Sending email...';
+                _this6.isAwaitingEmailSend = true;
+                _this6.emailFeedback = 'Sending email...';
                 _context6.prev = 2;
                 _context6.next = 5;
-                return axios.post("/api/quotes/".concat(_this7.quoteId, "/email"));
+                return axios.post("/api/quotes/".concat(_this6.quoteId, "/email"));
 
               case 5:
                 response = _context6.sent;
-                _this7.isAwaitingEmailSend = false;
+                _this6.isAwaitingEmailSend = false;
                 date = new Date();
-                _this7.emailFeedback = 'Email sent (UTC) ' + date.getUTCFullYear() + "/" + (date.getUTCMonth() + 1) + "/" + date.getUTCDate() + " at " + date.getUTCHours() + ":" + date.getUTCMinutes() + ":" + date.getUTCSeconds();
+                _this6.emailFeedback = 'Email sent (UTC) ' + date.getUTCFullYear() + "/" + (date.getUTCMonth() + 1) + "/" + date.getUTCDate() + " at " + date.getUTCHours() + ":" + date.getUTCMinutes() + ":" + date.getUTCSeconds();
                 _context6.next = 15;
                 break;
 
@@ -3020,7 +3056,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context6.prev = 11;
                 _context6.t0 = _context6["catch"](2);
                 console.error(_context6.t0);
-                _this7.emailFeedback = 'An error occurred when attempting to send as email.';
+                _this6.emailFeedback = 'An error occurred when attempting to send as email.';
 
               case 15:
               case "end":
@@ -3032,27 +3068,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   mounted: function mounted() {
-    var _this8 = this;
-
-    _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
-        while (1) {
-          switch (_context7.prev = _context7.next) {
-            case 0:
-              _context7.next = 2;
-              return Promise.all([_this8.getProductsInQuote(), _this8.getAllProducts()]);
-
-            case 2:
-              // once both requests are done, can use their data
-              _this8.updateProductsCouldAdd();
-
-            case 3:
-            case "end":
-              return _context7.stop();
-          }
-        }
-      }, _callee7);
-    }))();
+    this.fetchProductsInQuote();
+    this.fetchAllProducts();
   }
 });
 
@@ -4431,6 +4448,123 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/QuoteAddProduct.vue?vue&type=template&id=fbea07e2&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/QuoteAddProduct.vue?vue&type=template&id=fbea07e2& ***!
+  \******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("tr", [
+    _c("td", [
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.product,
+              expression: "product"
+            }
+          ],
+          on: {
+            change: function($event) {
+              var $$selectedVal = Array.prototype.filter
+                .call($event.target.options, function(o) {
+                  return o.selected
+                })
+                .map(function(o) {
+                  var val = "_value" in o ? o._value : o.value
+                  return val
+                })
+              _vm.product = $event.target.multiple
+                ? $$selectedVal
+                : $$selectedVal[0]
+            }
+          }
+        },
+        [
+          _c("option", { domProps: { value: null } }, [
+            _vm._v("\n                ----\n            ")
+          ]),
+          _vm._v(" "),
+          _vm._l(_vm.productsCouldAdd, function(product) {
+            return _c(
+              "option",
+              { key: product.id, domProps: { value: product } },
+              [
+                _vm._v(
+                  "\n                " + _vm._s(product.name) + "\n            "
+                )
+              ]
+            )
+          })
+        ],
+        2
+      )
+    ]),
+    _vm._v(" "),
+    _c("td", { staticClass: "count" }, [
+      _c("div", [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.count,
+              expression: "count"
+            }
+          ],
+          attrs: { type: "number", min: "1", step: "1" },
+          domProps: { value: _vm.count },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.count = $event.target.value
+            }
+          }
+        })
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "td",
+      [
+        _c("price-from-pence", {
+          staticClass: "preview",
+          attrs: { pence: _vm.linePrice }
+        })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("td", [
+      _c(
+        "button",
+        { attrs: { disabled: !_vm.product }, on: { click: _vm.addProduct } },
+        [_vm._v("\n            Add\n        ")]
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/QuoteLineItem.vue?vue&type=template&id=26c66de8&":
 /*!****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/QuoteLineItem.vue?vue&type=template&id=26c66de8& ***!
@@ -4447,7 +4581,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("tr", [
-    _c("td", [_vm._v(_vm._s(_vm.name))]),
+    _c("td", [_vm._v(_vm._s(_vm.product.name))]),
     _vm._v(" "),
     _c("td", { staticClass: "count" }, [
       _c("button", { on: { click: _vm.increaseCount } }, [_vm._v("+")]),
@@ -5211,127 +5345,26 @@ var render = function() {
             ? _c("tr", [_c("th", [_vm._v("No products in quote.")])])
             : _vm._e(),
           _vm._v(" "),
-          _vm._l(_vm.productsInQuote, function(productInQuote) {
+          _vm._l(_vm.productsInQuote, function(product) {
             return [
-              _c(
-                "quote-line-item",
-                _vm._b(
-                  {
-                    key: productInQuote.id,
-                    on: {
-                      "change-count": _vm.onCountChange,
-                      remove: _vm.onRemove
-                    }
-                  },
-                  "quote-line-item",
-                  productInQuote,
-                  false
-                )
-              )
+              _c("quote-line-item", {
+                key: product.id,
+                attrs: { product: product },
+                on: {
+                  "change-count": _vm.changeCount,
+                  remove: _vm.removeProduct
+                }
+              })
             ]
           }),
           _vm._v(" "),
-          _c("tr", [
-            _c("td", [
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.toAddProduct,
-                      expression: "toAddProduct"
-                    }
-                  ],
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.toAddProduct = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    }
-                  }
-                },
-                [
-                  _c("option", { domProps: { value: null } }, [
-                    _vm._v(
-                      "\n                        ----\n                    "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _vm._l(_vm.productsCouldAdd, function(product) {
-                    return _c(
-                      "option",
-                      { key: product.id, domProps: { value: product } },
-                      [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(product.name) +
-                            "\n                    "
-                        )
-                      ]
-                    )
-                  })
-                ],
-                2
-              )
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "count" }, [
-              _c("div", [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.toAddCount,
-                      expression: "toAddCount"
-                    }
-                  ],
-                  attrs: { type: "number", min: "1", step: "1" },
-                  domProps: { value: _vm.toAddCount },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.toAddCount = $event.target.value
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "td",
-              [
-                _c("price-from-pence", {
-                  staticClass: "preview",
-                  attrs: { pence: _vm.toAddPricePence }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("td", [
-              _c(
-                "button",
-                {
-                  attrs: { disabled: !_vm.toAddProduct },
-                  on: { click: _vm.addProduct }
-                },
-                [_vm._v("\n                    Add\n                ")]
-              )
-            ])
-          ])
+          _c("quote-add-product", {
+            attrs: {
+              allProducts: _vm.allProducts,
+              productsInQuote: _vm.productsInQuote
+            },
+            on: { addProduct: _vm.addProduct }
+          })
         ],
         2
       ),
@@ -20906,6 +20939,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductList_vue_vue_type_template_id_438ffe92___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductList_vue_vue_type_template_id_438ffe92___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/QuoteAddProduct.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/QuoteAddProduct.vue ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _QuoteAddProduct_vue_vue_type_template_id_fbea07e2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./QuoteAddProduct.vue?vue&type=template&id=fbea07e2& */ "./resources/js/components/QuoteAddProduct.vue?vue&type=template&id=fbea07e2&");
+/* harmony import */ var _QuoteAddProduct_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./QuoteAddProduct.vue?vue&type=script&lang=js& */ "./resources/js/components/QuoteAddProduct.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _QuoteAddProduct_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _QuoteAddProduct_vue_vue_type_template_id_fbea07e2___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _QuoteAddProduct_vue_vue_type_template_id_fbea07e2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/QuoteAddProduct.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/QuoteAddProduct.vue?vue&type=script&lang=js&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/QuoteAddProduct.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_QuoteAddProduct_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./QuoteAddProduct.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/QuoteAddProduct.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_QuoteAddProduct_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/QuoteAddProduct.vue?vue&type=template&id=fbea07e2&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/QuoteAddProduct.vue?vue&type=template&id=fbea07e2& ***!
+  \************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QuoteAddProduct_vue_vue_type_template_id_fbea07e2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./QuoteAddProduct.vue?vue&type=template&id=fbea07e2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/QuoteAddProduct.vue?vue&type=template&id=fbea07e2&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QuoteAddProduct_vue_vue_type_template_id_fbea07e2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QuoteAddProduct_vue_vue_type_template_id_fbea07e2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

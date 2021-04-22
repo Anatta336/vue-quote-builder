@@ -32,6 +32,8 @@ ProductInQuote:
 ## Done
 I began cleaning up frontend for managing a quóte.
 I split the component into modular parts.
+I made the quóte easier for a user to work with by giving access to all its relevant data in one view.
+I added missing styling for validation errors and disabled buttons.
 
 ## To Do
 QuoteProducts.vue is long. Split it up into components if possible.
