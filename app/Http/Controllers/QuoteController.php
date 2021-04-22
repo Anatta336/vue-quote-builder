@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateQuote;
+use App\Mail\QuoteToCustomer;
 use App\Quote;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
 
 class QuoteController extends Controller
 {
@@ -80,4 +82,12 @@ class QuoteController extends Controller
 
         return response('', Response::HTTP_NO_CONTENT);
     }
+
+    public function email(Quote $quote)
+    {
+        Mail::to($quote->customer_email)->send(new QuoteToCustomer($quote));
+
+        return response('I guess that sent an email, maybe!');
+    }
 }
+

@@ -123,8 +123,25 @@ I built up a query for the backend that calculates the subtotal for a quоte, an
 I added vatTotal and grandTotal methods to the Quօte model.
 I compared the backend and frontend techniques for calculating a quote's totals and checked they match.
 
+Next I'll research and begin implementing sending an email of the quọte to its customer.
+
+I set up a basic free account for MailTrap.
+I read through the Laravel mailer documentation, and looked up configuration details for MailTrap.
+I configured my local .env file to use MailTrap's SMTP server.
+I created a placeholder view to use for generating the contents of an email.
+I created a mailer and set it up to use that view.
+I added an API route and new method on Quote controller that triggers the mailer.
+I added a button to the frontend that POSTs to that API endpoint.
+I was able to send a simple test email to the MailTrap inbox.
+
+I created a basic HTML email that has a table showing the products in a quote with their count and line price. Beneath that is the sub total, VAT total, and grand total for the quote.
+I confirmed that email version of a quote matches the details when viewed from the web client.
+
+
 ## To Do
 email a quote to the customer (send to mailtrap)
+
+show confirmation once email has been sent, and some kind of "sending in progress" display (disable button?)
 
 cron that runs at the end of the day to give an overview of the quotes created that day with totals sent via email
 
@@ -144,10 +161,7 @@ Frontend force the price field to only take numbers (with decimal)
 
 Load products from some external source (CSV?)
 
-"Resources" may be useful? https://laravel.com/docs/7.x/eloquent-resources
-Seems to define a mapping between Eloquent model and JSON, or other representation.
-...although for basic models that's automatically done so not much advantage.
-
+Note in readme that after changing .env file should run `php artisan config:cache`
 
 ## Notes
 To access database directly:

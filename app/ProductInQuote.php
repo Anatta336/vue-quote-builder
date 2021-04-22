@@ -21,4 +21,15 @@ class ProductInQuote extends Model
     {
         return $this->hasOne(Quote::class, 'id', 'quote_id');
     }
+
+    /**
+     * Finds the total cost of this product, in pence.
+     * Simply multiplies the product's cost with its count.
+     *
+     * @return number Total cost of this product, in pence.
+     */
+    public function linePrice()
+    {
+        return (int)$this->product->price_pence * $this->count;
+    }
 }

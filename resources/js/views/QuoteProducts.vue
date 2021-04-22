@@ -56,6 +56,9 @@
                 Grand Total: <price-from-pence :pence="grandTotal" />
             </div>
         </div>
+        <div>
+            <button @click="emailToCustomer">Email</button>
+        </div>
     </div>
 </template>
 <script>
@@ -213,7 +216,16 @@ export default {
             this.productsInQuote = this.productsInQuote.filter((productInQuote) => {
                 return productInQuote.product_id !== idToRemove;
             });
-        }
+        },
+        async emailToCustomer() {
+            console.log('clicked to email');
+            try {
+                const response = await axios.post(`/api/quotes/${this.quoteId}/email`);
+                console.log('asked for an email.', response);
+            } catch (error) {
+                console.error(error);
+            }
+        },
     },
     mounted() {
         (async () => {

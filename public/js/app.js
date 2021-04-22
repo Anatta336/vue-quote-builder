@@ -2592,6 +2592,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "product-list",
@@ -2899,29 +2902,62 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.productsInQuote = this.productsInQuote.filter(function (productInQuote) {
         return productInQuote.product_id !== idToRemove;
       });
+    },
+    emailToCustomer: function emailToCustomer() {
+      var _this8 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                console.log('clicked to email');
+                _context7.prev = 1;
+                _context7.next = 4;
+                return axios.post("/api/quotes/".concat(_this8.quoteId, "/email"));
+
+              case 4:
+                response = _context7.sent;
+                console.log('asked for an email.', response);
+                _context7.next = 11;
+                break;
+
+              case 8:
+                _context7.prev = 8;
+                _context7.t0 = _context7["catch"](1);
+                console.error(_context7.t0);
+
+              case 11:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7, null, [[1, 8]]);
+      }))();
     }
   },
   mounted: function mounted() {
-    var _this8 = this;
+    var _this9 = this;
 
-    _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+    _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
         while (1) {
-          switch (_context7.prev = _context7.next) {
+          switch (_context8.prev = _context8.next) {
             case 0:
-              _context7.next = 2;
-              return Promise.all([_this8.getProductsInQuote(), _this8.getAllProducts()]);
+              _context8.next = 2;
+              return Promise.all([_this9.getProductsInQuote(), _this9.getAllProducts()]);
 
             case 2:
               // once both requests are done, can use their data
-              _this8.updateProductsCouldAdd();
+              _this9.updateProductsCouldAdd();
 
             case 3:
             case "end":
-              return _context7.stop();
+              return _context8.stop();
           }
         }
-      }, _callee7);
+      }, _callee8);
     }))();
   }
 });
@@ -5171,6 +5207,10 @@ var render = function() {
         ],
         1
       )
+    ]),
+    _vm._v(" "),
+    _c("div", [
+      _c("button", { on: { click: _vm.emailToCustomer } }, [_vm._v("Email")])
     ])
   ])
 }
