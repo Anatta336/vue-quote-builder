@@ -21,7 +21,7 @@
             </td>
         </tr>
 
-        <!-- row at the bottom for adding new products to quote -->
+        <!-- row at the bottom for adding new product to quote -->
         <tr>
             <td>
                 <select v-model="toAddProduct">
@@ -107,29 +107,41 @@ export default {
         },
         async increaseCount(productInQuote) {
             try {
+                productInQuote.count++;
                 await axios.patch(
                     `/api/quotes/${this.quoteId}/products/${productInQuote.product_id}`,
                     {
-                        'count': parseInt(productInQuote.count) + 1,
+                        'count': productInQuote.count,
                     }
                 );
-                this.getProductsInQuote();
             } catch (error) {
                 console.error(error);
             }
         },
         async decreaseCount(productInQuote) {
             try {
+                // instantly reduce count as stored in frontend, and remove from list if reached zero
+                productInQuote.count--;
+                const isProductRemoved = (productInQuote.count <= 0);
+                if (isProductRemoved) {
+                    this.removeProductFromLocalQuote(productInQuote.product_id);
+                }
+
                 await axios.patch(`/api/quotes/${this.quoteId}/products/${productInQuote.product_id}`, {
-                    'count': parseInt(productInQuote.count) - 1,
+                    'count': productInQuote.count,
                 });
-                await this.getProductsInQuote();
-                this.updateProductsCouldAdd();
+
+                if (isProductRemoved) {
+                    // fetch updated product lists to make sure we're in sync
+                    await this.getProductsInQuote();
+                    this.updateProductsCouldAdd();
+                }
             } catch (error) {
                 console.error(error);
             }
         },
         async remove(productInQuote) {
+            this.removeProductFromLocalQuote(productInQuote.product_id);
             try {
                 await axios.delete(`/api/quotes/${this.quoteId}/products/${productInQuote.product_id}`);
                 await this.getProductsInQuote();
@@ -140,19 +152,30 @@ export default {
         },
         async addProduct() {
             if (!this.toAddProduct) {
-                // TODO: display a "please select a product" warning
+                // TODO: display a "please select a product" warning.
+                // or, disable the "add" button when no product is selected (style it too)
                 return;
             }
 
             try {
-                // add the product
-                await axios.post(`/api/quotes/${this.quoteId}/products/${this.toAddProduct.id}`, {
-                    'count': this.toAddCount,
-                });
+                const product = this.toAddProduct;
+                const count = this.toAddCount;
 
                 // reset form
                 this.toAddProduct = null;
                 this.toAddCount = 1;
+
+                this.productsInQuote.push({
+                    product_id: product.id,
+                    name: product.name,
+                    price_pence: product.price_pence,
+                    count,
+                });
+
+                // request to add the product on backend
+                await axios.post(`/api/quotes/${this.quoteId}/products/${product.id}`, {
+                    'count': count,
+                });
 
                 // update list of products
                 await this.getProductsInQuote();
@@ -160,6 +183,11 @@ export default {
             } catch (error) {
                 console.error(error);
             }
+        },
+        removeProductFromLocalQuote(idToRemove) {
+            this.productsInQuote = this.productsInQuote.filter((productInQuote) => {
+                return productInQuote.product_id !== idToRemove;
+            });
         }
     },
     mounted() {

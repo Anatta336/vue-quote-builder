@@ -64,6 +64,8 @@ class ProductInQuoteController extends Controller
     {
         $validated = $request->validated();
 
+        //TODO: could this be done as part of validation? (Yes)
+        // Can it be added to the existing validation, without repetition?
         if ($quote->products->find($product->id)) {
             // product is already in the quote, so respond with an error
             return response([

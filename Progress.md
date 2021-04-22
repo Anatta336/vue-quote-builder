@@ -115,13 +115,20 @@ I added some validation in addition to the backend validation to avoid entering 
 I used computed values in Vue to show a live-preview of the updated line price when preparing to add a product to the quote.
 I added the ability to add a new product to the quote after selecting it from a dropdown menu and picking a quantity to add.
 
+I changed the scripts for adding, removing, and updating the products on a quote. It now locally updates the quote as soon as the button is pressed, rather than waiting for a response back from the server providing the new information. The quote builder screen is now much nicer to work with when using browser tools to simulate a slow connection.
+I also adjusted the frontend to make fewer GET requests when working on a quote. It now only requests data when a product is added or removed, not for every change in count.
+
 ## To Do
 quote:
     sub-total, vat total and total
 
-factory to generate some sample ProductInQuote instances
+A "sync with server" button? Trigger a GET of the quote.
 
 Stuff like totals could be functions on the Quote model?
+
+Combine the quote editing screens into one, rather than jumping between pages.
+
+factory to generate some sample ProductInQuote instances
 
 Frontend force the price field to only take numbers (with decimal)
 
@@ -169,7 +176,9 @@ What more can I do with the Vue.use() static method? Currently used for telling 
 On success, what should Laravel be returning as a response?
     Been doing stuff like: return response('', Response::HTTP_NO_CONTENT);
 
-How best to distribute the work/logic for handling this cart/quote system. Feels like I'm doing too much on the QuoteController.
+How to combine/inherit/something validation rules in Laravel.
+
+
 
 When taking input for creating a "product in quote" it'll receive an ID for each. Should FormRequest-type validation handle checking that those IDs exist on the relevant tables? It'll get checked by the database-level foreign key enforcement. But would be nice to have a more human-friendly check first. Remember (and note in comment) that some other user could be logged in that deleted a product/quote in the time between a dropdown being populated and the dropdown being used.
 

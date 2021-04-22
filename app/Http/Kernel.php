@@ -39,7 +39,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            'throttle:60,1',
+            'throttle:240,1', // requests per minute, and minutes to lock out for if exceeded
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];

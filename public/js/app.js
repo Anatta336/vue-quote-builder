@@ -2698,14 +2698,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.prev = 0;
-                _context3.next = 3;
+                productInQuote.count++;
+                _context3.next = 4;
                 return axios.patch("/api/quotes/".concat(_this4.quoteId, "/products/").concat(productInQuote.product_id), {
-                  'count': parseInt(productInQuote.count) + 1
+                  'count': productInQuote.count
                 });
 
-              case 3:
-                _this4.getProductsInQuote();
-
+              case 4:
                 _context3.next = 9;
                 break;
 
@@ -2726,37 +2725,52 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var isProductRemoved;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
                 _context4.prev = 0;
-                _context4.next = 3;
+                // instantly reduce count as stored in frontend, and remove from list if reached zero
+                productInQuote.count--;
+                isProductRemoved = productInQuote.count <= 0;
+
+                if (isProductRemoved) {
+                  _this5.removeProductFromLocalQuote(productInQuote.product_id);
+                }
+
+                _context4.next = 6;
                 return axios.patch("/api/quotes/".concat(_this5.quoteId, "/products/").concat(productInQuote.product_id), {
-                  'count': parseInt(productInQuote.count) - 1
+                  'count': productInQuote.count
                 });
 
-              case 3:
-                _context4.next = 5;
+              case 6:
+                if (!isProductRemoved) {
+                  _context4.next = 10;
+                  break;
+                }
+
+                _context4.next = 9;
                 return _this5.getProductsInQuote();
 
-              case 5:
+              case 9:
                 _this5.updateProductsCouldAdd();
 
-                _context4.next = 11;
+              case 10:
+                _context4.next = 15;
                 break;
 
-              case 8:
-                _context4.prev = 8;
+              case 12:
+                _context4.prev = 12;
                 _context4.t0 = _context4["catch"](0);
                 console.error(_context4.t0);
 
-              case 11:
+              case 15:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4, null, [[0, 8]]);
+        }, _callee4, null, [[0, 12]]);
       }))();
     },
     remove: function remove(productInQuote) {
@@ -2767,37 +2781,40 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                _context5.prev = 0;
-                _context5.next = 3;
+                _this6.removeProductFromLocalQuote(productInQuote.product_id);
+
+                _context5.prev = 1;
+                _context5.next = 4;
                 return axios["delete"]("/api/quotes/".concat(_this6.quoteId, "/products/").concat(productInQuote.product_id));
 
-              case 3:
-                _context5.next = 5;
+              case 4:
+                _context5.next = 6;
                 return _this6.getProductsInQuote();
 
-              case 5:
+              case 6:
                 _this6.updateProductsCouldAdd();
 
-                _context5.next = 11;
+                _context5.next = 12;
                 break;
 
-              case 8:
-                _context5.prev = 8;
-                _context5.t0 = _context5["catch"](0);
+              case 9:
+                _context5.prev = 9;
+                _context5.t0 = _context5["catch"](1);
                 console.error(_context5.t0);
 
-              case 11:
+              case 12:
               case "end":
                 return _context5.stop();
             }
           }
-        }, _callee5, null, [[0, 8]]);
+        }, _callee5, null, [[1, 9]]);
       }))();
     },
     addProduct: function addProduct() {
       var _this7 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        var product, count;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
@@ -2811,37 +2828,52 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 _context6.prev = 2;
-                _context6.next = 5;
-                return axios.post("/api/quotes/".concat(_this7.quoteId, "/products/").concat(_this7.toAddProduct.id), {
-                  'count': _this7.toAddCount
+                product = _this7.toAddProduct;
+                count = _this7.toAddCount; // reset form
+
+                _this7.toAddProduct = null;
+                _this7.toAddCount = 1;
+
+                _this7.productsInQuote.push({
+                  product_id: product.id,
+                  name: product.name,
+                  price_pence: product.price_pence,
+                  count: count
+                }); // request to add the product on backend
+
+
+                _context6.next = 10;
+                return axios.post("/api/quotes/".concat(_this7.quoteId, "/products/").concat(product.id), {
+                  'count': count
                 });
 
-              case 5:
-                // reset form
-                _this7.toAddProduct = null;
-                _this7.toAddCount = 1; // update list of products
-
-                _context6.next = 9;
+              case 10:
+                _context6.next = 12;
                 return _this7.getProductsInQuote();
 
-              case 9:
+              case 12:
                 _this7.updateProductsCouldAdd();
 
-                _context6.next = 15;
+                _context6.next = 18;
                 break;
 
-              case 12:
-                _context6.prev = 12;
+              case 15:
+                _context6.prev = 15;
                 _context6.t0 = _context6["catch"](2);
                 console.error(_context6.t0);
 
-              case 15:
+              case 18:
               case "end":
                 return _context6.stop();
             }
           }
-        }, _callee6, null, [[2, 12]]);
+        }, _callee6, null, [[2, 15]]);
       }))();
+    },
+    removeProductFromLocalQuote: function removeProductFromLocalQuote(idToRemove) {
+      this.productsInQuote = this.productsInQuote.filter(function (productInQuote) {
+        return productInQuote.product_id !== idToRemove;
+      });
     }
   },
   mounted: function mounted() {
