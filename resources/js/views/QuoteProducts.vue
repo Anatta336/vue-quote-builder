@@ -10,17 +10,17 @@
             <tr v-if="!productsInQuote">
                 <th>No products in quote.</th>
             </tr>
-            <tr v-for="product in productsInQuote" :key="product.id">
-                <td>{{ product.name }}</td>
-                <td class="count"><div>{{ product.count }}</div></td>
-                <td><price-from-pence :pence="product.price_pence * product.count"/></td>
-                <td>
-                    <button @click="increaseCount(product)">+</button>
-                    <span class="count">{{ product.count }}</span>
-                    <button @click="decreaseCount(product)">-</button>
-                    <button class="danger" @click="remove(product)">Remove</button>
-                </td>
-            </tr>
+
+            <template
+                v-for="productInQuote in productsInQuote"
+            >
+                <quote-line-item
+                    :key="productInQuote.id"
+                    v-bind="productInQuote"
+                    @change-count="onCountChange"
+                    @remove="onRemove"
+                />
+            </template>
 
             <!-- row at the bottom for adding new product to quote -->
             <!-- TODO: this could be moved into its own component -->
@@ -42,7 +42,9 @@
                     <price-from-pence class="preview" :pence="toAddPricePence"/>
                 </td>
                 <td>
-                    <button @click="addProduct">Add</button>
+                    <button :disabled="!toAddProduct" @click="addProduct">
+                        Add
+                    </button>
                 </td>
             </tr>
         </table>
@@ -68,10 +70,13 @@
 </template>
 <script>
 import PriceFromPence from '../components/PriceFromPence.vue';
+import QuoteLineItem from '../components/QuoteLineItem.vue';
+
 export default {
     name: "product-list",
     components: {
         PriceFromPence,
+        QuoteLineItem,
     },
     data() {
         return {
@@ -141,50 +146,43 @@ export default {
                 });
             });
         },
-        async increaseCount(productInQuote) {
+        async onCountChange(product_id, count) {
+            // find the product that changed
+            const productInQuote = this.getProductInQuoteById(product_id);
+            if (!productInQuote) {
+                return;
+            }
+
+            // update on frontend
+            productInQuote.count = count;
+            const isProductRemoved = (count <= 0);
+            if (isProductRemoved) {
+                this.removeProductFromLocalQuote(product_id);
+                this.updateProductsCouldAdd();
+            }
+
+            // send update to backend
             try {
-                productInQuote.count++;
                 await axios.patch(
-                    `/api/quotes/${this.quoteId}/products/${productInQuote.product_id}`,
-                    {
-                        'count': productInQuote.count,
-                    }
+                    `/api/quotes/${this.quoteId}/products/${product_id}`,
+                    { 'count': count }
                 );
             } catch (error) {
                 console.error(error);
             }
         },
-        async decreaseCount(productInQuote) {
+        async onRemove(product_id) {
+            this.removeProductFromLocalQuote(product_id);
+            this.updateProductsCouldAdd();
+
             try {
-                // instantly reduce count as stored in frontend, and remove from list if reached zero
-                productInQuote.count--;
-                const isProductRemoved = (productInQuote.count <= 0);
-                if (isProductRemoved) {
-                    this.removeProductFromLocalQuote(productInQuote.product_id);
-                }
-
-                await axios.patch(`/api/quotes/${this.quoteId}/products/${productInQuote.product_id}`, {
-                    'count': productInQuote.count,
-                });
-
-                if (isProductRemoved) {
-                    // fetch updated product lists to make sure we're in sync
-                    await this.getProductsInQuote();
-                    this.updateProductsCouldAdd();
-                }
+                await axios.delete(`/api/quotes/${this.quoteId}/products/${product_id}`);
             } catch (error) {
                 console.error(error);
             }
         },
-        async remove(productInQuote) {
-            this.removeProductFromLocalQuote(productInQuote.product_id);
-            try {
-                await axios.delete(`/api/quotes/${this.quoteId}/products/${productInQuote.product_id}`);
-                await this.getProductsInQuote();
-                this.updateProductsCouldAdd();
-            } catch (error) {
-                console.error(error);
-            }
+        getProductInQuoteById(id) {
+            return this.productsInQuote.find((product) => product.product_id === id);
         },
         async addProduct() {
             if (!this.toAddProduct) {
