@@ -69,8 +69,10 @@ export default {
 
             // force to be positive
             if (value < 1) {
-                this.count = 1;
+                value = 1;
             }
+
+            this.count = value;
         }
     },
     methods: {

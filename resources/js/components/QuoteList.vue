@@ -6,14 +6,13 @@
             <th>Actions</th>
         </tr>
         <tr v-if="!quotes">
-            <th>No quotes found.</th>
+            <td>No quotes found.</td>
         </tr>
         <tr v-for="quote in quotes" :key="quote.id">
             <td>{{ quote.customer_name }}</td>
             <td>{{ quote.customer_email }}</td>
             <td>
-                <button @click="editQuote(quote)">Edit Customer</button>
-                <button @click="editQuoteProducts(quote)">Edit Products</button>
+                <button @click="editQuote(quote)">Edit</button>
                 <button class="danger" @click="deleteQuote(quote)">Delete</button>
             </td>
         </tr>
@@ -28,12 +27,13 @@ export default {
         };
     },
     methods: {
-        getQuotes() {
-            axios.get('/api/quotes').then((response) => {
+        async fetchQuotes() {
+            try {
+                const response = await axios.get('/api/quotes');
                 this.quotes = response.data;
-            }).catch((error) => {
+            } catch(error) {
                 console.error(error);
-            });
+            }
         },
         editQuote(quote) {
             this.$router.push({
@@ -43,27 +43,20 @@ export default {
                 },
             });
         },
-        editQuoteProducts(quote) {
-            this.$router.push({
-                name: 'quoteProducts.edit',
-                params: {
-                    id: quote.id,
-                },
-            });
-        },
-        deleteQuote(quote) {
-            //TODO: confirm deletion
+        async deleteQuote(toRemove) {
+            // remove from local list
+            this.quotes = this.quotes.filter((quote) => quote.id !== toRemove.id);
 
-            axios.delete(`/api/quotes/${quote.id}`).then((response) => {
-                // refresh list of quotes as it should have changed
-                this.getQuotes();
-            }).catch((error) => {
+            // also remove on backend
+            try {
+                await axios.delete(`/api/quotes/${toRemove.id}`);
+            } catch (error) {
                 console.error(error);
-            });
+            }
         },
     },
     mounted() {
-        this.getQuotes();
+        this.fetchQuotes();
     }
 }
 </script>

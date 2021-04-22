@@ -1,69 +1,161 @@
 <template>
-    <div class="quote-edit">
+    <div v-if="quote" class="quote-edit">
         <h1>Edit Quote</h1>
-        <form @submit.prevent="formSubmit">
-            <div>
-                <label>
-                    Customer Name
-                    <input v-model="customerName" type="text">
-                </label>
-                <error-list v-if="errors" :errors="errors['customer_name']"/>
-            </div>
-            <div>
-                <label>
-                    Customer Email
-                    <input v-model="customerEmail" type="email">
-                </label>
-                <error-list v-if="errors" :errors="errors['customer_email']"/>
-            </div>
-            <button>Save</button>
-        </form>
+
+        <quote-customer-edit :quote="quote"/>
+
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Count</th>
+                <th>Line Price</th>
+                <th>Actions</th>
+            </tr>
+
+            <tr v-if="!productsInQuote">
+                <th>No products in quote.</th>
+            </tr>
+
+            <template v-for="product in productsInQuote">
+                <quote-line-item
+                    :key="product.id"
+                    :product="product"
+                    @change-count="changeCount"
+                    @remove="removeProduct"
+                />
+            </template>
+
+            <quote-add-product
+                :allProducts="allProducts"
+                :productsInQuote="productsInQuote"
+                @addProduct="addProduct"
+            />
+        </table>
+
+        <quote-totals
+            :productsInQuote="productsInQuote"
+            :vatRate="vatRate"
+        />
+
+        <quote-email :quote="quote"/>
     </div>
 </template>
 <script>
-import ErrorList from '../components/ErrorList.vue';
+import ErrorList from '../components/ErrorList';
+import PriceFromPence from '../components/PriceFromPence.vue';
+import QuoteCustomerEdit from '../components/QuoteCustomerEdit.vue';
+import QuoteLineItem from '../components/QuoteLineItem.vue';
+import QuoteTotals from '../components/QuoteTotals.vue';
+import QuoteAddProduct from '../components/QuoteAddProduct.vue';
+import QuoteEmail from '../components/QuoteEmail.vue';
 
 export default {
-    name: 'quote-edit',
+    name: "quote-edit",
     components: {
         ErrorList,
+        PriceFromPence,
+        QuoteCustomerEdit,
+        QuoteLineItem,
+        QuoteTotals,
+        QuoteAddProduct,
+        QuoteEmail,
     },
     data() {
         return {
-            id: this.$route.params.id,
-            customerName: '',
-            customerEmail: '',
-            errors: {},
+            quote: null,
+
+            allProducts: [],
+            productsInQuote: [],
+
+            vatRate: 0.2,
         }
     },
     methods: {
-        getDetails() {
-            axios.get(`/api/quotes/${this.id}`).then((response) => {
-                this.customerName = response.data.customer_name;
-                this.customerEmail = response.data.customer_email;
-            }).catch((error) => {
+        async fetchQuote() {
+            try {
+                const response = await axios.get(`/api/quotes/${this.$route.params.id}`)
+                this.quote = response.data;
+            } catch (error) {
                 console.error(error);
-            });
+            }
         },
-        formSubmit() {
-            axios.patch(`/api/quotes/${this.id}`, {
-                    'customer_name': this.customerName,
-                    'customer_email': this.customerEmail,
-                }
-            ).then(() => {
-                //TODO: display a "quote added" message?
+        async fetchAllProducts() {
+            try {
+                const response = await axios.get('/api/products')
+                this.allProducts = response.data;
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async fetchProductsInQuote() {
+            try {
+                const response = await axios.get(`/api/quotes/${this.$route.params.id}/products`);
+                this.productsInQuote = response.data;
+            } catch (error) {
+                console.error(error);
+            }
+        },
 
-                // redirect to the quote index route
-                this.$router.push({ name: 'quotes.index' });
-            }).catch((error) => {
-                if (error?.response?.data?.errors) {
-                    this.errors = error.response.data.errors;
-                }
+        async changeCount(product, count) {
+            if (!product) {
+                return;
+            }
+
+            // update on frontend
+            product.count = count;
+            const isProductRemoved = (count <= 0);
+            if (isProductRemoved) {
+                this.removeProductFromLocalQuote(product);
+            }
+
+            // send update to backend
+            try {
+                await axios.patch(
+                    `/api/quotes/${this.quote.id}/products/${product.product_id}`,
+                    { 'count': count }
+                );
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async removeProduct(product) {
+            this.removeProductFromLocalQuote(product);
+
+            try {
+                await axios.delete(`/api/quotes/${this.quote.id}/products/${product.product_id}`);
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async addProduct(product, count) {
+            try {
+                // add product in frontend
+                this.productsInQuote.push({
+                    product_id: product.id,
+                    name: product.name,
+                    price_pence: product.price_pence,
+                    count,
+                });
+
+                // request to add the product on backend
+                await axios.post(`/api/quotes/${this.quote.id}/products/${product.id}`, {
+                    'count': count,
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        },
+
+        removeProductFromLocalQuote(toRemove) {
+            this.productsInQuote = this.productsInQuote.filter((productInQuote) => {
+                return productInQuote.product_id !== toRemove.product_id;
             });
         }
     },
     mounted() {
-        this.getDetails();
+        this.fetchQuote();
+        this.fetchAllProducts();
+        this.fetchProductsInQuote();
     }
 }
 </script>

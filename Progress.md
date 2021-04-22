@@ -36,11 +36,9 @@ I made the quóte easier for a user to work with by giving access to all its rel
 I added missing styling for validation errors and disabled buttons.
 
 ## To Do
-QuoteProducts.vue is long. Split it up into components if possible.
+give styling to validation errors
 
 cron that runs at the end of the day to give an overview of the quotes created that day with totals sent via email
-
-give styling to validation errors
 
 No need for quote edit screen to list the product's count twice.
 

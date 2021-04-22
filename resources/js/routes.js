@@ -4,7 +4,6 @@ import ProductEdit from './views/ProductEdit'
 import QuoteIndex from './views/QuoteIndex'
 import QuoteAdd from './views/QuoteAdd'
 import QuoteEdit from './views/QuoteEdit'
-import QuoteProducts from './views/QuoteProducts'
 
 const routes = {
     mode: 'history',
@@ -39,13 +38,6 @@ const routes = {
             name: 'quotes.edit',
             component: QuoteEdit,
         },
-        {
-            // TODO: names don't quite match here - is it viewing or editing?
-            path: '/quotes/:id/products',
-            name: 'quoteProducts.edit',
-            component: QuoteProducts,
-        }
-
     ],
 };
 
