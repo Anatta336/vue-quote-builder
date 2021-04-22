@@ -7,6 +7,7 @@
                 <th>Line Price</th>
                 <th>Actions</th>
             </tr>
+
             <tr v-if="!productsInQuote">
                 <th>No products in quote.</th>
             </tr>
@@ -48,17 +49,10 @@
                 </td>
             </tr>
         </table>
-        <div class="totals">
-            <div>
-                Sub-Total: <price-from-pence :pence="subTotal" />
-            </div>
-            <div>
-                VAT: <price-from-pence :pence="vatTotal" />
-            </div>
-            <div class="grand-total">
-                Grand Total: <price-from-pence :pence="grandTotal" />
-            </div>
-        </div>
+        <quote-totals
+            :productsInQuote="productsInQuote"
+            :vatRate="vatRate"
+        />
         <div>
             <p>
                 Send this quote as an email to {{ customerEmail }}:
@@ -71,12 +65,14 @@
 <script>
 import PriceFromPence from '../components/PriceFromPence.vue';
 import QuoteLineItem from '../components/QuoteLineItem.vue';
+import QuoteTotals from '../components/QuoteTotals.vue';
 
 export default {
     name: "product-list",
     components: {
         PriceFromPence,
         QuoteLineItem,
+        QuoteTotals,
     },
     data() {
         return {
@@ -102,17 +98,6 @@ export default {
         toAddPricePence: function() {
             return this.toAddCount * this.toAddPricePerItem;
         },
-        subTotal: function() {
-            return this.productsInQuote.reduce((sum, product) => {
-                return sum + product.price_pence * product.count;
-            }, 0)
-        },
-        vatTotal: function() {
-            return this.subTotal * this.vatRate;
-        },
-        grandTotal: function() {
-            return this.subTotal + this.vatTotal;
-        }
     },
     watch: {
         toAddCount: function(value) {

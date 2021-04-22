@@ -2183,6 +2183,62 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/QuoteTotals.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/QuoteTotals.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PriceFromPence_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PriceFromPence.vue */ "./resources/js/components/PriceFromPence.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'quote-totals',
+  components: {
+    PriceFromPence: _PriceFromPence_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: {
+    productsInQuote: {
+      type: Array,
+      required: true
+    },
+    vatRate: {
+      type: Number,
+      required: true
+    }
+  },
+  computed: {
+    subTotal: function subTotal() {
+      return this.productsInQuote.reduce(function (sum, product) {
+        return sum + product.price_pence * product.count;
+      }, 0);
+    },
+    vatTotal: function vatTotal() {
+      return this.subTotal * this.vatRate;
+    },
+    grandTotal: function grandTotal() {
+      return this.subTotal + this.vatTotal;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/App.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/App.vue?vue&type=script&lang=js& ***!
@@ -2590,6 +2646,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_PriceFromPence_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/PriceFromPence.vue */ "./resources/js/components/PriceFromPence.vue");
 /* harmony import */ var _components_QuoteLineItem_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/QuoteLineItem.vue */ "./resources/js/components/QuoteLineItem.vue");
+/* harmony import */ var _components_QuoteTotals_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/QuoteTotals.vue */ "./resources/js/components/QuoteTotals.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2660,19 +2717,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "product-list",
   components: {
     PriceFromPence: _components_PriceFromPence_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    QuoteLineItem: _components_QuoteLineItem_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    QuoteLineItem: _components_QuoteLineItem_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    QuoteTotals: _components_QuoteTotals_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
@@ -2699,17 +2752,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     toAddPricePence: function toAddPricePence() {
       return this.toAddCount * this.toAddPricePerItem;
-    },
-    subTotal: function subTotal() {
-      return this.productsInQuote.reduce(function (sum, product) {
-        return sum + product.price_pence * product.count;
-      }, 0);
-    },
-    vatTotal: function vatTotal() {
-      return this.subTotal * this.vatRate;
-    },
-    grandTotal: function grandTotal() {
-      return this.subTotal + this.vatTotal;
     }
   },
   watch: {
@@ -4525,6 +4567,58 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/QuoteTotals.vue?vue&type=template&id=7ba56ea0&":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/QuoteTotals.vue?vue&type=template&id=7ba56ea0& ***!
+  \**************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "totals" }, [
+    _c(
+      "div",
+      [
+        _vm._v("\n        Sub-Total: "),
+        _c("price-from-pence", { attrs: { pence: _vm.subTotal } })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      [
+        _vm._v("\n        VAT: "),
+        _c("price-from-pence", { attrs: { pence: _vm.vatTotal } })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "grand-total" },
+      [
+        _vm._v("\n        Grand Total: "),
+        _c("price-from-pence", { attrs: { pence: _vm.grandTotal } })
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/App.vue?vue&type=template&id=91ac6b5c&":
 /*!*************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/App.vue?vue&type=template&id=91ac6b5c& ***!
@@ -5104,191 +5198,172 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "quote-products" }, [
-    _c(
-      "table",
-      [
-        _vm._m(0),
-        _vm._v(" "),
-        !_vm.productsInQuote
-          ? _c("tr", [_c("th", [_vm._v("No products in quote.")])])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm._l(_vm.productsInQuote, function(productInQuote) {
-          return [
-            _c(
-              "quote-line-item",
-              _vm._b(
+  return _c(
+    "div",
+    { staticClass: "quote-products" },
+    [
+      _c(
+        "table",
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          !_vm.productsInQuote
+            ? _c("tr", [_c("th", [_vm._v("No products in quote.")])])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm._l(_vm.productsInQuote, function(productInQuote) {
+            return [
+              _c(
+                "quote-line-item",
+                _vm._b(
+                  {
+                    key: productInQuote.id,
+                    on: {
+                      "change-count": _vm.onCountChange,
+                      remove: _vm.onRemove
+                    }
+                  },
+                  "quote-line-item",
+                  productInQuote,
+                  false
+                )
+              )
+            ]
+          }),
+          _vm._v(" "),
+          _c("tr", [
+            _c("td", [
+              _c(
+                "select",
                 {
-                  key: productInQuote.id,
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.toAddProduct,
+                      expression: "toAddProduct"
+                    }
+                  ],
                   on: {
-                    "change-count": _vm.onCountChange,
-                    remove: _vm.onRemove
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.toAddProduct = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
                   }
                 },
-                "quote-line-item",
-                productInQuote,
-                false
-              )
-            )
-          ]
-        }),
-        _vm._v(" "),
-        _c("tr", [
-          _c("td", [
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.toAddProduct,
-                    expression: "toAddProduct"
-                  }
+                [
+                  _c("option", { domProps: { value: null } }, [
+                    _vm._v(
+                      "\n                        ----\n                    "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.productsCouldAdd, function(product) {
+                    return _c(
+                      "option",
+                      { key: product.id, domProps: { value: product } },
+                      [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(product.name) +
+                            "\n                    "
+                        )
+                      ]
+                    )
+                  })
                 ],
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.toAddProduct = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
+                2
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", { staticClass: "count" }, [
+              _c("div", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.toAddCount,
+                      expression: "toAddCount"
+                    }
+                  ],
+                  attrs: { type: "number", min: "1", step: "1" },
+                  domProps: { value: _vm.toAddCount },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.toAddCount = $event.target.value
+                    }
                   }
-                }
-              },
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
               [
-                _c("option", { domProps: { value: null } }, [
-                  _vm._v("\n                        ----\n                    ")
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.productsCouldAdd, function(product) {
-                  return _c(
-                    "option",
-                    { key: product.id, domProps: { value: product } },
-                    [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(product.name) +
-                          "\n                    "
-                      )
-                    ]
-                  )
+                _c("price-from-pence", {
+                  staticClass: "preview",
+                  attrs: { pence: _vm.toAddPricePence }
                 })
               ],
-              2
-            )
-          ]),
-          _vm._v(" "),
-          _c("td", { staticClass: "count" }, [
-            _c("div", [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.toAddCount,
-                    expression: "toAddCount"
-                  }
-                ],
-                attrs: { type: "number", min: "1", step: "1" },
-                domProps: { value: _vm.toAddCount },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.toAddCount = $event.target.value
-                  }
-                }
-              })
+              1
+            ),
+            _vm._v(" "),
+            _c("td", [
+              _c(
+                "button",
+                {
+                  attrs: { disabled: !_vm.toAddProduct },
+                  on: { click: _vm.addProduct }
+                },
+                [_vm._v("\n                    Add\n                ")]
+              )
             ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "td",
-            [
-              _c("price-from-pence", {
-                staticClass: "preview",
-                attrs: { pence: _vm.toAddPricePence }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("td", [
-            _c(
-              "button",
-              {
-                attrs: { disabled: !_vm.toAddProduct },
-                on: { click: _vm.addProduct }
-              },
-              [_vm._v("\n                    Add\n                ")]
-            )
           ])
-        ])
-      ],
-      2
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "totals" }, [
-      _c(
-        "div",
-        [
-          _vm._v("\n            Sub-Total: "),
-          _c("price-from-pence", { attrs: { pence: _vm.subTotal } })
         ],
-        1
+        2
       ),
       _vm._v(" "),
-      _c(
-        "div",
-        [
-          _vm._v("\n            VAT: "),
-          _c("price-from-pence", { attrs: { pence: _vm.vatTotal } })
-        ],
-        1
-      ),
+      _c("quote-totals", {
+        attrs: { productsInQuote: _vm.productsInQuote, vatRate: _vm.vatRate }
+      }),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "grand-total" },
-        [
-          _vm._v("\n            Grand Total: "),
-          _c("price-from-pence", { attrs: { pence: _vm.grandTotal } })
-        ],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", [
-      _c("p", [
-        _vm._v(
-          "\n            Send this quote as an email to " +
-            _vm._s(_vm.customerEmail) +
-            ":\n            "
-        ),
-        _c(
-          "button",
-          {
-            attrs: { disabled: _vm.isAwaitingEmailSend },
-            on: { click: _vm.emailToCustomer }
-          },
-          [_vm._v("Email")]
-        )
-      ]),
-      _vm._v(" "),
-      _vm.emailFeedback != ""
-        ? _c("p", [_vm._v(_vm._s(_vm.emailFeedback))])
-        : _vm._e()
-    ])
-  ])
+      _c("div", [
+        _c("p", [
+          _vm._v(
+            "\n            Send this quote as an email to " +
+              _vm._s(_vm.customerEmail) +
+              ":\n            "
+          ),
+          _c(
+            "button",
+            {
+              attrs: { disabled: _vm.isAwaitingEmailSend },
+              on: { click: _vm.emailToCustomer }
+            },
+            [_vm._v("Email")]
+          )
+        ]),
+        _vm._v(" "),
+        _vm.emailFeedback != ""
+          ? _c("p", [_vm._v(_vm._s(_vm.emailFeedback))])
+          : _vm._e()
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -20969,6 +21044,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QuoteList_vue_vue_type_template_id_0d41425f___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QuoteList_vue_vue_type_template_id_0d41425f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/QuoteTotals.vue":
+/*!*************************************************!*\
+  !*** ./resources/js/components/QuoteTotals.vue ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _QuoteTotals_vue_vue_type_template_id_7ba56ea0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./QuoteTotals.vue?vue&type=template&id=7ba56ea0& */ "./resources/js/components/QuoteTotals.vue?vue&type=template&id=7ba56ea0&");
+/* harmony import */ var _QuoteTotals_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./QuoteTotals.vue?vue&type=script&lang=js& */ "./resources/js/components/QuoteTotals.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _QuoteTotals_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _QuoteTotals_vue_vue_type_template_id_7ba56ea0___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _QuoteTotals_vue_vue_type_template_id_7ba56ea0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/QuoteTotals.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/QuoteTotals.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/QuoteTotals.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_QuoteTotals_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./QuoteTotals.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/QuoteTotals.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_QuoteTotals_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/QuoteTotals.vue?vue&type=template&id=7ba56ea0&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/QuoteTotals.vue?vue&type=template&id=7ba56ea0& ***!
+  \********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QuoteTotals_vue_vue_type_template_id_7ba56ea0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./QuoteTotals.vue?vue&type=template&id=7ba56ea0& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/QuoteTotals.vue?vue&type=template&id=7ba56ea0&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QuoteTotals_vue_vue_type_template_id_7ba56ea0___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QuoteTotals_vue_vue_type_template_id_7ba56ea0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
