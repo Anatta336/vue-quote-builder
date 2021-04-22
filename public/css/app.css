@@ -128,6 +128,17 @@ table td > * {
   margin-right: auto;
 }
 
+ul.error {
+  padding-left: 0;
+  list-style: none;
+}
+
+li.error {
+  background-color: #d34b68;
+  padding: 5px 15px;
+  border-radius: 4px;
+}
+
 #app {
   background-color: #d8d1df;
   border-radius: 3px;

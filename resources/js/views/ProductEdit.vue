@@ -32,7 +32,7 @@ export default {
         return {
             id: this.$route.params.id,
             productName: '',
-            pricePounds: 0,
+            pricePounds: '0.00',
             errors: {},
         }
     },

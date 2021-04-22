@@ -1,6 +1,6 @@
 <template>
-    <ul v-if="errors" class="errors">
-        <li v-for="(error, index) in errors" :key="index">
+    <ul v-if="errors" class="error">
+        <li class="error" v-for="(error, index) in errors" :key="index">
             {{ error }}
         </li>
     </ul>

@@ -2710,7 +2710,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       id: this.$route.params.id,
       productName: '',
-      pricePounds: 0,
+      pricePounds: '0.00',
       errors: {}
     };
   },
@@ -4446,9 +4446,9 @@ var render = function() {
   return _vm.errors
     ? _c(
         "ul",
-        { staticClass: "errors" },
+        { staticClass: "error" },
         _vm._l(_vm.errors, function(error, index) {
-          return _c("li", { key: index }, [
+          return _c("li", { key: index, staticClass: "error" }, [
             _vm._v("\n        " + _vm._s(error) + "\n    ")
           ])
         }),

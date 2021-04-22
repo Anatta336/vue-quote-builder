@@ -1,0 +1,12 @@
+@use 'variables';
+
+ul.error {
+    padding-left: 0;
+    list-style: none;
+}
+
+li.error {
+    background-color: variables.$danger-colour;
+    padding: 5px 15px;
+    border-radius: 4px;
+}

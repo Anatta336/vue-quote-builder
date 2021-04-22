@@ -28,39 +28,22 @@ ProductInQuote:
     Quote (ref)
     Count
 
-
 ## Done
-I began cleaning up frontend for managing a quóte.
-I split the component into modular parts.
-I made the quóte easier for a user to work with by giving access to all its relevant data in one view.
-I added missing styling for validation errors and disabled buttons.
+
 
 ## To Do
-give styling to validation errors
-
 cron that runs at the end of the day to give an overview of the quotes created that day with totals sent via email
-
-No need for quote edit screen to list the product's count twice.
-
-Arrange buttons on quote edit screen a bit nicer too.
-
-Frontend, on quote there's "product" and "productInQuote" object which are similar but not the same. Improve that somehow?
-
-A "sync with server" button? Trigger a GET of the quote.
-
-Combine the quote editing screens into one, rather than jumping between pages.
-
-factory to generate some sample ProductInQuote instances
-
-Frontend force the price field to only take numbers (with decimal)
-
-Load products from some external source (CSV?)
 
 Note in readme that after changing .env file should run `php artisan config:cache`
 
+On products screens count how many are included in quotes.
+
+factory to generate some sample ProductInQuote instances
+Load products from some external source (CSV?)
+
 Run a GET for contents of current content every X seconds to make sure it stays up to date. (Config by env variable?)
 
-experiment with preloading before moving to the next view. Handled by vue-router, somewhere
+Experiment with preloading before moving to the next view? Handled by vue-router, somewhere
 
 ## Notes
 To access database directly:
@@ -91,9 +74,6 @@ https://vuejs.org/v2/guide/
 https://laravel.com/docs/7.x
 
 ## Questions
-What's the deal with naming Vue components? I seem to be able to use <product-list> and <ProductList> interchangably.
-    kebab-case is recommended for custom XHTML (or XML generally?) tags. It looking different from real HTML is very much intended.
-
 What more can I do with the Vue.use() static method? Currently used for telling it to use vue-router
 
 On success, what should Laravel be returning as a response?
@@ -101,8 +81,6 @@ On success, what should Laravel be returning as a response?
 
 How to combine/inherit/something validation rules in Laravel.
     Try extending the class, overriding method and just adding to the array it outputs.
-
-When taking input for creating a "product in quote" it'll receive an ID for each. Should FormRequest-type validation handle checking that those IDs exist on the relevant tables? It'll get checked by the database-level foreign key enforcement. But would be nice to have a more human-friendly check first. Remember (and note in comment) that some other user could be logged in that deleted a product/quote in the time between a dropdown being populated and the dropdown being used.
 
 I define some relationships in ProductInQuote, am I doing that in some way the wrong way around? Feels like if I defined it from the direction, I wouldn't have to specify column names for the columns.
 
