@@ -119,18 +119,22 @@ I changed the scripts for adding, removing, and updating the products on a quote
 I also adjusted the frontend to make fewer GET requests when working on a quote. It now only requests data when a product is added or removed, not for every change in count.
 
 I added calculation of sub-total, VAT total, and grand total to the front end.
-+28min
-
+I built up a query for the backend that calculates the subtotal for a quоte, and added it as a method to the Quóte model.
+I added vatTotal and grandTotal methods to the Quօte model.
+I compared the backend and frontend techniques for calculating a quote's totals and checked they match.
 
 ## To Do
-quote:
-    sub-total, vat total and total
+email a quote to the customer (send to mailtrap)
+
+cron that runs at the end of the day to give an overview of the quotes created that day with totals sent via email
+
+No need for quote edit screen to list the product's count twice.
+
+Arrange buttons on quote edit screen a bit nicer too.
 
 Frontend, on quote there's "product" and "productInQuote" object which are similar but not the same. Improve that somehow?
 
 A "sync with server" button? Trigger a GET of the quote.
-
-Stuff like totals could be functions on the Quote model?
 
 Combine the quote editing screens into one, rather than jumping between pages.
 
@@ -144,9 +148,6 @@ Load products from some external source (CSV?)
 Seems to define a mapping between Eloquent model and JSON, or other representation.
 ...although for basic models that's automatically done so not much advantage.
 
-email a quote to the customer (send to mailtrap)
-
-cron that runs at the end of the day to give an overview of the quotes created that day with totals sent via email
 
 ## Notes
 To access database directly:
@@ -166,6 +167,9 @@ Removed (dev) dependences:
 "jquery": "^3.2",
 "lodash": "^4.17.13",
 "popper.js": "^1.12",
+
+Ceci n'est pas un 'o'
+о ο օ ȯ ọ ỏ ơ ó ò ö
 
 ## Some reference sources
 https://www.youtube.com/watch?v=hbq2CAHNRZM
