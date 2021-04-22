@@ -136,12 +136,12 @@ I was able to send a simple test email to the MailTrap inbox.
 
 I created a basic HTML email that has a table showing the products in a quote with their count and line price. Beneath that is the sub total, VAT total, and grand total for the quote.
 I confirmed that email version of a quote matches the details when viewed from the web client.
-
+I added controls to the quote screen that sends the quote to the customer's email address, with a feedback message to confirm the email has been sent.
 
 ## To Do
-email a quote to the customer (send to mailtrap)
-
 show confirmation once email has been sent, and some kind of "sending in progress" display (disable button?)
+
+QuoteProducts.vue is long. Split it up into components if possible.
 
 cron that runs at the end of the day to give an overview of the quotes created that day with totals sent via email
 

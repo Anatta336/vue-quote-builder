@@ -20,4 +20,8 @@
     &:hover {
         background-color: color.adjust($colour, $lightness: -15%);
     }
+
+    &:disabled {
+        background-color: color.adjust($colour, $saturation: -100%);
+    }
 }

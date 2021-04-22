@@ -2595,6 +2595,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "product-list",
@@ -2609,7 +2614,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       productsCouldAdd: [],
       toAddProduct: null,
       toAddCount: 1,
-      vatRate: 0.2
+      vatRate: 0.2,
+      customerEmail: 'example@example.com',
+      //TODO: get this!
+      isAwaitingEmailSend: false,
+      emailFeedback: ''
     };
   },
   computed: {
@@ -2907,33 +2916,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this8 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        var response;
+        var response, date;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
-                console.log('clicked to email');
-                _context7.prev = 1;
-                _context7.next = 4;
+                _this8.isAwaitingEmailSend = true;
+                _this8.emailFeedback = 'Sending email...';
+                _context7.prev = 2;
+                _context7.next = 5;
                 return axios.post("/api/quotes/".concat(_this8.quoteId, "/email"));
 
-              case 4:
+              case 5:
                 response = _context7.sent;
-                console.log('asked for an email.', response);
-                _context7.next = 11;
+                _this8.isAwaitingEmailSend = false;
+                date = new Date();
+                _this8.emailFeedback = 'Email sent (UTC) ' + date.getUTCFullYear() + "/" + (date.getUTCMonth() + 1) + "/" + date.getUTCDate() + " at " + date.getUTCHours() + ":" + date.getUTCMinutes() + ":" + date.getUTCSeconds();
+                _context7.next = 15;
                 break;
 
-              case 8:
-                _context7.prev = 8;
-                _context7.t0 = _context7["catch"](1);
-                console.error(_context7.t0);
-
               case 11:
+                _context7.prev = 11;
+                _context7.t0 = _context7["catch"](2);
+                console.error(_context7.t0);
+                _this8.emailFeedback = 'An error occurred when attempting to send as email.';
+
+              case 15:
               case "end":
                 return _context7.stop();
             }
           }
-        }, _callee7, null, [[1, 8]]);
+        }, _callee7, null, [[2, 11]]);
       }))();
     }
   },
@@ -5210,7 +5223,25 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", [
-      _c("button", { on: { click: _vm.emailToCustomer } }, [_vm._v("Email")])
+      _c("p", [
+        _vm._v(
+          "\n            Send this quote as an email to " +
+            _vm._s(_vm.customerEmail) +
+            ":\n            "
+        ),
+        _c(
+          "button",
+          {
+            attrs: { disabled: _vm.isAwaitingEmailSend },
+            on: { click: _vm.emailToCustomer }
+          },
+          [_vm._v("Email")]
+        )
+      ]),
+      _vm._v(" "),
+      _vm.emailFeedback != ""
+        ? _c("p", [_vm._v(_vm._s(_vm.emailFeedback))])
+        : _vm._e()
     ])
   ])
 }

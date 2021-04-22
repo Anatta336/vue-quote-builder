@@ -23,6 +23,7 @@
             </tr>
 
             <!-- row at the bottom for adding new product to quote -->
+            <!-- TODO: this could be moved into its own component -->
             <tr>
                 <td>
                     <select v-model="toAddProduct">
@@ -57,7 +58,11 @@
             </div>
         </div>
         <div>
-            <button @click="emailToCustomer">Email</button>
+            <p>
+                Send this quote as an email to {{ customerEmail }}:
+                <button :disabled="isAwaitingEmailSend" @click="emailToCustomer">Email</button>
+            </p>
+            <p v-if="emailFeedback != ''">{{ emailFeedback }}</p>
         </div>
     </div>
 </template>
@@ -77,6 +82,9 @@ export default {
             toAddProduct: null,
             toAddCount: 1,
             vatRate: 0.2,
+            customerEmail: 'example@example.com', //TODO: get this!
+            isAwaitingEmailSend: false,
+            emailFeedback: ''
         };
     },
     computed: {
@@ -218,12 +226,23 @@ export default {
             });
         },
         async emailToCustomer() {
-            console.log('clicked to email');
+            this.isAwaitingEmailSend = true;
+            this.emailFeedback = 'Sending email...';
             try {
                 const response = await axios.post(`/api/quotes/${this.quoteId}/email`);
-                console.log('asked for an email.', response);
+
+                this.isAwaitingEmailSend = false;
+                const date = new Date();
+                this.emailFeedback = 'Email sent (UTC) '
+                    + date.getUTCFullYear()
+                    + "/" + (date.getUTCMonth() + 1)
+                    + "/" + date.getUTCDate()
+                    + " at " + date.getUTCHours()
+                    + ":" + date.getUTCMinutes()
+                    + ":" + date.getUTCSeconds();
             } catch (error) {
                 console.error(error);
+                this.emailFeedback = 'An error occurred when attempting to send as email.';
             }
         },
     },

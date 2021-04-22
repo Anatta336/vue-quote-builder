@@ -63,6 +63,10 @@ nav a:hover {
   background-color: #48a3c6;
 }
 
+nav a:disabled {
+  background-color: #adadad;
+}
+
 nav a.router-link-active {
   border-top: 5px solid #e3f1f6;
 }
@@ -153,6 +157,11 @@ button:hover {
   background-color: #48a3c6;
 }
 
+.button:disabled,
+button:disabled {
+  background-color: #adadad;
+}
+
 .button.danger,
 button.danger {
   display: flex;
@@ -172,6 +181,11 @@ button.danger {
 .button.danger:hover,
 button.danger:hover {
   background-color: #a82944;
+}
+
+.button.danger:disabled,
+button.danger:disabled {
+  background-color: #8f8f8f;
 }
 
 .money {
