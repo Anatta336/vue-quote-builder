@@ -1,49 +1,62 @@
 <template>
-    <table>
-        <tr>
-            <th>Product</th>
-            <th>Count</th>
-            <th>Line Price</th>
-            <th>Actions</th>
-        </tr>
-        <tr v-if="!productsInQuote">
-            <th>No products in quote.</th>
-        </tr>
-        <tr v-for="product in productsInQuote" :key="product.id">
-            <td>{{ product.name }}</td>
-            <td>{{ product.count }}</td>
-            <td><price-from-pence :pence="product.price_pence * product.count"/></td>
-            <td>
-                <button @click="increaseCount(product)">+</button>
-                <span class="count">{{ product.count }}</span>
-                <button @click="decreaseCount(product)">-</button>
-                <button class="danger" @click="remove(product)">Remove</button>
-            </td>
-        </tr>
+    <div class="quote-products">
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Count</th>
+                <th>Line Price</th>
+                <th>Actions</th>
+            </tr>
+            <tr v-if="!productsInQuote">
+                <th>No products in quote.</th>
+            </tr>
+            <tr v-for="product in productsInQuote" :key="product.id">
+                <td>{{ product.name }}</td>
+                <td class="count"><div>{{ product.count }}</div></td>
+                <td><price-from-pence :pence="product.price_pence * product.count"/></td>
+                <td>
+                    <button @click="increaseCount(product)">+</button>
+                    <span class="count">{{ product.count }}</span>
+                    <button @click="decreaseCount(product)">-</button>
+                    <button class="danger" @click="remove(product)">Remove</button>
+                </td>
+            </tr>
 
-        <!-- row at the bottom for adding new product to quote -->
-        <tr>
-            <td>
-                <select v-model="toAddProduct">
-                    <option :value="null">
-                        ----
-                    </option>
-                    <option v-for="product in productsCouldAdd" :key="product.id" :value="product">
-                        {{ product.name }}
-                    </option>
-                </select>
-            </td>
-            <td>
-                <input v-model="toAddCount" type="number" min="1" step="1">
-            </td>
-            <td>
-                <price-from-pence class="preview" :pence="toAddPricePence"/>
-            </td>
-            <td>
-                <button @click="addProduct">Add</button>
-            </td>
-        </tr>
-    </table>
+            <!-- row at the bottom for adding new product to quote -->
+            <tr>
+                <td>
+                    <select v-model="toAddProduct">
+                        <option :value="null">
+                            ----
+                        </option>
+                        <option v-for="product in productsCouldAdd" :key="product.id" :value="product">
+                            {{ product.name }}
+                        </option>
+                    </select>
+                </td>
+                <td class="count"><div>
+                    <input v-model="toAddCount" type="number" min="1" step="1">
+                </div></td>
+                <td>
+                    <price-from-pence class="preview" :pence="toAddPricePence"/>
+                </td>
+                <td>
+                    <button @click="addProduct">Add</button>
+                </td>
+            </tr>
+        </table>
+        <div class="totals">
+            <div>
+                Sub-Total: <price-from-pence :pence="subTotal" />
+            </div>
+            <div>
+                VAT: <price-from-pence :pence="vatTotal" />
+            </div>
+            <div class="grand-total">
+                Grand Total: <price-from-pence :pence="grandTotal" />
+            </div>
+        </div>
+    </div>
 </template>
 <script>
 import PriceFromPence from '../components/PriceFromPence.vue';
@@ -60,6 +73,7 @@ export default {
             productsCouldAdd: [],
             toAddProduct: null,
             toAddCount: 1,
+            vatRate: 0.2,
         };
     },
     computed: {
@@ -71,6 +85,17 @@ export default {
         },
         toAddPricePence: function() {
             return this.toAddCount * this.toAddPricePerItem;
+        },
+        subTotal: function() {
+            return this.productsInQuote.reduce((sum, product) => {
+                return sum + product.price_pence * product.count;
+            }, 0)
+        },
+        vatTotal: function() {
+            return this.subTotal * this.vatRate;
+        },
+        grandTotal: function() {
+            return this.subTotal + this.vatTotal;
         }
     },
     watch: {

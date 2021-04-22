@@ -1,10 +1,11 @@
-@use 'font';
 @use 'variables';
-@use 'base';
+@use 'font';
 @use 'mixins/card';
 @use 'mixins/button';
-@use 'nav';
+@use 'base';
 @use 'form';
+@use 'nav';
+@use 'quote';
 @use 'table';
 
 #app {

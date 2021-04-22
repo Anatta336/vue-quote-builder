@@ -118,9 +118,15 @@ I added the ability to add a new product to the quote after selecting it from a 
 I changed the scripts for adding, removing, and updating the products on a quote. It now locally updates the quote as soon as the button is pressed, rather than waiting for a response back from the server providing the new information. The quote builder screen is now much nicer to work with when using browser tools to simulate a slow connection.
 I also adjusted the frontend to make fewer GET requests when working on a quote. It now only requests data when a product is added or removed, not for every change in count.
 
+I added calculation of sub-total, VAT total, and grand total to the front end.
++28min
+
+
 ## To Do
 quote:
     sub-total, vat total and total
+
+Frontend, on quote there's "product" and "productInQuote" object which are similar but not the same. Improve that somehow?
 
 A "sync with server" button? Trigger a GET of the quote.
 

@@ -2579,6 +2579,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "product-list",
@@ -2592,7 +2605,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       allProducts: [],
       productsCouldAdd: [],
       toAddProduct: null,
-      toAddCount: 1
+      toAddCount: 1,
+      vatRate: 0.2
     };
   },
   computed: {
@@ -2605,6 +2619,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     toAddPricePence: function toAddPricePence() {
       return this.toAddCount * this.toAddPricePerItem;
+    },
+    subTotal: function subTotal() {
+      return this.productsInQuote.reduce(function (sum, product) {
+        return sum + product.price_pence * product.count;
+      }, 0);
+    },
+    vatTotal: function vatTotal() {
+      return this.subTotal * this.vatRate;
+    },
+    grandTotal: function grandTotal() {
+      return this.subTotal + this.vatTotal;
     }
   },
   watch: {
@@ -4949,169 +4974,205 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "table",
-    [
-      _vm._m(0),
-      _vm._v(" "),
-      !_vm.productsInQuote
-        ? _c("tr", [_c("th", [_vm._v("No products in quote.")])])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm._l(_vm.productsInQuote, function(product) {
-        return _c("tr", { key: product.id }, [
-          _c("td", [_vm._v(_vm._s(product.name))]),
+  return _c("div", { staticClass: "quote-products" }, [
+    _c(
+      "table",
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        !_vm.productsInQuote
+          ? _c("tr", [_c("th", [_vm._v("No products in quote.")])])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm._l(_vm.productsInQuote, function(product) {
+          return _c("tr", { key: product.id }, [
+            _c("td", [_vm._v(_vm._s(product.name))]),
+            _vm._v(" "),
+            _c("td", { staticClass: "count" }, [
+              _c("div", [_vm._v(_vm._s(product.count))])
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              [
+                _c("price-from-pence", {
+                  attrs: { pence: product.price_pence * product.count }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("td", [
+              _c(
+                "button",
+                {
+                  on: {
+                    click: function($event) {
+                      return _vm.increaseCount(product)
+                    }
+                  }
+                },
+                [_vm._v("+")]
+              ),
+              _vm._v(" "),
+              _c("span", { staticClass: "count" }, [
+                _vm._v(_vm._s(product.count))
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  on: {
+                    click: function($event) {
+                      return _vm.decreaseCount(product)
+                    }
+                  }
+                },
+                [_vm._v("-")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "danger",
+                  on: {
+                    click: function($event) {
+                      return _vm.remove(product)
+                    }
+                  }
+                },
+                [_vm._v("Remove")]
+              )
+            ])
+          ])
+        }),
+        _vm._v(" "),
+        _c("tr", [
+          _c("td", [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.toAddProduct,
+                    expression: "toAddProduct"
+                  }
+                ],
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.toAddProduct = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
+                }
+              },
+              [
+                _c("option", { domProps: { value: null } }, [
+                  _vm._v("\n                        ----\n                    ")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.productsCouldAdd, function(product) {
+                  return _c(
+                    "option",
+                    { key: product.id, domProps: { value: product } },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(product.name) +
+                          "\n                    "
+                      )
+                    ]
+                  )
+                })
+              ],
+              2
+            )
+          ]),
           _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(product.count))]),
+          _c("td", { staticClass: "count" }, [
+            _c("div", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.toAddCount,
+                    expression: "toAddCount"
+                  }
+                ],
+                attrs: { type: "number", min: "1", step: "1" },
+                domProps: { value: _vm.toAddCount },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.toAddCount = $event.target.value
+                  }
+                }
+              })
+            ])
+          ]),
           _vm._v(" "),
           _c(
             "td",
             [
               _c("price-from-pence", {
-                attrs: { pence: product.price_pence * product.count }
+                staticClass: "preview",
+                attrs: { pence: _vm.toAddPricePence }
               })
             ],
             1
           ),
           _vm._v(" "),
           _c("td", [
-            _c(
-              "button",
-              {
-                on: {
-                  click: function($event) {
-                    return _vm.increaseCount(product)
-                  }
-                }
-              },
-              [_vm._v("+")]
-            ),
-            _vm._v(" "),
-            _c("span", { staticClass: "count" }, [
-              _vm._v(_vm._s(product.count))
-            ]),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                on: {
-                  click: function($event) {
-                    return _vm.decreaseCount(product)
-                  }
-                }
-              },
-              [_vm._v("-")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "danger",
-                on: {
-                  click: function($event) {
-                    return _vm.remove(product)
-                  }
-                }
-              },
-              [_vm._v("Remove")]
-            )
+            _c("button", { on: { click: _vm.addProduct } }, [_vm._v("Add")])
           ])
         ])
-      }),
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "totals" }, [
+      _c(
+        "div",
+        [
+          _vm._v("\n            Sub-Total: "),
+          _c("price-from-pence", { attrs: { pence: _vm.subTotal } })
+        ],
+        1
+      ),
       _vm._v(" "),
-      _c("tr", [
-        _c("td", [
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.toAddProduct,
-                  expression: "toAddProduct"
-                }
-              ],
-              on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.toAddProduct = $event.target.multiple
-                    ? $$selectedVal
-                    : $$selectedVal[0]
-                }
-              }
-            },
-            [
-              _c("option", { domProps: { value: null } }, [
-                _vm._v("\n                    ----\n                ")
-              ]),
-              _vm._v(" "),
-              _vm._l(_vm.productsCouldAdd, function(product) {
-                return _c(
-                  "option",
-                  { key: product.id, domProps: { value: product } },
-                  [
-                    _vm._v(
-                      "\n                    " +
-                        _vm._s(product.name) +
-                        "\n                "
-                    )
-                  ]
-                )
-              })
-            ],
-            2
-          )
-        ]),
-        _vm._v(" "),
-        _c("td", [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.toAddCount,
-                expression: "toAddCount"
-              }
-            ],
-            attrs: { type: "number", min: "1", step: "1" },
-            domProps: { value: _vm.toAddCount },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.toAddCount = $event.target.value
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c(
-          "td",
-          [
-            _c("price-from-pence", {
-              staticClass: "preview",
-              attrs: { pence: _vm.toAddPricePence }
-            })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("td", [
-          _c("button", { on: { click: _vm.addProduct } }, [_vm._v("Add")])
-        ])
-      ])
-    ],
-    2
-  )
+      _c(
+        "div",
+        [
+          _vm._v("\n            VAT: "),
+          _c("price-from-pence", { attrs: { pence: _vm.vatTotal } })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "grand-total" },
+        [
+          _vm._v("\n            Grand Total: "),
+          _c("price-from-pence", { attrs: { pence: _vm.grandTotal } })
+        ],
+        1
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
