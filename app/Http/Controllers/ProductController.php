@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Http\Requests\UpdateProduct;
+use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
@@ -43,10 +43,10 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateProduct  $request
+     * @param  \App\Http\Requests\ProductRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UpdateProduct $request)
+    public function store(ProductRequest $request)
     {
         $validated = $request->validated();
         $this->pricePoundsToPence($validated);
@@ -60,11 +60,11 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateProduct  $request
+     * @param  \App\Http\Requests\ProductRequest  $request
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProduct $request, Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
         $validated = $request->validated();
         $this->pricePoundsToPence($validated);

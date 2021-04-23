@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateQuote;
+use App\Http\Requests\QuoteRequest;
 use App\Mail\QuoteToCustomer;
 use App\Quote;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
 
@@ -25,10 +24,10 @@ class QuoteController extends Controller
      * Create a new quote, with a customer name and email, but
      * no products.
      *
-     * @param  \App\Http\Requests\UpdateQuote;  $request
+     * @param  \App\Http\Requests\QuoteRequest;  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UpdateQuote $request)
+    public function store(QuoteRequest $request)
     {
         $validated = $request->validated();
         $quote = new Quote($validated);
@@ -58,11 +57,11 @@ class QuoteController extends Controller
      * This is NOT used to update what products are in the quote,
      * see ProductInQuoteController for that functionality.
      *
-     * @param  \App\Http\Requests\UpdateQuote;  $request
+     * @param  \App\Http\Requests\QuoteRequest;  $request
      * @param  \App\Quote  $quote
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateQuote $request, Quote $quote)
+    public function update(QuoteRequest $request, Quote $quote)
     {
         $validated = $request->validated();
         $quote->update($validated);
