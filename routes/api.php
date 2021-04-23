@@ -26,7 +26,6 @@ Route::post('/products', 'ProductController@store')->name('product.add');
 Route::patch('/products/{product}', 'ProductController@update')->name('product.update');
 Route::delete('/products/{product}', 'ProductController@destroy')->name('product.delete');
 
-
 // ---- Quote
 Route::get('/quotes', 'QuoteController@index')->name('quote.index');
 Route::get('/quotes/{quote}', 'QuoteController@show')->name('quote.show');

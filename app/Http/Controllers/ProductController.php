@@ -49,8 +49,6 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $validated = $request->validated();
-        $this->pricePoundsToPence($validated);
-
         $created = new Product($validated);
         $created->save();
 
@@ -67,8 +65,6 @@ class ProductController extends Controller
     public function update(ProductRequest $request, Product $product)
     {
         $validated = $request->validated();
-        $this->pricePoundsToPence($validated);
-
         $product->update($validated);
 
         return response('', Response::HTTP_NO_CONTENT);
@@ -85,19 +81,5 @@ class ProductController extends Controller
         $product->delete();
 
         return response('', Response::HTTP_NO_CONTENT);
-    }
-
-    /**
-     * Modifies the given array (which is passed by reference) to remove the
-     * 'price_pounds' value on it, and add a 'price_pence' using that value.
-     *
-     * @param array $data Validated data as an associative array that includes
-     *                    'prince_pounds' as a key.
-     *
-     * @return void
-     */
-    protected function pricePoundsToPence(&$data) {
-        $data['price_pence'] = round($data['price_pounds'] * 100);
-        unset($data['price_pounds']);
     }
 }

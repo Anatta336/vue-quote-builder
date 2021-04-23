@@ -1,6 +1,5 @@
 import ProductIndex from './views/ProductIndex'
 import ProductAdd from './views/ProductAdd'
-import ProductEdit from './views/ProductEdit'
 import QuoteIndex from './views/QuoteIndex'
 import QuoteAdd from './views/QuoteAdd'
 import QuoteView from './views/QuoteView'
@@ -18,11 +17,6 @@ const routes = {
             path: '/products/add',
             name: 'products.add',
             component: ProductAdd,
-        },
-        {
-            path: '/products/:id/edit',
-            name: 'products.edit',
-            component: ProductEdit,
         },
         {
             path: '/quotes',

@@ -29,19 +29,37 @@ ProductInQuote:
     Count
 
 ## Done
-
+I used scoped slots to allow the user to select any product in the product list to edit it in place in that list.
+I resolved some issues with making sure validation errors are displayed when using this inline edit approach.
+I removed the frontend component and route that was used for editing a product as they're no longer needed.
 
 ## To Do
-Note in readme that after changing .env file should run `php artisan config:cache`
+add new product using the same one-screen approach
+when storing new product, send the price in PENCE
+
+Learn about renderless components.
+
+Learn about filters {{ someVariable | penceFormat }}
+
+Maybe use filters to do this: when editing a price, keep the £ unremovably within the text field to the left, and generally make currency numbers well behaved.
+
+Use learned stuff to do more updates to whole thing
+
+Use addon vueselect to create/manage the select dropdown on the quote edit.
+
+Style project using Tailwind
 
 factory to generate some sample ProductInQuote instances
-Load products from external source (CSV?)
 
 Feature tests.
 
-Run a GET for contents of current content every X seconds to make sure it stays up to date. (Config by env variable?)
+Load products from external source (CSV?)
 
-Experiment with preloading before moving to the next view? Handled by vue-router, somewhere
+Run a GET for contents of current content every X seconds to make sure it stays up to date? (Config by env variable?)
+
+Experiment with preloading before moving to the next view? Handled by vue-router.
+
+Note in readme that after changing .env file should run `php artisan config:cache`
 
 ## Notes
 To access database directly:
@@ -77,17 +95,10 @@ https://vuejs.org/v2/guide/
 https://laravel.com/docs/7.x
 
 ## Questions
-On success, what should Laravel be returning as a response?
-    Been doing stuff like: return response('', Response::HTTP_NO_CONTENT);
-
-How to combine/inherit/something validation rules in Laravel.
-    Try extending the class, overriding method and just adding to the array it outputs.
-    Or (perhaps better/simpler) has a single class with conditionals. Use `$this->route('quote')` to see if the route received a quote object, which can differentiate between adding new or updating existing.
-
-I define some relationships in ProductInQuote, am I doing that in some way the wrong way around? Feels like if I defined it from the direction, I wouldn't have to specify column names for the columns.
-
 Which is better API design?
 - Separate endpoints for adding an item, removing an item, and changing the item's count
 - Single endpoint for setting item count, which adds or removes as necessary.
 
 What's the best practice for keeping front and back updated? Frontend is sending out PATCH whenever a change happens, but (currently) doesn't make a GET request to read the updated state. If someone else is logged in and altering the quote could get into a bit of a confused mess. On a multi-user system, run a GET every X seconds?
+
+I've been entirely using single file components. Should I be ready to swap to an alternative?
