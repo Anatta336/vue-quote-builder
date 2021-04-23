@@ -7,7 +7,7 @@
                 <product-row-view
                     :product="product"
                     @edit="beginEdit(product)"
-                    @delete="deleteProduct(product)"
+                    @delete="productDeleted(product.id)"
                 ></product-row-view>
             </template>
 
@@ -16,7 +16,7 @@
                 <product-row-edit
                     :product="product"
                     @update="productUpdated"
-                    @delete="deleteProduct(product)"
+                    @delete="productDeleted(product.id)"
                 ></product-row-edit>
             </template>
 
@@ -30,21 +30,17 @@
     </div>
 </template>
 <script>
-import PriceFromPence from '../components/PriceFromPence.vue';
 import ProductTable from '../components/products/ProductTable.vue';
 import ProductRowView from '../components/products/ProductRowView.vue';
 import ProductRowEdit from '../components/products/ProductRowEdit.vue';
 import ProductRowAdd from '../components/products/ProductRowAdd.vue';
-import ErrorList from '../components/ErrorList.vue';
 
 export default {
     components: {
-        PriceFromPence,
         ProductTable,
         ProductRowView,
         ProductRowEdit,
         ProductRowAdd,
-        ErrorList,
     },
     name: "product-list",
     data() {
@@ -66,7 +62,7 @@ export default {
             this.idToEdit = product.id;
         },
         productUpdated(id, name, pricePence) {
-            // update local product
+            // update product in local collection
             const localProduct = this.products.find((product) => product.id === id);
             localProduct.name = name;
             localProduct.price_pence = pricePence;
@@ -74,24 +70,17 @@ export default {
             // no longer editing product
             this.idToEdit = -1;
         },
-        //TODO: rework so delete button does the actual delete, this just updates local, so renamed to "productDeleted"
-        async deleteProduct(product) {
-            // delete locally
-            this.products = this.products.filter((existing) => existing.id != product.id);
+        productDeleted(id) {
+            // remove from local collection
+            this.products = this.products.filter((existing) => existing.id !== id);
 
             // if editing deleted product, stop editing it
-            if (this.idToEdit == product.id) {
+            if (this.idToEdit === id) {
                 this.idToEdit = -1;
-            }
-
-            // request to delete remotely too
-            try {
-                await axios.delete(`/api/products/${product.id}`);
-            } catch(error) {
-                console.error(error);
             }
         },
         productAdded() {
+            // needt to actually fetch data, as don't know what ID it was assigned
             this.fetchProducts();
         },
     },
@@ -100,4 +89,3 @@ export default {
     }
 }
 </script>
-

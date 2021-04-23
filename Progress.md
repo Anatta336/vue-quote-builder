@@ -31,10 +31,7 @@ ProductInQuote:
 ## Done
 
 ## To Do
-add new product using the same one-screen approach
-when storing new product, send the price in PENCE
-
-Are my naming conventions good?
+Review Vue recommended naming conventions, check work.
 
 Learn about renderless components.
 
@@ -42,9 +39,12 @@ Learn about filters {{ someVariable | penceFormat }}
 
 Maybe use filters to do this: when editing a price, keep the £ unremovably within the text field to the left, and generally make currency numbers well behaved.
 
-Use learned stuff to do more updates to whole thing
+Use learned stuff to do more updates to whole thing.
+    Use direct event retransmit with like `<button @click="$emit('delete')">Delete</button>` rather than bouncing through a method.
 
 Use addon vueselect to create/manage the select dropdown on the quote edit.
+
+The height difference between buttons and route links is a bit painful.
 
 Style project using Tailwind
 

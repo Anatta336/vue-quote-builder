@@ -7,18 +7,27 @@
             <price-from-pence :pence="product.price_pence" />
         </td>
         <td>
-            <button @click="editProduct">Edit</button>
-            <button class="danger" @click="deleteProduct">Delete</button>
+            <button
+                @click="$emit('edit')"
+            >
+                Edit
+            </button>
+            <product-delete
+                :product="product"
+                @delete="$emit('delete')"
+            ></product-delete>
         </td>
     </tr>
 </template>
 <script>
 import PriceFromPence from '../PriceFromPence.vue';
+import ProductDelete from './ProductDelete.vue';
 
 export default {
     name: 'product-row-view',
     components: {
         PriceFromPence,
+        ProductDelete,
     },
     props: {
         product: {
@@ -26,13 +35,5 @@ export default {
             required: true,
         }
     },
-    methods: {
-        editProduct() {
-            this.$emit('edit');
-        },
-        deleteProduct() {
-            this.$emit('delete');
-        }
-    }
 }
 </script>

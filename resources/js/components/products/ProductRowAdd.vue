@@ -35,7 +35,7 @@ export default {
     methods: {
         async addProduct() {
             try {
-                const pricePence = Math.round(this.pricePounds * 100);
+                const pricePence = this.pricePounds * 100;
                 await axios.post('/api/products', {
                     'name': this.productName,
                     'price_pence': pricePence,

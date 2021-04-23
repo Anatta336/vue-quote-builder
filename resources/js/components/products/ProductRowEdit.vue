@@ -13,18 +13,27 @@
             </form>
         </td>
         <td>
-            <button @click="storeProduct">Store</button>
-            <button class="danger" @click="deleteProduct">Delete</button>
+            <button
+                @click="storeProduct"
+            >
+                Store
+            </button>
+            <product-delete
+                :product="product"
+                @delete="$emit('delete')"
+            ></product-delete>
         </td>
     </tr>
 </template>
 <script>
 import ErrorList from '../ErrorList.vue';
+import ProductDelete from './ProductDelete.vue';
 
 export default {
     name: 'product-row-edit',
     components: {
         ErrorList,
+        ProductDelete,
     },
     props: {
         product: {
@@ -64,16 +73,11 @@ export default {
                 }
             }
         },
-        deleteProduct() {
-            this.$emit('delete');
-        },
         initFromProduct() {
             this.productName = this.product.name;
             this.pricePounds = (this.product.price_pence * 0.01).toFixed(2);
             this.errors = [];
         }
-        // TODO: could move the action of deletion into a delete product button component,
-        // which handles all the axios stuff itself, and just sends out a completion signal.
     },
     mounted() {
         this.initFromProduct();
