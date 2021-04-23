@@ -12,7 +12,24 @@
             <td>{{ quote.customer_name }}</td>
             <td>{{ quote.customer_email }}</td>
             <td>
-                <button @click="editQuote(quote)">Edit</button>
+                <router-link
+                    class="button"
+                    :to="{
+                        name: 'quotes.view',
+                        params: { id: quote.id }
+                    }"
+                >
+                    View
+                </router-link>
+                <router-link
+                    class="button"
+                    :to="{
+                        name: 'quotes.edit',
+                        params: { id: quote.id }
+                    }"
+                >
+                    Edit
+                </router-link>
                 <button class="danger" @click="deleteQuote(quote)">Delete</button>
             </td>
         </tr>
@@ -34,14 +51,6 @@ export default {
             } catch(error) {
                 console.error(error);
             }
-        },
-        editQuote(quote) {
-            this.$router.push({
-                name: 'quotes.edit',
-                params: {
-                    id: quote.id,
-                },
-            });
         },
         async deleteQuote(toRemove) {
             // remove from local list

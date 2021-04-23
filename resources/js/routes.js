@@ -3,6 +3,7 @@ import ProductAdd from './views/ProductAdd'
 import ProductEdit from './views/ProductEdit'
 import QuoteIndex from './views/QuoteIndex'
 import QuoteAdd from './views/QuoteAdd'
+import QuoteView from './views/QuoteView'
 import QuoteEdit from './views/QuoteEdit'
 
 const routes = {
@@ -19,7 +20,7 @@ const routes = {
             component: ProductAdd,
         },
         {
-            path: '/products/:id',
+            path: '/products/:id/edit',
             name: 'products.edit',
             component: ProductEdit,
         },
@@ -35,6 +36,11 @@ const routes = {
         },
         {
             path: '/quotes/:id',
+            name: 'quotes.view',
+            component: QuoteView,
+        },
+        {
+            path: '/quotes/:id/edit',
             name: 'quotes.edit',
             component: QuoteEdit,
         },

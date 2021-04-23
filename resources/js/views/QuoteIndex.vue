@@ -1,7 +1,12 @@
 <template>
     <div class="quote-index">
         <quote-list />
-        <router-link class="button" :to="{ name: 'quotes.add' }">Create</router-link>
+        <router-link
+            class="button"
+            :to="{ name: 'quotes.add' }"
+        >
+        Create
+        </router-link>
     </div>
 </template>
 <script>

@@ -1,12 +1,16 @@
 <template>
 <tr>
-    <td>{{ product.name }}</td>
+    <td>
+        {{ product.name }}
+    </td>
     <td class="count">
         <button @click="increaseCount">+</button>
         <span class="count">{{ localCount }}</span>
         <button @click="decreaseCount">-</button>
     </td>
-    <td><price-from-pence :pence="line_price"/></td>
+    <td>
+        <price-from-pence :pence="line_price"/>
+    </td>
     <td>
         <button class="danger" @click="remove">Remove</button>
     </td>
@@ -16,7 +20,7 @@
 import PriceFromPence from './PriceFromPence.vue';
 
 export default {
-    name: 'quote-line-item',
+    name: 'quote-line-item-edit',
     components: {
         PriceFromPence,
     },

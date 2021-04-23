@@ -29,16 +29,9 @@ ProductInQuote:
     Count
 
 ## Done
-I researched how to schedule jobs in Laravel. I learned that Laravel maintains a schedule that it'll check every time php artisan schedule:run is run. I'll assume a cron job on the server is configured to regularly run that command.
-I added a daily scheduled job which will fetch any quotes created in the past 24 hours, and pass them to a mailer.
-I created a simple template that lists details of the quotes to use in the email.
-I resolved an issue with the email never being sent because the destination address wasn't being set correctly.
-I confirmed that the scheduled job sends an email of recently created quotes.
+I added a frontend page for viewing a quote, without editing it.
 
 ## To Do
-A quote view (separate from edit.)
-Link to it from the summary email sent out.
-
 Note in readme that after changing .env file should run `php artisan config:cache`
 
 factory to generate some sample ProductInQuote instances
