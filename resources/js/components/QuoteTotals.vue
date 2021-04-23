@@ -1,7 +1,7 @@
 <template>
     <div class="totals">
         <div>
-            Sub-Total: <price-from-pence :pence="subTotal" />
+            Subtotal: <price-from-pence :pence="subTotal" />
         </div>
         <div>
             VAT: <price-from-pence :pence="vatTotal" />

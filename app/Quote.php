@@ -52,11 +52,11 @@ class Quote extends Model
     }
 
     /**
-     * Finds the sub total cost of this quote, in pence.
+     * Finds the subtotal cost of this quote, in pence.
      * That is the total cost of every product in the quote,
      * without applying VAT.
      *
-     * @return integer Sub total of quote in pence.
+     * @return integer Subtotal of quote in pence.
      */
     public function subTotal() {
         // selectRaw allows the use of mathematical operators

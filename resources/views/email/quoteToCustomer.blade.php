@@ -44,7 +44,7 @@
         </tr>
         @endforeach
     </table>
-    <p>Sub Total: £{{number_format($quote->subTotal() * 0.01, 2)}}</p>
+    <p>Subtotal: £{{number_format($quote->subTotal() * 0.01, 2)}}</p>
     <p>VAT Total: £{{number_format($quote->vatTotal() * 0.01, 2)}}</p>
     <p class="grand">Grand Total: £{{number_format($quote->grandTotal() * 0.01, 2)}}</p>
     <p>If you have any questions or queries please don't hesitate to get in contact.</p>

@@ -4986,7 +4986,7 @@ var render = function() {
     _c(
       "div",
       [
-        _vm._v("\n        Sub-Total: "),
+        _vm._v("\n        Subtotal: "),
         _c("price-from-pence", { attrs: { pence: _vm.subTotal } })
       ],
       1

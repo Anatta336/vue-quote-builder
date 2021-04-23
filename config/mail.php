@@ -78,6 +78,8 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    'dailyReportTo' => env('DAILY_REPORT_EMAIL', 'reports@example.com'),
+
     /*
     |--------------------------------------------------------------------------
     | Markdown Mail Settings

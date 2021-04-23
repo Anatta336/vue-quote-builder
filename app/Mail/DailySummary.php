@@ -2,26 +2,27 @@
 
 namespace App\Mail;
 
-use App\Quote;
 use Illuminate\Bus\Queueable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Config;
 
-class QuoteToCustomer extends Mailable
+class DailySummary extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected Quote $quote;
+    protected Collection $quotes;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($quote)
+    public function __construct(Collection $quotes)
     {
-        $this->quote = $quote;
+        $this->quotes = $quotes;
+        echo "construct mailable with quotes\n";
     }
 
     /**
@@ -31,8 +32,9 @@ class QuoteToCustomer extends Mailable
      */
     public function build()
     {
+        echo "building Mailable\n";
         return $this->from(Config::get('mail.from.address'), Config::get('mail.from.name'))
-            ->subject('Your Quote')
-            ->view('email.quoteToCustomer', ['quote' => $this->quote]);
+            ->subject('Recent Quotes')
+            ->view('email.dailySummary', ['quotes' => $this->quotes]);
     }
 }
