@@ -22,7 +22,6 @@ class DailySummary extends Mailable
     public function __construct(Collection $quotes)
     {
         $this->quotes = $quotes;
-        echo "construct mailable with quotes\n";
     }
 
     /**
@@ -32,7 +31,6 @@ class DailySummary extends Mailable
      */
     public function build()
     {
-        echo "building Mailable\n";
         return $this->from(Config::get('mail.from.address'), Config::get('mail.from.name'))
             ->subject('Recent Quotes')
             ->view('email.dailySummary', ['quotes' => $this->quotes]);

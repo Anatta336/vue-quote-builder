@@ -30,6 +30,7 @@ ProductInQuote:
 
 ## Done
 I added a frontend page for viewing a quote, without editing it.
+I added links to view the quotes into the daily summary of created quotes that's emailed out, and confirmed they work.
 
 ## To Do
 Note in readme that after changing .env file should run `php artisan config:cache`

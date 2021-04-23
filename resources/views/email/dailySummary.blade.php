@@ -26,11 +26,13 @@
         <tr>
             <th>Customer</th>
             <th>Subtotal</th>
+            <th>Link</th>
         </tr>
         @foreach ($quotes as $quote)
         <tr>
             <td>{{ $quote->customer_name }}</td>
             <td>£{{ number_format($quote->subTotal() * 0.01, 2) }}</td>
+            <td><a href="{{ Illuminate\Support\Facades\Config::get('app.url') . '/quotes/' . $quote->id }}">View</a></td>
         </tr>
         @endforeach
     </table>
