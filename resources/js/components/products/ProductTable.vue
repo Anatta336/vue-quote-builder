@@ -25,6 +25,7 @@
             >
             </slot>
         </tr>
+        <slot name="after-table-rows"></slot>
     </table>
 </template>
 <script>

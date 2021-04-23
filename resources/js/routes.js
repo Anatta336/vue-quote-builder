@@ -1,9 +1,8 @@
-import ProductIndex from './views/ProductIndex'
-import ProductAdd from './views/ProductAdd'
-import QuoteIndex from './views/QuoteIndex'
-import QuoteAdd from './views/QuoteAdd'
-import QuoteView from './views/QuoteView'
-import QuoteEdit from './views/QuoteEdit'
+import ProductList from './views/ProductList.vue';
+import QuoteIndex from './views/QuoteIndex.vue';
+import QuoteAdd from './views/QuoteAdd.vue';
+import QuoteView from './views/QuoteView.vue';
+import QuoteEdit from './views/QuoteEdit.vue';
 
 const routes = {
     mode: 'history',
@@ -11,12 +10,7 @@ const routes = {
         {
             path: '/products',
             name: 'products.index',
-            component: ProductIndex,
-        },
-        {
-            path: '/products/add',
-            name: 'products.add',
-            component: ProductAdd,
+            component: ProductList,
         },
         {
             path: '/quotes',

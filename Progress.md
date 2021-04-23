@@ -29,9 +29,6 @@ ProductInQuote:
     Count
 
 ## Done
-I used scoped slots to allow the user to select any product in the product list to edit it in place in that list.
-I resolved some issues with making sure validation errors are displayed when using this inline edit approach.
-I removed the frontend component and route that was used for editing a product as they're no longer needed.
 
 ## To Do
 add new product using the same one-screen approach
