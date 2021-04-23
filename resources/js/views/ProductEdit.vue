@@ -51,8 +51,6 @@ export default {
                     'price_pounds': this.pricePounds,
                 }
             ).then(() => {
-                //TODO: display a "product edited" success message
-
                 // redirect to the product index route
                 this.$router.push({ name: 'products.index' });
             }).catch((error) => {

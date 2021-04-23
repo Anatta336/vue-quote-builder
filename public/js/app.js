@@ -2022,7 +2022,6 @@ __webpack_require__.r(__webpack_exports__);
     deleteProduct: function deleteProduct(product) {
       var _this2 = this;
 
-      //TODO: confirm deletion
       axios["delete"]("/api/products/".concat(product.id)).then(function (response) {
         // refresh list of products as it should have changed
         _this2.getProducts();
@@ -2743,7 +2742,6 @@ __webpack_require__.r(__webpack_exports__);
         'name': this.productName,
         'price_pounds': this.pricePounds
       }).then(function () {
-        //TODO: display a "product added" message?
         // redirect to the product index route
         _this.$router.push({
           name: 'products.index'
@@ -2825,7 +2823,6 @@ __webpack_require__.r(__webpack_exports__);
         'name': this.productName,
         'price_pounds': this.pricePounds
       }).then(function () {
-        //TODO: display a "product edited" success message
         // redirect to the product index route
         _this2.$router.push({
           name: 'products.index'
@@ -2925,7 +2922,6 @@ __webpack_require__.r(__webpack_exports__);
         'customer_name': this.customerName,
         'customer_email': this.customerEmail
       }).then(function () {
-        //TODO: display a "quote added" message?
         // redirect to the quote index route
         _this.$router.push({
           name: 'quotes.index'

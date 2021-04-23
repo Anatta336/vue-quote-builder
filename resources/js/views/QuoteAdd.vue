@@ -42,8 +42,6 @@ export default {
                     'customer_email': this.customerEmail,
                 }
             ).then(() => {
-                //TODO: display a "quote added" message?
-
                 // redirect to the quote index route
                 this.$router.push({ name: 'quotes.index' });
             }).catch((error) => {

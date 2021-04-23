@@ -45,8 +45,6 @@ export default {
             });
         },
         deleteProduct(product) {
-            //TODO: confirm deletion
-
             axios.delete(`/api/products/${product.id}`).then((response) => {
                 // refresh list of products as it should have changed
                 this.getProducts();

@@ -29,8 +29,7 @@ ProductInQuote:
     Count
 
 ## Done
-I added a frontend page for viewing a quote, without editing it.
-I added links to view the quotes into the daily summary of created quotes that's emailed out, and confirmed they work.
+
 
 ## To Do
 Note in readme that after changing .env file should run `php artisan config:cache`
@@ -78,13 +77,12 @@ https://vuejs.org/v2/guide/
 https://laravel.com/docs/7.x
 
 ## Questions
-What more can I do with the Vue.use() static method? Currently used for telling it to use vue-router
-
 On success, what should Laravel be returning as a response?
     Been doing stuff like: return response('', Response::HTTP_NO_CONTENT);
 
 How to combine/inherit/something validation rules in Laravel.
     Try extending the class, overriding method and just adding to the array it outputs.
+    Or (perhaps better/simpler) has a single class with conditionals. Use `$this->route('quote')` to see if the route received a quote object, which can differentiate between adding new or updating existing.
 
 I define some relationships in ProductInQuote, am I doing that in some way the wrong way around? Feels like if I defined it from the direction, I wouldn't have to specify column names for the columns.
 
