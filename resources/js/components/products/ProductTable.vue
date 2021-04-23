@@ -12,10 +12,11 @@
                 </slot>
             </td>
         </tr>
-        <tr v-for="product in products" :key="product.id">
+        <template v-for="product in products">
+            <!-- TODO: not setting :key="product.id" anywhere, which is ... not great? -->
             <slot
                 name="product-edit"
-                v-if="toEdit && toEdit.id === product.id"
+                v-if="idToEdit === product.id"
                 v-bind:product="product"
             ></slot>
             <slot
@@ -24,7 +25,7 @@
                 v-bind:product="product"
             >
             </slot>
-        </tr>
+        </template>
         <slot name="after-table-rows"></slot>
     </table>
 </template>
@@ -36,9 +37,9 @@ export default {
             type: Array,
             required: true,
         },
-        toEdit: {
-            type: Object,
-            required: false,
+        idToEdit: {
+            type: Number,
+            required: true,
         },
     }
 }

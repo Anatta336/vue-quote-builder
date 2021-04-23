@@ -34,6 +34,8 @@ ProductInQuote:
 add new product using the same one-screen approach
 when storing new product, send the price in PENCE
 
+Are my naming conventions good?
+
 Learn about renderless components.
 
 Learn about filters {{ someVariable | penceFormat }}
