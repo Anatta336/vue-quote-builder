@@ -26,14 +26,11 @@
     </tr>
 </template>
 <script>
-import PriceFromPence from './PriceFromPence.vue'
 
 export default {
-    //TODO: rename to quoteLikeAddProduct?
+    //TODO: rename to quoteLineAddProduct?
     name: 'quote-add-product',
-    components: {
-        PriceFromPence,
-    },
+    components: {},
     props: {
         allProducts: {
             type: Array,

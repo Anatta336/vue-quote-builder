@@ -22,13 +22,11 @@
     </tr>
 </template>
 <script>
-import PriceFromPence from '../PriceFromPence.vue';
 import ProductDelete from './ProductDelete.vue';
 
 export default {
     name: 'product-row-view',
     components: {
-        PriceFromPence,
         ProductDelete,
     },
     props: {

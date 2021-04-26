@@ -14,13 +14,9 @@
 </tr>
 </template>
 <script>
-import PriceFromPence from './PriceFromPence.vue';
-
 export default {
     name: 'quote-line-item-view',
-    components: {
-        PriceFromPence,
-    },
+    components: {},
     props: {
         product: {
             type: Object,

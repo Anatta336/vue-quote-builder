@@ -29,13 +29,19 @@ ProductInQuote:
     Count
 
 ## Done
-I learned how to use Vue filters to modify the output of expressions when they're being used in "mustache" interpolation or v-bind expressions.
-I created a global Vue filter and used it to format all currency output across the frontend.
+I began learning about renderless components.
+I learned that renderless components have state and methods just like any component, but do not themselves define any rendered output. Instead they use scoped slots to make that state and logic available to the consuming component
+I used a renderless component to calculate the total cost of a quote, separating how those totals are calculated from how they are displayed.
 
 ## To Do
-Review Vue recommended naming conventions, check work.
-
 Learn about renderless components.
+    Apply to calculating totals
+
+Renderless components do an interesting thing with not having a root element, just dumping the slot contents in there directly. Is there a way to avoid problems with that?
+
+Remove all import PriceFromPence (no longer exists)
+
+Review Vue recommended naming conventions, check work.
 
 Use learned stuff to do more updates to whole thing.
     Use direct event retransmit with like `<button @click="$emit('delete')">Delete</button>` rather than bouncing through a method.
