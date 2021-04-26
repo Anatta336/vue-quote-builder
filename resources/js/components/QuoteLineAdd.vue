@@ -1,6 +1,7 @@
 <template>
     <tr>
         <td>
+            <!-- vanilla HTML option element
             <select v-model="product">
                 <option :value="null">
                     ----
@@ -9,6 +10,13 @@
                     {{ product.name }}
                 </option>
             </select>
+             -->
+            <v-select
+                :options="allProducts"
+                label="name"
+                v-model="product"
+                :selectable="(option) => !(productsInQuote.some((inQuote) => option.id === inQuote.product_id))"
+            ></v-select>
         </td>
         <td class="count"><div>
             <input v-model="count" type="number" min="1" step="1">
@@ -28,8 +36,7 @@
 <script>
 
 export default {
-    //TODO: rename to quoteLineAddProduct?
-    name: 'quote-add-product',
+    name: 'quote-line-add',
     components: {},
     props: {
         allProducts: {
@@ -54,6 +61,7 @@ export default {
             }
             return this.product.price_pence * this.count;
         },
+        /* as used by vanilla Select element
         productsCouldAdd: function() {
             return this.allProducts.filter((product) => {
                 return !this.productsInQuote.some((inQuote) => {
@@ -61,6 +69,7 @@ export default {
                 });
             });
         }
+        */
     },
     watch: {
         count: function(value) {

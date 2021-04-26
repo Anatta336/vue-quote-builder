@@ -25,7 +25,7 @@
                 />
             </template>
 
-            <quote-add-product
+            <quote-line-add
                 :allProducts="allProducts"
                 :productsInQuote="productsInQuote"
                 @addProduct="addProduct"
@@ -43,8 +43,8 @@
 <script>
 import QuoteCustomerEdit from '../components/QuoteCustomerEdit.vue';
 import QuoteLineItemEdit from '../components/QuoteLineItemEdit.vue';
+import QuoteLineAdd from '../components/QuoteLineAdd.vue';
 import QuoteTotals from '../components/QuoteTotals.vue';
-import QuoteAddProduct from '../components/QuoteAddProduct.vue';
 import QuoteEmail from '../components/QuoteEmail.vue';
 
 export default {
@@ -52,8 +52,8 @@ export default {
     components: {
         QuoteCustomerEdit,
         QuoteLineItemEdit,
+        QuoteLineAdd,
         QuoteTotals,
-        QuoteAddProduct,
         QuoteEmail,
     },
     data() {

@@ -29,40 +29,28 @@ ProductInQuote:
     Count
 
 ## Done
-I began learning about renderless components.
-I learned that renderless components have state and methods just like any component, but do not themselves define any rendered output. Instead they use scoped slots to make that state and logic available to the consuming component
-I used a renderless component to calculate the total cost of a quote, separating how those totals are calculated from how they are displayed.
+I read through the vue-select documentation.
+I added vue-select to the project's dependencies and included v-select as a component within the Vue instance.
+I replaced the plain HTML select form element with the vue-select component.
+I adjusted styling for the vue-select element to match with the rest of the form elements.
 
 ## To Do
-Learn about renderless components.
-    Apply to calculating totals
+* Frontend:
+    * Use addon vueselect to create/manage the select dropdown on the quote edit.
+    * Review Vue recommended naming conventions, check work.
+        * Rename QuoteLineItemEdit -> QuoteLineEdit (etc.)
+    * Use learned stuff to do more updates to whole thing.
+        * Use direct event retransmit with like `<button @click="$emit('delete')">Delete</button>` rather than bouncing through a method.
+    * Style project using Tailwind
+    * The height difference between buttons and route links is a bit painful.
+    * Run a GET for contents of current content every X seconds to make sure it stays up to date? (Config by env variable?)
+    * Experiment with preloading before moving to the next view? Handled by vue-router.
 
-Renderless components do an interesting thing with not having a root element, just dumping the slot contents in there directly. Is there a way to avoid problems with that?
-
-Remove all import PriceFromPence (no longer exists)
-
-Review Vue recommended naming conventions, check work.
-
-Use learned stuff to do more updates to whole thing.
-    Use direct event retransmit with like `<button @click="$emit('delete')">Delete</button>` rather than bouncing through a method.
-
-Use addon vueselect to create/manage the select dropdown on the quote edit.
-
-The height difference between buttons and route links is a bit painful.
-
-Style project using Tailwind
-
-factory to generate some sample ProductInQuote instances
-
-Feature tests.
-
-Load products from external source (CSV?)
-
-Run a GET for contents of current content every X seconds to make sure it stays up to date? (Config by env variable?)
-
-Experiment with preloading before moving to the next view? Handled by vue-router.
-
-Note in readme that after changing .env file should run `php artisan config:cache`
+* Backend:
+    * factory to generate some sample ProductInQuote instances
+    * Feature tests.
+    * Load products from external source (CSV?)
+    * Note in readme that after changing .env file should run `php artisan config:cache`
 
 ## Notes
 To access database directly:
@@ -104,4 +92,6 @@ Which is better API design?
 
 What's the best practice for keeping front and back updated? Frontend is sending out PATCH whenever a change happens, but (currently) doesn't make a GET request to read the updated state. If someone else is logged in and altering the quote could get into a bit of a confused mess. On a multi-user system, run a GET every X seconds?
 
-I've been entirely using single file components. Should I be ready to swap to an alternative?
+I've been entirely using single file components - except for renderless components. Are there other forms I should be ready to use?
+
+It's easy for a renderless component to generate errors with multiple root node, because effectively it dumps whatever is in its default slot directly as its root nodes

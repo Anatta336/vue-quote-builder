@@ -1,3 +1,5 @@
+@use './variables';
+
 label {
     display: flex;
     flex-direction: row;
@@ -11,8 +13,14 @@ label {
 }
 
 input,
+select,
+.vs__dropdown-toggle {
+    border-radius: variables.$form-item-border-radius;
+    background-color: variables.$field-background;
+}
+
+input,
 select {
-    border-radius: 4px;
     padding: 5px;
     border: none;
     min-width: 14rem;
@@ -22,4 +30,12 @@ select {
 input[type="number"] {
     min-width: 5rem;
     width: 5rem;
+}
+
+.vs__clear {
+    width: auto;
+}
+
+.vs__search {
+    min-width: auto;
 }
