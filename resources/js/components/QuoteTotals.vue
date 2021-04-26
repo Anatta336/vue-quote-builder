@@ -1,13 +1,22 @@
 <template>
     <div class="totals">
         <div>
-            Subtotal: <price-from-pence :pence="subTotal" />
+            Subtotal:
+            <span class="money">
+                {{ subTotal | penceAsPounds }}
+            </span>
         </div>
         <div>
-            VAT: <price-from-pence :pence="vatTotal" />
+            VAT:
+            <span class="money">
+                {{ vatTotal | penceAsPounds }}
+            </span>
         </div>
         <div class="grand-total">
-            Grand Total: <price-from-pence :pence="grandTotal" />
+            Grand Total:
+            <span class="money">
+                {{ grandTotal | penceAsPounds }}
+            </span>
         </div>
     </div>
 </template>

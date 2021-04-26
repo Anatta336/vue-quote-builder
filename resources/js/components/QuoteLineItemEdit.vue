@@ -9,7 +9,9 @@
         <button @click="decreaseCount">-</button>
     </td>
     <td>
-        <price-from-pence :pence="line_price"/>
+        <span class="money">
+            {{ linePrice | penceAsPounds }}
+        </span>
     </td>
     <td>
         <button class="danger" @click="remove">Remove</button>
@@ -36,7 +38,7 @@ export default {
         };
     },
     computed: {
-        line_price: function() {
+        linePrice: function() {
             return this.product.price_pence * this.localCount;
         }
     },

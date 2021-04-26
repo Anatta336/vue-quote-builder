@@ -4,7 +4,9 @@
             {{ product.name }}
         </td>
         <td>
-            <price-from-pence :pence="product.price_pence" />
+            <span class="money">
+                {{ product.price_pence | penceAsPounds }}
+            </span>
         </td>
         <td>
             <button

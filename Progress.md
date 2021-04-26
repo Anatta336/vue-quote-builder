@@ -29,15 +29,13 @@ ProductInQuote:
     Count
 
 ## Done
+I learned how to use Vue filters to modify the output of expressions when they're being used in "mustache" interpolation or v-bind expressions.
+I created a global Vue filter and used it to format all currency output across the frontend.
 
 ## To Do
 Review Vue recommended naming conventions, check work.
 
 Learn about renderless components.
-
-Learn about filters {{ someVariable | penceFormat }}
-
-Maybe use filters to do this: when editing a price, keep the £ unremovably within the text field to the left, and generally make currency numbers well behaved.
 
 Use learned stuff to do more updates to whole thing.
     Use direct event retransmit with like `<button @click="$emit('delete')">Delete</button>` rather than bouncing through a method.

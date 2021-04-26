@@ -14,7 +14,9 @@
             <input v-model="count" type="number" min="1" step="1">
         </div></td>
         <td>
-            <price-from-pence class="preview" :pence="linePrice"/>
+            <span class="money preview">
+                {{ linePrice | penceAsPounds }}
+            </span>
         </td>
         <td>
             <button :disabled="!product" @click="addProduct">
@@ -27,6 +29,7 @@
 import PriceFromPence from './PriceFromPence.vue'
 
 export default {
+    //TODO: rename to quoteLikeAddProduct?
     name: 'quote-add-product',
     components: {
         PriceFromPence,

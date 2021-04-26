@@ -1939,27 +1939,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PriceFromPence.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PriceFromPence.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'price-from-pence',
-  props: {
-    pence: [String, Number]
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/QuoteAddProduct.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/QuoteAddProduct.vue?vue&type=script&lang=js& ***!
@@ -1995,8 +1974,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  //TODO: rename to quoteLikeAddProduct?
   name: 'quote-add-product',
   components: {
     PriceFromPence: _PriceFromPence_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -2302,6 +2284,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'quote-line-item-edit',
@@ -2320,7 +2304,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   computed: {
-    line_price: function line_price() {
+    linePrice: function linePrice() {
       return this.product.price_pence * this.localCount;
     }
   },
@@ -2364,6 +2348,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'quote-line-item-view',
@@ -2382,7 +2368,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   computed: {
-    line_price: function line_price() {
+    linePrice: function linePrice() {
       return this.product.price_pence * this.localCount;
     }
   }
@@ -2536,6 +2522,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PriceFromPence_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PriceFromPence.vue */ "./resources/js/components/PriceFromPence.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2896,6 +2891,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PriceFromPence_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../PriceFromPence.vue */ "./resources/js/components/PriceFromPence.vue");
 /* harmony import */ var _ProductDelete_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProductDelete.vue */ "./resources/js/components/products/ProductDelete.vue");
+//
+//
 //
 //
 //
@@ -4998,32 +4995,6 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PriceFromPence.vue?vue&type=template&id=6572d593&":
-/*!*****************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PriceFromPence.vue?vue&type=template&id=6572d593& ***!
-  \*****************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("span", { staticClass: "money" }, [
-    _vm._v("£" + _vm._s((_vm.pence / 100).toFixed(2)))
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/QuoteAddProduct.vue?vue&type=template&id=fbea07e2&":
 /*!******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/QuoteAddProduct.vue?vue&type=template&id=fbea07e2& ***!
@@ -5114,16 +5085,15 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c(
-      "td",
-      [
-        _c("price-from-pence", {
-          staticClass: "preview",
-          attrs: { pence: _vm.linePrice }
-        })
-      ],
-      1
-    ),
+    _c("td", [
+      _c("span", { staticClass: "money preview" }, [
+        _vm._v(
+          "\n            " +
+            _vm._s(_vm._f("penceAsPounds")(_vm.linePrice)) +
+            "\n        "
+        )
+      ])
+    ]),
     _vm._v(" "),
     _c("td", [
       _c(
@@ -5357,7 +5327,15 @@ var render = function() {
       _c("button", { on: { click: _vm.decreaseCount } }, [_vm._v("-")])
     ]),
     _vm._v(" "),
-    _c("td", [_c("price-from-pence", { attrs: { pence: _vm.line_price } })], 1),
+    _c("td", [
+      _c("span", { staticClass: "money" }, [
+        _vm._v(
+          "\n            " +
+            _vm._s(_vm._f("penceAsPounds")(_vm.linePrice)) +
+            "\n        "
+        )
+      ])
+    ]),
     _vm._v(" "),
     _c("td", [
       _c("button", { staticClass: "danger", on: { click: _vm.remove } }, [
@@ -5395,7 +5373,15 @@ var render = function() {
       _c("span", { staticClass: "count" }, [_vm._v(_vm._s(_vm.localCount))])
     ]),
     _vm._v(" "),
-    _c("td", [_c("price-from-pence", { attrs: { pence: _vm.line_price } })], 1)
+    _c("td", [
+      _c("span", { staticClass: "money" }, [
+        _vm._v(
+          "\n            " +
+            _vm._s(_vm._f("penceAsPounds")(_vm.linePrice)) +
+            "\n        "
+        )
+      ])
+    ])
   ])
 }
 var staticRenderFns = []
@@ -5523,33 +5509,38 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "totals" }, [
-    _c(
-      "div",
-      [
-        _vm._v("\n        Subtotal: "),
-        _c("price-from-pence", { attrs: { pence: _vm.subTotal } })
-      ],
-      1
-    ),
+    _c("div", [
+      _vm._v("\n        Subtotal:\n        "),
+      _c("span", { staticClass: "money" }, [
+        _vm._v(
+          "\n            " +
+            _vm._s(_vm._f("penceAsPounds")(_vm.subTotal)) +
+            "\n        "
+        )
+      ])
+    ]),
     _vm._v(" "),
-    _c(
-      "div",
-      [
-        _vm._v("\n        VAT: "),
-        _c("price-from-pence", { attrs: { pence: _vm.vatTotal } })
-      ],
-      1
-    ),
+    _c("div", [
+      _vm._v("\n        VAT:\n        "),
+      _c("span", { staticClass: "money" }, [
+        _vm._v(
+          "\n            " +
+            _vm._s(_vm._f("penceAsPounds")(_vm.vatTotal)) +
+            "\n        "
+        )
+      ])
+    ]),
     _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "grand-total" },
-      [
-        _vm._v("\n        Grand Total: "),
-        _c("price-from-pence", { attrs: { pence: _vm.grandTotal } })
-      ],
-      1
-    )
+    _c("div", { staticClass: "grand-total" }, [
+      _vm._v("\n        Grand Total:\n        "),
+      _c("span", { staticClass: "money" }, [
+        _vm._v(
+          "\n            " +
+            _vm._s(_vm._f("penceAsPounds")(_vm.grandTotal)) +
+            "\n        "
+        )
+      ])
+    ])
   ])
 }
 var staticRenderFns = []
@@ -5833,11 +5824,15 @@ var render = function() {
   return _c("tr", [
     _c("td", [_vm._v("\n        " + _vm._s(_vm.product.name) + "\n    ")]),
     _vm._v(" "),
-    _c(
-      "td",
-      [_c("price-from-pence", { attrs: { pence: _vm.product.price_pence } })],
-      1
-    ),
+    _c("td", [
+      _c("span", { staticClass: "money" }, [
+        _vm._v(
+          "\n            " +
+            _vm._s(_vm._f("penceAsPounds")(_vm.product.price_pence)) +
+            "\n        "
+        )
+      ])
+    ]),
     _vm._v(" "),
     _c(
       "td",
@@ -21700,7 +21695,15 @@ __webpack_require__.r(__webpack_exports__);
 window.axios = axios__WEBPACK_IMPORTED_MODULE_2___default.a;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'; // use VueRouter
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]); // create global filters
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('penceAsPounds', function (value) {
+  if (!value) {
+    return '£0.00';
+  }
+
+  return '£' + (value / 100).toFixed(2);
+});
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app',
   components: {
@@ -21786,67 +21789,9 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./resources/js/components/PriceFromPence.vue ***!
   \****************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _PriceFromPence_vue_vue_type_template_id_6572d593___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PriceFromPence.vue?vue&type=template&id=6572d593& */ "./resources/js/components/PriceFromPence.vue?vue&type=template&id=6572d593&");
-/* harmony import */ var _PriceFromPence_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PriceFromPence.vue?vue&type=script&lang=js& */ "./resources/js/components/PriceFromPence.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _PriceFromPence_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _PriceFromPence_vue_vue_type_template_id_6572d593___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _PriceFromPence_vue_vue_type_template_id_6572d593___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/PriceFromPence.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/PriceFromPence.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************!*\
-  !*** ./resources/js/components/PriceFromPence.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PriceFromPence_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./PriceFromPence.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PriceFromPence.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PriceFromPence_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/PriceFromPence.vue?vue&type=template&id=6572d593&":
-/*!***********************************************************************************!*\
-  !*** ./resources/js/components/PriceFromPence.vue?vue&type=template&id=6572d593& ***!
-  \***********************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PriceFromPence_vue_vue_type_template_id_6572d593___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./PriceFromPence.vue?vue&type=template&id=6572d593& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PriceFromPence.vue?vue&type=template&id=6572d593&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PriceFromPence_vue_vue_type_template_id_6572d593___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PriceFromPence_vue_vue_type_template_id_6572d593___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
+throw new Error("Module build failed (from ./node_modules/vue-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'D:\\Reflections\\vue-reflection\\resources\\js\\components\\PriceFromPence.vue'");
 
 /***/ }),
 
