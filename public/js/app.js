@@ -1939,6 +1939,55 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/general/ItemCounter.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/general/ItemCounter.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'item-counter',
+  props: {
+    initialCount: {
+      type: [Number, String],
+      "default": 0
+    }
+  },
+  data: function data() {
+    return {
+      count: parseInt(this.initialCount)
+    };
+  },
+  emits: ['change-count'],
+  methods: {
+    increase: function increase() {
+      this.count++;
+      this.$emit('change-count', this.count);
+    },
+    decrease: function decrease() {
+      this.count = Math.max(0, this.count - 1);
+      this.$emit('change-count', this.count);
+    }
+  },
+  beforeUpdate: function beforeUpdate() {
+    this.count = this.initialCount;
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/products/ProductDelete.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/products/ProductDelete.vue?vue&type=script&lang=js& ***!
@@ -1971,6 +2020,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       required: true
     }
   },
+  emits: ['delete-begin', 'delete-success', 'delete-error'],
   methods: {
     deleteProduct: function deleteProduct() {
       var _this = this;
@@ -1980,27 +2030,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.prev = 0;
-                _context.next = 3;
+                _this.$emit('delete-begin');
+
+                _context.prev = 1;
+                _context.next = 4;
                 return axios["delete"]("/api/products/".concat(_this.product.id));
 
-              case 3:
-                _this.$emit('delete');
+              case 4:
+                _this.$emit('delete-success');
 
-                _context.next = 9;
+                _context.next = 11;
                 break;
 
-              case 6:
-                _context.prev = 6;
-                _context.t0 = _context["catch"](0);
-                console.error(_context.t0);
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](1);
+                console.warn(_context.t0);
 
-              case 9:
+                _this.$emit('delete-error');
+
+              case 11:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 6]]);
+        }, _callee, null, [[1, 7]]);
       }))();
     }
   }
@@ -2275,6 +2329,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'product-row-view',
@@ -2300,7 +2356,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
 //
 //
 //
@@ -2752,6 +2807,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _general_ItemCounter_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../general/ItemCounter.vue */ "./resources/js/components/general/ItemCounter.vue");
 //
 //
 //
@@ -2772,34 +2828,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'quote-line-edit',
-  components: {},
+  components: {
+    ItemCounter: _general_ItemCounter_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   props: {
     product: {
       type: Object,
       required: true
     }
   },
-  data: function data() {
-    return {
-      localCount: this.product.count
-    };
-  },
   computed: {
     linePrice: function linePrice() {
-      return this.product.price_pence * this.localCount;
+      return this.product.price_pence * this.product.count;
     }
   },
   methods: {
-    increaseCount: function increaseCount() {
-      this.localCount++;
-      this.$emit('change-count', this.product, this.localCount);
-    },
-    decreaseCount: function decreaseCount() {
-      this.localCount = Math.max(0, this.localCount - 1);
-      this.$emit('change-count', this.product, this.localCount);
-    },
     remove: function remove() {
       this.$emit('remove', this.product);
     }
@@ -5170,6 +5217,41 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/general/ItemCounter.vue?vue&type=template&id=25b8bda7&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/general/ItemCounter.vue?vue&type=template&id=25b8bda7& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "counter" },
+    [
+      _c("button", { on: { click: _vm.increase } }, [_vm._v("+")]),
+      _vm._v(" "),
+      _vm._t("default", [_vm._v("\n        " + _vm._s(_vm.count) + "\n    ")]),
+      _vm._v(" "),
+      _c("button", { on: { click: _vm.decrease } }, [_vm._v("-")])
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/products/ProductDelete.vue?vue&type=template&id=5674527a&":
 /*!*************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/products/ProductDelete.vue?vue&type=template&id=5674527a& ***!
@@ -5472,8 +5554,14 @@ var render = function() {
         _c("product-delete", {
           attrs: { product: _vm.product },
           on: {
-            delete: function($event) {
-              return _vm.$emit("delete")
+            "delete-begin": function($event) {
+              return _vm.$emit("delete-begin")
+            },
+            "delete-success": function($event) {
+              return _vm.$emit("delete-success")
+            },
+            "delete-error": function($event) {
+              return _vm.$emit("delete-error")
             }
           }
         })
@@ -5887,13 +5975,21 @@ var render = function() {
   return _c("tr", [
     _c("td", [_vm._v("\n        " + _vm._s(_vm.product.name) + "\n    ")]),
     _vm._v(" "),
-    _c("td", { staticClass: "count" }, [
-      _c("button", { on: { click: _vm.increaseCount } }, [_vm._v("+")]),
-      _vm._v(" "),
-      _c("span", { staticClass: "count" }, [_vm._v(_vm._s(_vm.localCount))]),
-      _vm._v(" "),
-      _c("button", { on: { click: _vm.decreaseCount } }, [_vm._v("-")])
-    ]),
+    _c(
+      "td",
+      { staticClass: "count" },
+      [
+        _c("item-counter", {
+          attrs: { initialCount: _vm.product.count },
+          on: {
+            "change-count": function(updatedCount) {
+              return _vm.$emit("change-count", _vm.product, updatedCount)
+            }
+          }
+        })
+      ],
+      1
+    ),
     _vm._v(" "),
     _c("td", [
       _c("span", { staticClass: "money" }, [
@@ -6447,7 +6543,9 @@ var render = function() {
                     key: product.id,
                     attrs: { product: product },
                     on: {
-                      "change-count": _vm.changeCount,
+                      "change-count": function(product, updatedCount) {
+                        return _vm.changeCount(product, updatedCount)
+                      },
                       remove: _vm.removeProduct
                     }
                   })
@@ -22066,6 +22164,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ErrorList_vue_vue_type_template_id_48c089eb___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ErrorList_vue_vue_type_template_id_48c089eb___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/general/ItemCounter.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/general/ItemCounter.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ItemCounter_vue_vue_type_template_id_25b8bda7___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ItemCounter.vue?vue&type=template&id=25b8bda7& */ "./resources/js/components/general/ItemCounter.vue?vue&type=template&id=25b8bda7&");
+/* harmony import */ var _ItemCounter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ItemCounter.vue?vue&type=script&lang=js& */ "./resources/js/components/general/ItemCounter.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ItemCounter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ItemCounter_vue_vue_type_template_id_25b8bda7___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ItemCounter_vue_vue_type_template_id_25b8bda7___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/general/ItemCounter.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/general/ItemCounter.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/general/ItemCounter.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ItemCounter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ItemCounter.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/general/ItemCounter.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ItemCounter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/general/ItemCounter.vue?vue&type=template&id=25b8bda7&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/general/ItemCounter.vue?vue&type=template&id=25b8bda7& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ItemCounter_vue_vue_type_template_id_25b8bda7___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ItemCounter.vue?vue&type=template&id=25b8bda7& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/general/ItemCounter.vue?vue&type=template&id=25b8bda7&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ItemCounter_vue_vue_type_template_id_25b8bda7___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ItemCounter_vue_vue_type_template_id_25b8bda7___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

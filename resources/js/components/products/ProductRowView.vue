@@ -16,7 +16,9 @@
             </button>
             <product-delete
                 :product="product"
-                @delete="$emit('delete')"
+                @delete-begin="$emit('delete-begin')"
+                @delete-success="$emit('delete-success')"
+                @delete-error="$emit('delete-error')"
             ></product-delete>
         </td>
     </tr>

@@ -29,14 +29,14 @@ ProductInQuote:
     Count
 
 ## Done
-I created a component to add quotes inline with the listed summary of existing quotes.
-I improved how creating and deleting quotes is handled by having the component responsible emit events for the start and completion of the AJAX process, and another if there was an error.
-I added error handling so if the backend doesn't respond to a delete request with a successful status, the frontend will attempt to get its version of the data back in sync with that of the backend. That allows a deleted item to be immediately removed from display, but then be re-added if the delete operation doesn't get completed on the backend.
+I found an issue where reducing the count of a product to zero correctly removes it from the list, but the product that takes its place in the displayed list has its displayed count set to zero.
+I resolved the issue. Vue was reusing the same component, but because the component was working with an internal value that was only getting updated when the component is first created, it kept using and displaying the old count value. I used the "beforeUpdate" lifecycle event on the component to update the internal value when the property is changed from the outside.
 
 ## To Do
-Similar to delete, error checking on creation of quotes.
 Do same stuff with products, and items on quote.
 And then Tailwind!
+
+Selector for adding product when quote is empty is too small.
 
 * Frontend:
     * Review Vue recommended naming conventions, check work.

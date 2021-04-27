@@ -14,13 +14,20 @@ export default {
             required: true,
         },
     },
+    emits: [
+        'delete-begin',
+        'delete-success',
+        'delete-error',
+    ],
     methods: {
         async deleteProduct() {
+            this.$emit('delete-begin');
             try {
                 await axios.delete(`/api/products/${this.product.id}`);
-                this.$emit('delete');
+                this.$emit('delete-success');
             } catch(error) {
-                console.error(error);
+                console.warn(error);
+                this.$emit('delete-error');
             }
         }
     }

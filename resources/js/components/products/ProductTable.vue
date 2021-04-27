@@ -13,7 +13,6 @@
             </td>
         </tr>
         <template v-for="product in products">
-            <!-- TODO: not setting :key="product.id" anywhere, which is ... not great? -->
             <slot
                 name="product-edit"
                 v-if="idToEdit === product.id"

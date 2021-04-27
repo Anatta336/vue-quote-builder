@@ -20,7 +20,7 @@
                 <quote-line-edit
                     :key="product.id"
                     :product="product"
-                    @change-count="changeCount"
+                    @change-count="(product, updatedCount) => changeCount(product, updatedCount)"
                     @remove="removeProduct"
                 />
             </template>
