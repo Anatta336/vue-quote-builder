@@ -2,7 +2,7 @@
     <div>
         <p>
             Send this quote as an email to {{ quote.customer_email }}:
-            <button :disabled="isAwaitingEmailSend || !quote || !quote.customer_email" @click="sendEmail">Email</button>
+            <button :disabled="!!isAwaitingEmailSend || !quote || !quote.customer_email" @click="sendEmail">Email</button>
         </p>
         <p v-if="emailFeedback != ''">{{ emailFeedback }}</p>
     </div>

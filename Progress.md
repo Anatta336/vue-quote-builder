@@ -29,20 +29,23 @@ ProductInQuote:
     Count
 
 ## Done
-I read through the vue-select documentation.
-I added vue-select to the project's dependencies and included v-select as a component within the Vue instance.
-I replaced the plain HTML select form element with the vue-select component.
-I adjusted styling for the vue-select element to match with the rest of the form elements.
+I created a component to add quotes inline with the listed summary of existing quotes.
+I improved how creating and deleting quotes is handled by having the component responsible emit events for the start and completion of the AJAX process, and another if there was an error.
+I added error handling so if the backend doesn't respond to a delete request with a successful status, the frontend will attempt to get its version of the data back in sync with that of the backend. That allows a deleted item to be immediately removed from display, but then be re-added if the delete operation doesn't get completed on the backend.
 
 ## To Do
+Similar to delete, error checking on creation of quotes.
+Do same stuff with products, and items on quote.
+And then Tailwind!
+
 * Frontend:
     * Review Vue recommended naming conventions, check work.
-        * Rename QuoteLineItemEdit -> QuoteLineEdit (etc.)
     * Use learned stuff to do more updates to whole thing.
         * Use direct event retransmit with like `<button @click="$emit('delete')">Delete</button>` rather than bouncing through a method.
         * Find more places to use renderless components.
+        * Show loading indicators?
     * Style project using Tailwind
-    * The height difference between buttons and route links is a bit painful.
+        * The height difference between buttons and route links is a bit painful.
     * Run a GET for contents of current content every X seconds to make sure it stays up to date? (Config by env variable?)
     * Experiment with preloading before moving to the next view? Handled by vue-router.
 
@@ -51,6 +54,7 @@ I adjusted styling for the vue-select element to match with the rest of the form
     * Feature tests.
     * Load products from external source (CSV?)
     * Note in readme that after changing .env file should run `php artisan config:cache`
+    * Create emails with markdown(?) instead of raw HTML.
 
 ## Notes
 To access database directly:
@@ -95,3 +99,5 @@ What's the best practice for keeping front and back updated? Frontend is sending
 I've been entirely using single file components - except for renderless components. Are there other forms I should be ready to use?
 
 It's easy for a renderless component to generate errors with multiple root node, because effectively it dumps whatever is in its default slot directly as its root nodes
+
+Is there a way for a component to declare what events it might emit?

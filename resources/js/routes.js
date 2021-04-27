@@ -1,6 +1,5 @@
 import ProductList from './views/ProductList.vue';
 import QuoteIndex from './views/QuoteIndex.vue';
-import QuoteAdd from './views/QuoteAdd.vue';
 import QuoteView from './views/QuoteView.vue';
 import QuoteEdit from './views/QuoteEdit.vue';
 
@@ -16,11 +15,6 @@ const routes = {
             path: '/quotes',
             name: 'quotes.index',
             component: QuoteIndex,
-        },
-        {
-            path: '/quotes/add',
-            name: 'quotes.add',
-            component: QuoteAdd,
         },
         {
             path: '/quotes/:id',

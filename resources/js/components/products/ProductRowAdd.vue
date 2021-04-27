@@ -2,7 +2,7 @@
     <tr>
         <td>
             <form @submit.prevent="addProduct">
-                <input v-model="productName" type="text">
+                <input v-model="productName" type="text" placeholder="New Product Name">
                 <error-list :errors="errors.name"/>
             </form>
         </td>
