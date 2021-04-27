@@ -18,7 +18,7 @@
         </form>
 </template>
 <script>
-import ErrorList from './ErrorList.vue';
+import ErrorList from '../ErrorList.vue';
 
 export default {
     name: 'quote-customer-edit',

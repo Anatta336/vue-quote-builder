@@ -20,7 +20,7 @@
 </template>
 <script>
 export default {
-    name: 'quote-line-item-edit',
+    name: 'quote-line-edit',
     components: {},
     props: {
         product: {

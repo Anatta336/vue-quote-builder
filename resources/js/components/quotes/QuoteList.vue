@@ -11,6 +11,7 @@
         <tr v-for="quote in quotes" :key="quote.id">
             <td>{{ quote.customer_name }}</td>
             <td>{{ quote.customer_email }}</td>
+            <!-- TODO: include quote's subtotal? -->
             <td>
                 <router-link
                     class="button"

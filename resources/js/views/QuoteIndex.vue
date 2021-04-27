@@ -10,7 +10,7 @@
     </div>
 </template>
 <script>
-import QuoteList from '../components/QuoteList.vue';
+import QuoteList from '../components/quotes/QuoteList.vue';
 
 export default {
     name: 'quote-index',

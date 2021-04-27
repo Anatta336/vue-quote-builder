@@ -8,7 +8,6 @@
     </div>
 </template>
 <script>
-
 export default {
     name: 'quote-email',
     props: {

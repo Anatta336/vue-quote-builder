@@ -36,11 +36,11 @@ I adjusted styling for the vue-select element to match with the rest of the form
 
 ## To Do
 * Frontend:
-    * Use addon vueselect to create/manage the select dropdown on the quote edit.
     * Review Vue recommended naming conventions, check work.
         * Rename QuoteLineItemEdit -> QuoteLineEdit (etc.)
     * Use learned stuff to do more updates to whole thing.
         * Use direct event retransmit with like `<button @click="$emit('delete')">Delete</button>` rather than bouncing through a method.
+        * Find more places to use renderless components.
     * Style project using Tailwind
     * The height difference between buttons and route links is a bit painful.
     * Run a GET for contents of current content every X seconds to make sure it stays up to date? (Config by env variable?)

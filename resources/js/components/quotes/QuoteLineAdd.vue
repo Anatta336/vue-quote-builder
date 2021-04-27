@@ -34,7 +34,6 @@
     </tr>
 </template>
 <script>
-
 export default {
     name: 'quote-line-add',
     components: {},

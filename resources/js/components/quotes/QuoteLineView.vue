@@ -15,7 +15,7 @@
 </template>
 <script>
 export default {
-    name: 'quote-line-item-view',
+    name: 'quote-line-view',
     components: {},
     props: {
         product: {

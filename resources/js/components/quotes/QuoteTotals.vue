@@ -27,7 +27,7 @@
     </totals>
 </template>
 <script>
-import totals from './quote/totals.js';
+import totals from './totals.js';
 
 export default {
     name: 'quote-totals',

@@ -17,7 +17,7 @@
             </tr>
 
             <template v-for="product in productsInQuote">
-                <quote-line-item-edit
+                <quote-line-edit
                     :key="product.id"
                     :product="product"
                     @change-count="changeCount"
@@ -41,17 +41,17 @@
     </div>
 </template>
 <script>
-import QuoteCustomerEdit from '../components/QuoteCustomerEdit.vue';
-import QuoteLineItemEdit from '../components/QuoteLineItemEdit.vue';
-import QuoteLineAdd from '../components/QuoteLineAdd.vue';
-import QuoteTotals from '../components/QuoteTotals.vue';
-import QuoteEmail from '../components/QuoteEmail.vue';
+import QuoteCustomerEdit from '../components/quotes/QuoteCustomerEdit.vue';
+import QuoteLineEdit from '../components/quotes/QuoteLineEdit.vue';
+import QuoteLineAdd from '../components/quotes/QuoteLineAdd.vue';
+import QuoteTotals from '../components/quotes/QuoteTotals.vue';
+import QuoteEmail from '../components/quotes/QuoteEmail.vue';
 
 export default {
     name: "quote-edit",
     components: {
         QuoteCustomerEdit,
-        QuoteLineItemEdit,
+        QuoteLineEdit,
         QuoteLineAdd,
         QuoteTotals,
         QuoteEmail,

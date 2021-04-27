@@ -16,7 +16,7 @@
             </tr>
 
             <template v-for="product in productsInQuote">
-                <quote-line-item-view
+                <quote-line-view
                     :key="product.id"
                     :product="product"
                 />
@@ -42,16 +42,16 @@
     </div>
 </template>
 <script>
-import QuoteCustomerView from '../components/QuoteCustomerView.vue';
-import QuoteLineItemView from '../components/QuoteLineItemView.vue';
-import QuoteTotals from '../components/QuoteTotals.vue';
-import QuoteEmail from '../components/QuoteEmail.vue';
+import QuoteCustomerView from '../components/quotes/QuoteCustomerView.vue';
+import QuoteLineView from '../components/quotes/QuoteLineView.vue';
+import QuoteTotals from '../components/quotes/QuoteTotals.vue';
+import QuoteEmail from '../components/quotes/QuoteEmail.vue';
 
 export default {
     name: "quote-view",
     components: {
         QuoteCustomerView,
-        QuoteLineItemView,
+        QuoteLineView,
         QuoteTotals,
         QuoteEmail,
     },
