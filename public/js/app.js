@@ -2902,6 +2902,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'quote-summary-line-add',
@@ -2916,7 +2921,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       isAwaitingCreate: false
     };
   },
-  emits: ['create-begin', 'create-complete'],
+  emits: ['create-begin', 'create-success', 'create-error'],
   methods: {
     create: function create() {
       var _this = this;
@@ -2940,11 +2945,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 5:
-                _this.$emit('create-complete', _this.customerName, _this.customerEmail);
+                _this.$emit('create-success', _this.customerName, _this.customerEmail);
 
                 _this.clearForm();
 
-                _context.next = 12;
+                _context.next = 13;
                 break;
 
               case 9:
@@ -2953,19 +2958,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (_context.t0 !== null && _context.t0 !== void 0 && (_error$response = _context.t0.response) !== null && _error$response !== void 0 && (_error$response$data = _error$response.data) !== null && _error$response$data !== void 0 && _error$response$data.errors) {
                   _this.errors = _context.t0.response.data.errors;
+                } else {
+                  console.warn(_context.t0);
                 }
 
-              case 12:
-                _context.prev = 12;
-                _this.isAwaitingCreate = false;
-                return _context.finish(12);
+                _this.$emit('create-error');
 
-              case 15:
+              case 13:
+                _context.prev = 13;
+                _this.isAwaitingCreate = false;
+                return _context.finish(13);
+
+              case 16:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[2, 9, 12, 15]]);
+        }, _callee, null, [[2, 9, 13, 16]]);
       }))();
     },
     clearForm: function clearForm() {
@@ -3710,7 +3719,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 7:
                 _context.prev = 7;
                 _context.t0 = _context["catch"](0);
-                console.error(_context.t0);
+                console.warn(_context.t0);
 
               case 10:
               case "end":
@@ -6065,7 +6074,7 @@ var render = function() {
           attrs: { disabled: !!_vm.isAwaitingCreate },
           on: { click: _vm.create }
         },
-        [_vm._v("Create")]
+        [_vm._v("\n            Create\n        ")]
       )
     ])
   ])
@@ -6538,7 +6547,7 @@ var render = function() {
               return [
                 _c("quote-summary-line-add", {
                   on: {
-                    "create-complete": function($event) {
+                    "create-success": function($event) {
                       return _vm.quoteCreated()
                     }
                   }

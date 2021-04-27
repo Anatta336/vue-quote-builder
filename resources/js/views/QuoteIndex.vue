@@ -13,7 +13,7 @@
 
             <template #after-loop>
                 <quote-summary-line-add
-                    @create-complete="quoteCreated()"
+                    @create-success="quoteCreated()"
                 ></quote-summary-line-add>
             </template>
         </quote-summary-table>
@@ -42,7 +42,7 @@ export default {
                 const response = await axios.get('/api/quotes');
                 this.quotes = response.data;
             } catch(error) {
-                console.error(error);
+                console.warn(error);
             }
         },
         quoteDeleted(toRemove) {

@@ -23,7 +23,12 @@
             <error-list :errors="errors.customer_email"></error-list>
         </td>
         <td>
-            <button @click="create" :disabled="!!isAwaitingCreate">Create</button>
+            <button
+                @click="create"
+                :disabled="!!isAwaitingCreate"
+            >
+                Create
+            </button>
         </td>
     </tr>
 </template>
@@ -45,7 +50,8 @@ export default {
     },
     emits: [
         'create-begin',
-        'create-complete',
+        'create-success',
+        'create-error',
     ],
     methods: {
         async create() {
@@ -56,12 +62,15 @@ export default {
                     'customer_name': this.customerName,
                     'customer_email': this.customerEmail,
                 })
-                this.$emit('create-complete', this.customerName, this.customerEmail);
+                this.$emit('create-success', this.customerName, this.customerEmail);
                 this.clearForm();
             } catch (error) {
                 if (error?.response?.data?.errors) {
                     this.errors = error.response.data.errors;
+                } else {
+                    console.warn(error);
                 }
+                this.$emit('create-error');
             } finally {
                 this.isAwaitingCreate = false;
             }
