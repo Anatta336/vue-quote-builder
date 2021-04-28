@@ -17,15 +17,15 @@ const totals = {
         },
     },
     computed: {
-        subTotal: function() {
+        subTotal() {
             return this.productsInQuote.reduce((sum, product) => {
                 return sum + product.price_pence * product.count;
             }, 0)
         },
-        vatTotal: function() {
+        vatTotal() {
             return this.subTotal * this.vatRate;
         },
-        grandTotal: function() {
+        grandTotal() {
             return this.subTotal + this.vatTotal;
         }
     }

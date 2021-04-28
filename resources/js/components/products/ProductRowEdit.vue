@@ -49,7 +49,7 @@ export default {
         }
     },
     watch: {
-        product: function() {
+        product() {
             this.initFromProduct();
         }
     },

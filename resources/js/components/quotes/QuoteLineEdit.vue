@@ -49,7 +49,7 @@ export default {
         },
     },
     computed: {
-        linePrice: function() {
+        linePrice() {
             return this.product.price_pence * this.product.count;
         }
     },
