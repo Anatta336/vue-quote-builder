@@ -18,10 +18,13 @@
 
             <template v-for="product in productsInQuote">
                 <quote-line-edit
-                    :key="product.id"
+                    :key="product.product_id"
+                    :quoteId="parseInt(quote.id)"
                     :product="product"
-                    @change-count="(product, updatedCount) => changeCount(product, updatedCount)"
-                    @remove="removeProduct"
+                    @change-count-begin="(product, newCount, oldCount) => changeCountInLocal(product, newCount)"
+                    @change-count-error="fetchProductsInQuote()"
+                    @remove-begin="removeProductFromLocal(product)"
+                    @remove-error="fetchProductsInQuote()"
                 />
             </template>
 
@@ -92,38 +95,8 @@ export default {
             }
         },
 
-        async changeCount(product, count) {
-            if (!product) {
-                return;
-            }
-
-            // update on frontend
-            product.count = count;
-            const isProductRemoved = (count <= 0);
-            if (isProductRemoved) {
-                this.removeProductFromLocalQuote(product);
-            }
-
-            // send update to backend
-            try {
-                await axios.patch(
-                    `/api/quotes/${this.quote.id}/products/${product.product_id}`,
-                    { 'count': count }
-                );
-            } catch (error) {
-                console.error(error);
-            }
-        },
-        async removeProduct(product) {
-            this.removeProductFromLocalQuote(product);
-
-            try {
-                await axios.delete(`/api/quotes/${this.quote.id}/products/${product.product_id}`);
-            } catch (error) {
-                console.error(error);
-            }
-        },
         async addProduct(product, count) {
+            //TODO: move this to a dedicated component
             try {
                 // add product in frontend
                 this.productsInQuote.push({
@@ -141,12 +114,22 @@ export default {
                 console.error(error);
             }
         },
+        changeCountInLocal(product, newCount) {
+            if (!product) {
+                return;
+            }
 
-        removeProductFromLocalQuote(toRemove) {
+            // update on frontend
+            product.count = newCount;
+            if (newCount <= 0) {
+                this.removeProductFromLocal(product);
+            }
+        },
+        removeProductFromLocal(toRemove) {
             this.productsInQuote = this.productsInQuote.filter((productInQuote) => {
                 return productInQuote.product_id !== toRemove.product_id;
             });
-        }
+        },
     },
     mounted() {
         this.fetchQuote();

@@ -1,7 +1,7 @@
 <template>
 <div class="counter">
     <button @click="increase">+</button>
-    <slot>
+    <slot :count="count">
         {{ count }}
     </slot>
     <button @click="decrease">-</button>
@@ -14,7 +14,15 @@ export default {
         initialCount: {
             type: [Number, String],
             default: 0,
-        }
+        },
+        min: {
+            type: Number,
+            default: 0,
+        },
+        max: {
+            type: Number,
+            default: Number.MAX_SAFE_INTEGER,
+        },
     },
     data() {
         return {
@@ -22,20 +30,22 @@ export default {
         }
     },
     emits: [
-        'change-count',
+        'change-count', // (newValue, oldValue)
     ],
     methods: {
         increase() {
-            this.count++;
-            this.$emit('change-count', this.count);
+            const old = this.count;
+            this.count = Math.min(this.max, this.count + 1);
+            this.$emit('change-count', this.count, old);
         },
         decrease() {
-            this.count = Math.max(0, this.count - 1);
-            this.$emit('change-count', this.count);
+            const old = this.count;
+            this.count = Math.max(this.min, this.count - 1);
+            this.$emit('change-count', this.count, old);
         }
     },
     beforeUpdate() {
-        this.count = this.initialCount;
+        this.count = parseInt(this.initialCount);
     }
 }
 </script>

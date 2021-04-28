@@ -29,14 +29,17 @@ ProductInQuote:
     Count
 
 ## Done
-I found an issue where reducing the count of a product to zero correctly removes it from the list, but the product that takes its place in the displayed list has its displayed count set to zero.
-I resolved the issue. Vue was reusing the same component, but because the component was working with an internal value that was only getting updated when the component is first created, it kept using and displaying the old count value. I used the "beforeUpdate" lifecycle event on the component to update the internal value when the property is changed from the outside.
+I fixed an issue related to v-for being used with a key that wasn't actually unique to each item in the iteration. That allowed components to be incorrectly reused.
+I created a dedicated component to handle changing the count of a product in a quóte, reducing the number of responsibilities that a single component has.
+I tested different arrangements for handling data that's passed as a prop to a child component changing. I found that when the child component makes a local copy of the data to work with, it can use the BeforeUpdate lifecycle event to refresh that local copy when the data is changed elsewhere.
+
 
 ## To Do
-Do same stuff with products, and items on quote.
+For whole quote edit process, don't rely on the view itself to do the AJAX work.
+
 And then Tailwind!
 
-Selector for adding product when quote is empty is too small.
+Vue-select element for adding product when quote is empty is too small (fix in styling)
 
 * Frontend:
     * Review Vue recommended naming conventions, check work.

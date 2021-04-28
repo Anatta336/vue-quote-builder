@@ -1963,6 +1963,14 @@ __webpack_require__.r(__webpack_exports__);
     initialCount: {
       type: [Number, String],
       "default": 0
+    },
+    min: {
+      type: Number,
+      "default": 0
+    },
+    max: {
+      type: Number,
+      "default": Number.MAX_SAFE_INTEGER
     }
   },
   data: function data() {
@@ -1970,19 +1978,22 @@ __webpack_require__.r(__webpack_exports__);
       count: parseInt(this.initialCount)
     };
   },
-  emits: ['change-count'],
+  emits: ['change-count' // (newValue, oldValue)
+  ],
   methods: {
     increase: function increase() {
-      this.count++;
-      this.$emit('change-count', this.count);
+      var old = this.count;
+      this.count = Math.min(this.max, this.count + 1);
+      this.$emit('change-count', this.count, old);
     },
     decrease: function decrease() {
-      this.count = Math.max(0, this.count - 1);
-      this.$emit('change-count', this.count);
+      var old = this.count;
+      this.count = Math.max(this.min, this.count - 1);
+      this.$emit('change-count', this.count, old);
     }
   },
   beforeUpdate: function beforeUpdate() {
-    this.count = this.initialCount;
+    this.count = parseInt(this.initialCount);
   }
 });
 
@@ -2807,7 +2818,17 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _general_ItemCounter_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../general/ItemCounter.vue */ "./resources/js/components/general/ItemCounter.vue");
+/* harmony import */ var _QuoteProductCounter_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./QuoteProductCounter.vue */ "./resources/js/components/quotes/QuoteProductCounter.vue");
+/* harmony import */ var _QuoteProductRemove_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./QuoteProductRemove.vue */ "./resources/js/components/quotes/QuoteProductRemove.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2830,12 +2851,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'quote-line-edit',
   components: {
-    ItemCounter: _general_ItemCounter_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    QuoteProductRemove: _QuoteProductRemove_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    QuoteProductCounter: _QuoteProductCounter_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: {
+    quoteId: {
+      type: Number,
+      required: true
+    },
     product: {
       type: Object,
       required: true
@@ -2846,11 +2873,13 @@ __webpack_require__.r(__webpack_exports__);
       return this.product.price_pence * this.product.count;
     }
   },
-  methods: {
-    remove: function remove() {
-      this.$emit('remove', this.product);
-    }
-  }
+  emits: ['change-count-begin', // (product, newValue, oldValue)
+  'change-count-success', // (product, newValue, oldValue)
+  'change-count-error', // (product, newValue, oldValue)
+  'remove-begin', // (product)
+  'remove-success', // (product)
+  'remove-error' // (product)
+  ]
 });
 
 /***/ }),
@@ -2896,6 +2925,172 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     linePrice: function linePrice() {
       return this.product.price_pence * this.localCount;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/quotes/QuoteProductCounter.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/quotes/QuoteProductCounter.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _general_ItemCounter_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../general/ItemCounter.vue */ "./resources/js/components/general/ItemCounter.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'quote-product-counter',
+  props: {
+    quoteId: {
+      type: Number,
+      required: true
+    },
+    product: {
+      type: Object,
+      required: true
+    }
+  },
+  components: {
+    ItemCounter: _general_ItemCounter_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  emits: ['change-begin', // (newValue, oldValue)
+  'change-success', // (newValue, oldValue)
+  'change-error' // (newValue, oldValue)
+  ],
+  methods: {
+    changeCount: function changeCount(newValue, oldValue) {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this.$emit('change-begin', newValue, oldValue);
+
+                _context.prev = 1;
+                _context.next = 4;
+                return axios.patch("/api/quotes/".concat(_this.quoteId, "/products/").concat(_this.product.product_id), {
+                  'count': newValue
+                });
+
+              case 4:
+                _this.$emit('change-success', newValue, oldValue);
+
+                _context.next = 11;
+                break;
+
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](1);
+                console.warn(_context.t0);
+
+                _this.$emit('change-error', newValue, oldValue);
+
+              case 11:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[1, 7]]);
+      }))();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/quotes/QuoteProductRemove.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/quotes/QuoteProductRemove.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'quote-product-remove',
+  props: {
+    quoteId: {
+      type: Number,
+      required: true
+    },
+    productId: {
+      type: Number,
+      required: true
+    }
+  },
+  emits: ['remove-begin', 'remove-success', 'remove-error'],
+  methods: {
+    remove: function remove() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this.$emit('remove-begin');
+
+                _context.prev = 1;
+                _context.next = 4;
+                return axios["delete"]("/api/quotes/".concat(_this.quoteId, "/products/").concat(_this.productId));
+
+              case 4:
+                _this.$emit('remove-success');
+
+                _context.next = 11;
+                break;
+
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](1);
+                console.warn(_context.t0);
+
+                _this.$emit('remove-error');
+
+              case 11:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[1, 7]]);
+      }))();
     }
   }
 });
@@ -3432,6 +3627,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 
 
@@ -3551,98 +3749,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee3, null, [[0, 7]]);
       }))();
     },
-    changeCount: function changeCount(product, count) {
+    addProduct: function addProduct(product, count) {
       var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var isProductRemoved;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                if (product) {
-                  _context4.next = 2;
-                  break;
-                }
-
-                return _context4.abrupt("return");
-
-              case 2:
-                // update on frontend
-                product.count = count;
-                isProductRemoved = count <= 0;
-
-                if (isProductRemoved) {
-                  _this4.removeProductFromLocalQuote(product);
-                } // send update to backend
-
-
-                _context4.prev = 5;
-                _context4.next = 8;
-                return axios.patch("/api/quotes/".concat(_this4.quote.id, "/products/").concat(product.product_id), {
-                  'count': count
-                });
-
-              case 8:
-                _context4.next = 13;
-                break;
-
-              case 10:
-                _context4.prev = 10;
-                _context4.t0 = _context4["catch"](5);
-                console.error(_context4.t0);
-
-              case 13:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4, null, [[5, 10]]);
-      }))();
-    },
-    removeProduct: function removeProduct(product) {
-      var _this5 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                _this5.removeProductFromLocalQuote(product);
-
-                _context5.prev = 1;
-                _context5.next = 4;
-                return axios["delete"]("/api/quotes/".concat(_this5.quote.id, "/products/").concat(product.product_id));
-
-              case 4:
-                _context5.next = 9;
-                break;
-
-              case 6:
-                _context5.prev = 6;
-                _context5.t0 = _context5["catch"](1);
-                console.error(_context5.t0);
-
-              case 9:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5, null, [[1, 6]]);
-      }))();
-    },
-    addProduct: function addProduct(product, count) {
-      var _this6 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                _context6.prev = 0;
+                _context4.prev = 0;
 
                 // add product in frontend
-                _this6.productsInQuote.push({
+                _this4.productsInQuote.push({
                   product_id: product.id,
                   name: product.name,
                   price_pence: product.price_pence,
@@ -3650,29 +3768,41 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }); // request to add the product on backend
 
 
-                _context6.next = 4;
-                return axios.post("/api/quotes/".concat(_this6.quote.id, "/products/").concat(product.id), {
+                _context4.next = 4;
+                return axios.post("/api/quotes/".concat(_this4.quote.id, "/products/").concat(product.id), {
                   'count': count
                 });
 
               case 4:
-                _context6.next = 9;
+                _context4.next = 9;
                 break;
 
               case 6:
-                _context6.prev = 6;
-                _context6.t0 = _context6["catch"](0);
-                console.error(_context6.t0);
+                _context4.prev = 6;
+                _context4.t0 = _context4["catch"](0);
+                console.error(_context4.t0);
 
               case 9:
               case "end":
-                return _context6.stop();
+                return _context4.stop();
             }
           }
-        }, _callee6, null, [[0, 6]]);
+        }, _callee4, null, [[0, 6]]);
       }))();
     },
-    removeProductFromLocalQuote: function removeProductFromLocalQuote(toRemove) {
+    changeCountInLocal: function changeCountInLocal(product, newCount) {
+      if (!product) {
+        return;
+      } // update on frontend
+
+
+      product.count = newCount;
+
+      if (newCount <= 0) {
+        this.removeProductFromLocal(product);
+      }
+    },
+    removeProductFromLocal: function removeProductFromLocal(toRemove) {
       this.productsInQuote = this.productsInQuote.filter(function (productInQuote) {
         return productInQuote.product_id !== toRemove.product_id;
       });
@@ -5238,7 +5368,9 @@ var render = function() {
     [
       _c("button", { on: { click: _vm.increase } }, [_vm._v("+")]),
       _vm._v(" "),
-      _vm._t("default", [_vm._v("\n        " + _vm._s(_vm.count) + "\n    ")]),
+      _vm._t("default", [_vm._v("\n        " + _vm._s(_vm.count) + "\n    ")], {
+        count: _vm.count
+      }),
       _vm._v(" "),
       _c("button", { on: { click: _vm.decrease } }, [_vm._v("-")])
     ],
@@ -5979,11 +6111,32 @@ var render = function() {
       "td",
       { staticClass: "count" },
       [
-        _c("item-counter", {
-          attrs: { initialCount: _vm.product.count },
+        _c("quote-product-counter", {
+          attrs: { quoteId: _vm.quoteId, product: _vm.product },
           on: {
-            "change-count": function(updatedCount) {
-              return _vm.$emit("change-count", _vm.product, updatedCount)
+            "change-begin": function(newValue, oldValue) {
+              return _vm.$emit(
+                "change-count-begin",
+                _vm.product,
+                newValue,
+                oldValue
+              )
+            },
+            "change-success": function(newValue, oldValue) {
+              return _vm.$emit(
+                "change-count-success",
+                _vm.product,
+                newValue,
+                oldValue
+              )
+            },
+            "change-error": function(newValue, oldValue) {
+              return _vm.$emit(
+                "change-count-error",
+                _vm.product,
+                newValue,
+                oldValue
+              )
             }
           }
         })
@@ -6001,11 +6154,29 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("td", [
-      _c("button", { staticClass: "danger", on: { click: _vm.remove } }, [
-        _vm._v("Remove")
-      ])
-    ])
+    _c(
+      "td",
+      [
+        _c("quote-product-remove", {
+          attrs: {
+            quoteId: _vm.quoteId,
+            productId: parseInt(_vm.product.product_id)
+          },
+          on: {
+            "remove-begin": function($event) {
+              return _vm.$emit("remove-begin", _vm.product)
+            },
+            "remove-success": function($event) {
+              return _vm.$emit("remove-success", _vm.product)
+            },
+            "remove-error": function($event) {
+              return _vm.$emit("remove-error", _vm.product)
+            }
+          }
+        })
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []
@@ -6046,6 +6217,82 @@ var render = function() {
         )
       ])
     ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/quotes/QuoteProductCounter.vue?vue&type=template&id=7cae94fc&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/quotes/QuoteProductCounter.vue?vue&type=template&id=7cae94fc& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("item-counter", {
+    attrs: { initialCount: _vm.product.count },
+    on: {
+      "change-count": function(newValue, oldValue) {
+        return _vm.changeCount(newValue, oldValue)
+      }
+    },
+    scopedSlots: _vm._u(
+      [
+        {
+          key: "default",
+          fn: function(ref) {
+            var count = ref.count
+            return [
+              _vm._t(
+                "default",
+                [_vm._v("\n        ×" + _vm._s(count) + "\n    ")],
+                { count: count }
+              )
+            ]
+          }
+        }
+      ],
+      null,
+      true
+    )
+  })
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/quotes/QuoteProductRemove.vue?vue&type=template&id=303af1b4&":
+/*!****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/quotes/QuoteProductRemove.vue?vue&type=template&id=303af1b4& ***!
+  \****************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("button", { staticClass: "danger", on: { click: _vm.remove } }, [
+    _vm._v("Remove")
   ])
 }
 var staticRenderFns = []
@@ -6540,13 +6787,28 @@ var render = function() {
               _vm._l(_vm.productsInQuote, function(product) {
                 return [
                   _c("quote-line-edit", {
-                    key: product.id,
-                    attrs: { product: product },
+                    key: product.product_id,
+                    attrs: {
+                      quoteId: parseInt(_vm.quote.id),
+                      product: product
+                    },
                     on: {
-                      "change-count": function(product, updatedCount) {
-                        return _vm.changeCount(product, updatedCount)
+                      "change-count-begin": function(
+                        product,
+                        newCount,
+                        oldCount
+                      ) {
+                        return _vm.changeCountInLocal(product, newCount)
                       },
-                      remove: _vm.removeProduct
+                      "change-count-error": function($event) {
+                        return _vm.fetchProductsInQuote()
+                      },
+                      "remove-begin": function($event) {
+                        return _vm.removeProductFromLocal(product)
+                      },
+                      "remove-error": function($event) {
+                        return _vm.fetchProductsInQuote()
+                      }
                     }
                   })
                 ]
@@ -23066,19 +23328,157 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/quotes/QuoteSummaryLineAdd.vue":
+/***/ "./resources/js/components/quotes/QuoteProductCounter.vue":
 /*!****************************************************************!*\
-  !*** ./resources/js/components/quotes/QuoteSummaryLineAdd.vue ***!
+  !*** ./resources/js/components/quotes/QuoteProductCounter.vue ***!
   \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _QuoteProductCounter_vue_vue_type_template_id_7cae94fc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./QuoteProductCounter.vue?vue&type=template&id=7cae94fc& */ "./resources/js/components/quotes/QuoteProductCounter.vue?vue&type=template&id=7cae94fc&");
+/* harmony import */ var _QuoteProductCounter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./QuoteProductCounter.vue?vue&type=script&lang=js& */ "./resources/js/components/quotes/QuoteProductCounter.vue?vue&type=script&lang=js&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _QuoteProductCounter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _QuoteProductCounter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _QuoteProductCounter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _QuoteProductCounter_vue_vue_type_template_id_7cae94fc___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _QuoteProductCounter_vue_vue_type_template_id_7cae94fc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/quotes/QuoteProductCounter.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/quotes/QuoteProductCounter.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/quotes/QuoteProductCounter.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_QuoteProductCounter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./QuoteProductCounter.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/quotes/QuoteProductCounter.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_QuoteProductCounter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/quotes/QuoteProductCounter.vue?vue&type=template&id=7cae94fc&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/quotes/QuoteProductCounter.vue?vue&type=template&id=7cae94fc& ***!
+  \***********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QuoteProductCounter_vue_vue_type_template_id_7cae94fc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./QuoteProductCounter.vue?vue&type=template&id=7cae94fc& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/quotes/QuoteProductCounter.vue?vue&type=template&id=7cae94fc&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QuoteProductCounter_vue_vue_type_template_id_7cae94fc___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QuoteProductCounter_vue_vue_type_template_id_7cae94fc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/quotes/QuoteProductRemove.vue":
+/*!***************************************************************!*\
+  !*** ./resources/js/components/quotes/QuoteProductRemove.vue ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _QuoteProductRemove_vue_vue_type_template_id_303af1b4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./QuoteProductRemove.vue?vue&type=template&id=303af1b4& */ "./resources/js/components/quotes/QuoteProductRemove.vue?vue&type=template&id=303af1b4&");
+/* harmony import */ var _QuoteProductRemove_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./QuoteProductRemove.vue?vue&type=script&lang=js& */ "./resources/js/components/quotes/QuoteProductRemove.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _QuoteProductRemove_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _QuoteProductRemove_vue_vue_type_template_id_303af1b4___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _QuoteProductRemove_vue_vue_type_template_id_303af1b4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/quotes/QuoteProductRemove.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/quotes/QuoteProductRemove.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/quotes/QuoteProductRemove.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_QuoteProductRemove_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./QuoteProductRemove.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/quotes/QuoteProductRemove.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_QuoteProductRemove_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/quotes/QuoteProductRemove.vue?vue&type=template&id=303af1b4&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/quotes/QuoteProductRemove.vue?vue&type=template&id=303af1b4& ***!
+  \**********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QuoteProductRemove_vue_vue_type_template_id_303af1b4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./QuoteProductRemove.vue?vue&type=template&id=303af1b4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/quotes/QuoteProductRemove.vue?vue&type=template&id=303af1b4&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QuoteProductRemove_vue_vue_type_template_id_303af1b4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QuoteProductRemove_vue_vue_type_template_id_303af1b4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/quotes/QuoteSummaryLineAdd.vue":
+/*!****************************************************************!*\
+  !*** ./resources/js/components/quotes/QuoteSummaryLineAdd.vue ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _QuoteSummaryLineAdd_vue_vue_type_template_id_44127114___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./QuoteSummaryLineAdd.vue?vue&type=template&id=44127114& */ "./resources/js/components/quotes/QuoteSummaryLineAdd.vue?vue&type=template&id=44127114&");
 /* harmony import */ var _QuoteSummaryLineAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./QuoteSummaryLineAdd.vue?vue&type=script&lang=js& */ "./resources/js/components/quotes/QuoteSummaryLineAdd.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _QuoteSummaryLineAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _QuoteSummaryLineAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -23108,7 +23508,7 @@ component.options.__file = "resources/js/components/quotes/QuoteSummaryLineAdd.v
 /*!*****************************************************************************************!*\
   !*** ./resources/js/components/quotes/QuoteSummaryLineAdd.vue?vue&type=script&lang=js& ***!
   \*****************************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -4,10 +4,13 @@
             {{ product.name }}
         </td>
         <td class="count">
-            <item-counter
-                :initialCount="product.count"
-                @change-count="(updatedCount) => $emit('change-count', product, updatedCount)"
-            ></item-counter>
+            <quote-product-counter
+                :quoteId="quoteId"
+                :product="product"
+                @change-begin="(newValue, oldValue) => $emit('change-count-begin', product, newValue, oldValue)"
+                @change-success="(newValue, oldValue) => $emit('change-count-success', product, newValue, oldValue)"
+                @change-error="(newValue, oldValue) => $emit('change-count-error', product, newValue, oldValue)"
+            ></quote-product-counter>
         </td>
         <td>
             <span class="money">
@@ -15,19 +18,31 @@
             </span>
         </td>
         <td>
-            <button class="danger" @click="remove">Remove</button>
+            <quote-product-remove
+                :quoteId="quoteId"
+                :productId="parseInt(product.product_id)"
+                @remove-begin="$emit('remove-begin', product)"
+                @remove-success="$emit('remove-success', product)"
+                @remove-error="$emit('remove-error', product)"
+            ></quote-product-remove>
         </td>
     </tr>
 </template>
 <script>
-import ItemCounter from '../general/ItemCounter.vue';
+import QuoteProductCounter from './QuoteProductCounter.vue';
+import QuoteProductRemove from './QuoteProductRemove.vue';
 
 export default {
     name: 'quote-line-edit',
     components: {
-        ItemCounter,
+        QuoteProductRemove,
+        QuoteProductCounter,
     },
     props: {
+        quoteId: {
+            type: Number,
+            required: true,
+        },
         product: {
             type: Object,
             required: true,
@@ -38,10 +53,13 @@ export default {
             return this.product.price_pence * this.product.count;
         }
     },
-    methods: {
-        remove: function() {
-            this.$emit('remove', this.product);
-        }
-    }
+    emits: [
+        'change-count-begin',   // (product, newValue, oldValue)
+        'change-count-success', // (product, newValue, oldValue)
+        'change-count-error',   // (product, newValue, oldValue)
+        'remove-begin',   // (product)
+        'remove-success', // (product)
+        'remove-error',   // (product)
+    ],
 }
 </script>
