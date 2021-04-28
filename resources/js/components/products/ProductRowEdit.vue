@@ -69,7 +69,7 @@ export default {
                 if (error?.response?.data?.errors) {
                     this.errors = error.response.data.errors;
                 } else {
-                    console.error(error);
+                    console.warn(error);
                 }
             }
         },

@@ -39,7 +39,7 @@ export default {
                     + ":" + date.getUTCMinutes()
                     + ":" + date.getUTCSeconds();
             } catch (error) {
-                console.error(error);
+                console.warn(error);
                 this.emailFeedback = 'An error occurred when attempting to send as email.';
             }
         }

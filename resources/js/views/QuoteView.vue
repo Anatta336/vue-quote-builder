@@ -68,7 +68,7 @@ export default {
                 const response = await axios.get(`/api/quotes/${this.$route.params.id}`)
                 this.quote = response.data;
             } catch (error) {
-                console.error(error);
+                console.warn(error);
             }
         },
         async fetchProductsInQuote() {
@@ -76,7 +76,7 @@ export default {
                 const response = await axios.get(`/api/quotes/${this.$route.params.id}/products`);
                 this.productsInQuote = response.data;
             } catch (error) {
-                console.error(error);
+                console.warn(error);
             }
         },
     },

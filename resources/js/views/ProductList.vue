@@ -55,7 +55,7 @@ export default {
                 const response = await axios.get('/api/products');
                 this.products = response.data;
             } catch (error) {
-                console.error(error);
+                console.warn(error);
             }
         },
         beginEdit(product) {
