@@ -18,7 +18,7 @@
 
             <template v-for="product in productsInQuote">
                 <quote-line-edit
-                    :key="product.product_id"
+                    :key="product.id"
                     :quoteId="parseInt(quote.id)"
                     :product="product"
                     @change-count-begin="(product, newCount, oldCount) => changeCountInLocal(product, newCount)"
@@ -29,9 +29,11 @@
             </template>
 
             <quote-line-add
+                :quoteId="parseInt(quote.id)"
                 :allProducts="allProducts"
                 :productsInQuote="productsInQuote"
-                @addProduct="addProduct"
+                @add-product-begin="(product, count) => addProductToLocal(product, count)"
+                @add-product-error="fetchProductsInQuote()"
             />
         </table>
 
@@ -75,7 +77,7 @@ export default {
                 const response = await axios.get(`/api/quotes/${this.$route.params.id}`)
                 this.quote = response.data;
             } catch (error) {
-                console.error(error);
+                console.warn(error);
             }
         },
         async fetchAllProducts() {
@@ -83,51 +85,55 @@ export default {
                 const response = await axios.get('/api/products')
                 this.allProducts = response.data;
             } catch (error) {
-                console.error(error);
+                console.warn(error);
             }
         },
         async fetchProductsInQuote() {
             try {
                 const response = await axios.get(`/api/quotes/${this.$route.params.id}/products`);
+                this.productsInQuote = response.data.map((responseProduct) => {
+                    // the response has:  .product_id, .name, .price_pence, .count
+                    // but want to store:         .id, .name, .price_pence, .count
+                    return {
+                        ...responseProduct,
+                        id: responseProduct.product_id,
+                        product_id: undefined,
+                    };
+                });
+
                 this.productsInQuote = response.data;
             } catch (error) {
-                console.error(error);
+                console.warn(error);
             }
         },
 
-        async addProduct(product, count) {
-            //TODO: move this to a dedicated component
-            try {
-                // add product in frontend
-                this.productsInQuote.push({
-                    product_id: product.id,
-                    name: product.name,
-                    price_pence: product.price_pence,
-                    count,
-                });
-
-                // request to add the product on backend
-                await axios.post(`/api/quotes/${this.quote.id}/products/${product.id}`, {
-                    'count': count,
-                });
-            } catch (error) {
-                console.error(error);
+        addProductToLocal(product, count) {
+            if (!product) {
+                return;
             }
+
+            this.productsInQuote.push({
+                ...product,
+                count,
+            });
         },
         changeCountInLocal(product, newCount) {
             if (!product) {
                 return;
             }
 
-            // update on frontend
             product.count = newCount;
             if (newCount <= 0) {
                 this.removeProductFromLocal(product);
             }
         },
-        removeProductFromLocal(toRemove) {
+        removeProductFromLocal(product) {
+            if (!product) {
+                return;
+            }
+
             this.productsInQuote = this.productsInQuote.filter((productInQuote) => {
-                return productInQuote.product_id !== toRemove.product_id;
+                return productInQuote.id !== product.id;
             });
         },
     },

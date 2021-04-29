@@ -35,6 +35,13 @@ export default {
         products: {
             type: Array,
             required: true,
+            validator(value) {
+                return value.every((product) => {
+                    return product.hasOwnProperty('id')
+                        && product.hasOwnProperty('name')
+                        && product.hasOwnProperty('price_pence');
+                });
+            },
         },
         idToEdit: {
             type: Number,

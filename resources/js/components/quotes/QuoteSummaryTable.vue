@@ -11,14 +11,11 @@
         </tr>
 
         <template v-for="quote in quotes">
-            <slot
-                :quote="quote"
-            ></slot>
+            <!-- TODO: should be :key="quote.id" here, on a wrapping element which doesn't break table? -->
+            <slot :quote="quote"></slot>
         </template>
 
-        <slot
-            name="after-loop"
-        ></slot>
+        <slot name="after-loop"></slot>
 
     </table>
 </template>
@@ -29,6 +26,13 @@ export default {
         quotes: {
             type: Array,
             default: () => [],
+            validator(value) {
+                return value.every((quote) => {
+                    return quote.hasOwnProperty('id')
+                        && quote.hasOwnProperty('customer_name')
+                        && quote.hasOwnProperty('customer_email');
+                });
+            }
         }
     }
 }

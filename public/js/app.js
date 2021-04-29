@@ -2028,7 +2028,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   props: {
     product: {
       type: Object,
-      required: true
+      required: true,
+      validator: function validator(value) {
+        return value.hasOwnProperty('id');
+      }
     }
   },
   emits: ['delete-begin', 'delete-success', 'delete-error'],
@@ -2233,7 +2236,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   props: {
     product: {
       type: Object,
-      required: true
+      required: true,
+      validator: function validator(value) {
+        return value.hasOwnProperty('id') && value.hasOwnProperty('name') && value.hasOwnProperty('price_pence');
+      }
     }
   },
   data: function data() {
@@ -2283,7 +2289,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 if (_context.t0 !== null && _context.t0 !== void 0 && (_error$response = _context.t0.response) !== null && _error$response !== void 0 && (_error$response$data = _error$response.data) !== null && _error$response$data !== void 0 && _error$response$data.errors) {
                   _this.errors = _context.t0.response.data.errors;
                 } else {
-                  console.error(_context.t0);
+                  console.warn(_context.t0);
                 }
 
               case 11:
@@ -2351,7 +2357,10 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     product: {
       type: Object,
-      required: true
+      required: true,
+      validator: function validator(value) {
+        return value.hasOwnProperty('id') && value.hasOwnProperty('name') && value.hasOwnProperty('price_pence');
+      }
     }
   }
 });
@@ -2402,7 +2411,12 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     products: {
       type: Array,
-      required: true
+      required: true,
+      validator: function validator(value) {
+        return value.every(function (product) {
+          return product.hasOwnProperty('id') && product.hasOwnProperty('name') && product.hasOwnProperty('price_pence');
+        });
+      }
     },
     idToEdit: {
       type: Number,
@@ -2459,7 +2473,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   props: {
     quote: {
       type: Object,
-      required: true
+      required: true,
+      validator: function validator(value) {
+        return value.hasOwnProperty('id') && value.hasOwnProperty('customer_name') && value.hasOwnProperty('customer_email');
+      }
     }
   },
   data: function data() {
@@ -2534,7 +2551,10 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     quote: {
       type: Object,
-      required: true
+      required: true,
+      validator: function validator(value) {
+        return value.hasOwnProperty('id') && value.hasOwnProperty('customer_name') && value.hasOwnProperty('customer_email');
+      }
     }
   }
 });
@@ -2570,7 +2590,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   props: {
     quote: {
       type: Object,
-      required: true
+      required: true,
+      validator: function validator(value) {
+        return value.hasOwnProperty('id');
+      }
     }
   },
   emits: ['delete-begin', 'delete-success', 'delete-error'],
@@ -2647,7 +2670,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   props: {
     quote: {
       type: Object,
-      required: true
+      required: true,
+      validator: function validator(value) {
+        return value.hasOwnProperty('id') && value.hasOwnProperty('customer_name') && value.hasOwnProperty('customer_email');
+      }
     }
   },
   data: function data() {
@@ -2682,7 +2708,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 10:
                 _context.prev = 10;
                 _context.t0 = _context["catch"](2);
-                console.error(_context.t0);
+                console.warn(_context.t0);
                 _this.emailFeedback = 'An error occurred when attempting to send as email.';
 
               case 14:
@@ -2707,16 +2733,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2746,13 +2770,30 @@ __webpack_require__.r(__webpack_exports__);
   name: 'quote-line-add',
   components: {},
   props: {
+    quoteId: {
+      type: Number,
+      required: true,
+      validator: function validator(value) {
+        return isInteger(value) && value >= 0;
+      }
+    },
     allProducts: {
       type: Array,
-      required: true
+      required: true,
+      validator: function validator(value) {
+        return value.every(function (product) {
+          return product.hasOwnProperty('id') && product.hasOwnProperty('name') && product.hasOwnProperty('price_pence');
+        });
+      }
     },
     productsInQuote: {
       type: Array,
-      required: true
+      required: true,
+      validator: function validator(value) {
+        return value.every(function (product) {
+          return product.hasOwnProperty('id') && product.hasOwnProperty('name') && product.hasOwnProperty('price_pence') && product.hasOwnProperty('count');
+        });
+      }
     }
   },
   data: function data() {
@@ -2769,40 +2810,82 @@ __webpack_require__.r(__webpack_exports__);
 
       return this.product.price_pence * this.count;
     }
-    /* as used by vanilla Select element
-    productsCouldAdd: function() {
-        return this.allProducts.filter((product) => {
-            return !this.productsInQuote.some((inQuote) => {
-                return product.id === inQuote.product_id;
-            });
-        });
-    }
-    */
-
   },
   watch: {
     count: function count(value) {
-      // force to be integer
-      value = Math.round(value); // force to be positive
-
-      if (value < 1) {
-        value = 1;
-      }
-
+      // force to be integer >= 1
+      value = Math.max(1, Math.round(value));
       this.count = value;
+    },
+    product: function product(value) {
+      // this shouldn't ever happen, but there's at least one bug in vue-select that
+      // allows selecting an unselectable item. If that happens, unselect it.
+      if (!this.isSelectable(value)) {
+        this.product = null;
+      }
     }
   },
+  emits: ['add-product-begin', // (product, count)
+  'add-product-success', // (product, count)
+  'add-product-error' // (product, count)
+  ],
   methods: {
     addProduct: function addProduct() {
-      if (!this.product) {
-        return;
-      } // send event
+      var _this = this;
 
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var productToAdd, countToAdd;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (_this.product) {
+                  _context.next = 2;
+                  break;
+                }
 
-      this.$emit('addProduct', this.product, this.count); // reset form
+                return _context.abrupt("return");
 
-      this.product = null;
-      this.count = 1;
+              case 2:
+                productToAdd = _this.product;
+                countToAdd = _this.count; // reset form
+
+                _this.product = null;
+                _this.count = 1;
+
+                _this.$emit('add-product-begin', productToAdd, countToAdd);
+
+                _context.prev = 7;
+                _context.next = 10;
+                return axios.post("/api/quotes/".concat(_this.quoteId, "/products/").concat(productToAdd.id), {
+                  'count': countToAdd
+                });
+
+              case 10:
+                _this.$emit('add-product-success', productToAdd, countToAdd);
+
+                _context.next = 17;
+                break;
+
+              case 13:
+                _context.prev = 13;
+                _context.t0 = _context["catch"](7);
+                console.warn(_context.t0);
+
+                _this.$emit('add-product-error', productToAdd, countToAdd);
+
+              case 17:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[7, 13]]);
+      }))();
+    },
+    isSelectable: function isSelectable(product) {
+      return product && !this.productsInQuote.some(function (inQuote) {
+        return product.id === inQuote.id;
+      });
     }
   }
 });
@@ -2861,11 +2944,17 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     quoteId: {
       type: Number,
-      required: true
+      required: true,
+      validator: function validator(value) {
+        return isInteger(value) && value >= 0;
+      }
     },
     product: {
       type: Object,
-      required: true
+      required: true,
+      validator: function validator(value) {
+        return value.hasOwnProperty('id') && value.hasOwnProperty('name') && value.hasOwnProperty('price_pence') && value.hasOwnProperty('count');
+      }
     }
   },
   computed: {
@@ -2914,7 +3003,10 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     product: {
       type: Object,
-      required: true
+      required: true,
+      validator: function validator(value) {
+        return value.hasOwnProperty('id') && value.hasOwnProperty('name') && value.hasOwnProperty('price_pence') && value.hasOwnProperty('count');
+      }
     }
   },
   data: function data() {
@@ -2970,7 +3062,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     product: {
       type: Object,
-      required: true
+      required: true,
+      validator: function validator(value) {
+        return value.hasOwnProperty('id') && value.hasOwnProperty('name') && value.hasOwnProperty('price_pence') && value.hasOwnProperty('count');
+      }
     }
   },
   components: {
@@ -2993,7 +3088,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _context.prev = 1;
                 _context.next = 4;
-                return axios.patch("/api/quotes/".concat(_this.quoteId, "/products/").concat(_this.product.product_id), {
+                return axios.patch("/api/quotes/".concat(_this.quoteId, "/products/").concat(_this.product.id), {
                   'count': newValue
                 });
 
@@ -3282,7 +3377,10 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     quote: {
       type: Object,
-      required: true
+      required: true,
+      validator: function validator(value) {
+        return value.hasOwnProperty('id') && value.hasOwnProperty('customer_name') && value.hasOwnProperty('customer_email');
+      }
     }
   },
   emits: ['delete-begin', 'delete-success', 'delete-error']
@@ -3320,9 +3418,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'quote-summary-table',
   props: {
@@ -3330,6 +3425,11 @@ __webpack_require__.r(__webpack_exports__);
       type: Array,
       "default": function _default() {
         return [];
+      },
+      validator: function validator(value) {
+        return value.every(function (quote) {
+          return quote.hasOwnProperty('id') && quote.hasOwnProperty('customer_name') && quote.hasOwnProperty('customer_email');
+        });
       }
     }
   }
@@ -3384,11 +3484,19 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     productsInQuote: {
       type: Array,
-      required: true
+      required: true,
+      validator: function validator(value) {
+        return value.every(function (product) {
+          return product.hasOwnProperty('id') && product.hasOwnProperty('name') && product.hasOwnProperty('price_pence') && product.hasOwnProperty('count');
+        });
+      }
     },
     vatRate: {
       type: Number,
-      "default": 0.2
+      "default": 0.2,
+      validator: function validator(value) {
+        return value >= 0;
+      }
     }
   }
 });
@@ -3518,7 +3626,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 7:
                 _context.prev = 7;
                 _context.t0 = _context["catch"](0);
-                console.error(_context.t0);
+                console.warn(_context.t0);
 
               case 10:
               case "end":
@@ -3579,12 +3687,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_quotes_QuoteLineAdd_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/quotes/QuoteLineAdd.vue */ "./resources/js/components/quotes/QuoteLineAdd.vue");
 /* harmony import */ var _components_quotes_QuoteTotals_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/quotes/QuoteTotals.vue */ "./resources/js/components/quotes/QuoteTotals.vue");
 /* harmony import */ var _components_quotes_QuoteEmail_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/quotes/QuoteEmail.vue */ "./resources/js/components/quotes/QuoteEmail.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
 //
 //
 //
@@ -3675,7 +3791,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 7:
                 _context.prev = 7;
                 _context.t0 = _context["catch"](0);
-                console.error(_context.t0);
+                console.warn(_context.t0);
 
               case 10:
               case "end":
@@ -3707,7 +3823,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 7:
                 _context2.prev = 7;
                 _context2.t0 = _context2["catch"](0);
-                console.error(_context2.t0);
+                console.warn(_context2.t0);
 
               case 10:
               case "end":
@@ -3732,69 +3848,44 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 3:
                 response = _context3.sent;
+                _this3.productsInQuote = response.data.map(function (responseProduct) {
+                  // the response has:  .product_id, .name, .price_pence, .count
+                  // but want to store:         .id, .name, .price_pence, .count
+                  return _objectSpread(_objectSpread({}, responseProduct), {}, {
+                    id: responseProduct.product_id,
+                    product_id: undefined
+                  });
+                });
                 _this3.productsInQuote = response.data;
-                _context3.next = 10;
+                _context3.next = 11;
                 break;
 
-              case 7:
-                _context3.prev = 7;
+              case 8:
+                _context3.prev = 8;
                 _context3.t0 = _context3["catch"](0);
-                console.error(_context3.t0);
+                console.warn(_context3.t0);
 
-              case 10:
+              case 11:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[0, 7]]);
+        }, _callee3, null, [[0, 8]]);
       }))();
     },
-    addProduct: function addProduct(product, count) {
-      var _this4 = this;
+    addProductToLocal: function addProductToLocal(product, count) {
+      if (!product) {
+        return;
+      }
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                _context4.prev = 0;
-
-                // add product in frontend
-                _this4.productsInQuote.push({
-                  product_id: product.id,
-                  name: product.name,
-                  price_pence: product.price_pence,
-                  count: count
-                }); // request to add the product on backend
-
-
-                _context4.next = 4;
-                return axios.post("/api/quotes/".concat(_this4.quote.id, "/products/").concat(product.id), {
-                  'count': count
-                });
-
-              case 4:
-                _context4.next = 9;
-                break;
-
-              case 6:
-                _context4.prev = 6;
-                _context4.t0 = _context4["catch"](0);
-                console.error(_context4.t0);
-
-              case 9:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4, null, [[0, 6]]);
-      }))();
+      this.productsInQuote.push(_objectSpread(_objectSpread({}, product), {}, {
+        count: count
+      }));
     },
     changeCountInLocal: function changeCountInLocal(product, newCount) {
       if (!product) {
         return;
-      } // update on frontend
-
+      }
 
       product.count = newCount;
 
@@ -3802,9 +3893,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         this.removeProductFromLocal(product);
       }
     },
-    removeProductFromLocal: function removeProductFromLocal(toRemove) {
+    removeProductFromLocal: function removeProductFromLocal(product) {
+      if (!product) {
+        return;
+      }
+
       this.productsInQuote = this.productsInQuote.filter(function (productInQuote) {
-        return productInQuote.product_id !== toRemove.product_id;
+        return productInQuote.id !== product.id;
       });
     }
   },
@@ -3911,11 +4006,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.quotes = this.quotes.filter(function (quote) {
         return quote.id !== toRemove.id;
       });
-    },
-    quoteNotDeleted: function quoteNotDeleted() {
-      // called when a quote deletion began, but then AJAX encountered an error.
-      // local list is likely to be out of sync with backend, so re-fetch
-      this.fetchQuotes();
     },
     quoteCreated: function quoteCreated() {
       this.fetchQuotes();
@@ -4034,7 +4124,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 7:
                 _context.prev = 7;
                 _context.t0 = _context["catch"](0);
-                console.error(_context.t0);
+                console.warn(_context.t0);
 
               case 10:
               case "end":
@@ -4059,14 +4149,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 3:
                 response = _context2.sent;
-                _this2.productsInQuote = response.data;
+                _this2.productsInQuote = response.data; //TODO: convert product_id -> id
+
                 _context2.next = 10;
                 break;
 
               case 7:
                 _context2.prev = 7;
                 _context2.t0 = _context2["catch"](0);
-                console.error(_context2.t0);
+                console.warn(_context2.t0);
 
               case 10:
               case "end":
@@ -6021,9 +6112,7 @@ var render = function() {
             options: _vm.allProducts,
             label: "name",
             selectable: function(option) {
-              return !_vm.productsInQuote.some(function(inQuote) {
-                return option.id === inQuote.product_id
-              })
+              return _vm.isSelectable(option)
             }
           },
           model: {
@@ -6158,10 +6247,7 @@ var render = function() {
       "td",
       [
         _c("quote-product-remove", {
-          attrs: {
-            quoteId: _vm.quoteId,
-            productId: parseInt(_vm.product.product_id)
-          },
+          attrs: { quoteId: _vm.quoteId, productId: parseInt(_vm.product.id) },
           on: {
             "remove-begin": function($event) {
               return _vm.$emit("remove-begin", _vm.product)
@@ -6787,7 +6873,7 @@ var render = function() {
               _vm._l(_vm.productsInQuote, function(product) {
                 return [
                   _c("quote-line-edit", {
-                    key: product.product_id,
+                    key: product.id,
                     attrs: {
                       quoteId: parseInt(_vm.quote.id),
                       product: product
@@ -6816,10 +6902,18 @@ var render = function() {
               _vm._v(" "),
               _c("quote-line-add", {
                 attrs: {
+                  quoteId: parseInt(_vm.quote.id),
                   allProducts: _vm.allProducts,
                   productsInQuote: _vm.productsInQuote
                 },
-                on: { addProduct: _vm.addProduct }
+                on: {
+                  "add-product-begin": function(product, count) {
+                    return _vm.addProductToLocal(product, count)
+                  },
+                  "add-product-error": function($event) {
+                    return _vm.fetchProductsInQuote()
+                  }
+                }
               })
             ],
             2
@@ -6894,7 +6988,7 @@ var render = function() {
                       return _vm.quoteDeleted(quote)
                     },
                     "delete-error": function($event) {
-                      return _vm.quoteNotDeleted(quote)
+                      return _vm.fetchQuotes()
                     }
                   }
                 })
@@ -23332,15 +23426,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!****************************************************************!*\
   !*** ./resources/js/components/quotes/QuoteProductCounter.vue ***!
   \****************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _QuoteProductCounter_vue_vue_type_template_id_7cae94fc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./QuoteProductCounter.vue?vue&type=template&id=7cae94fc& */ "./resources/js/components/quotes/QuoteProductCounter.vue?vue&type=template&id=7cae94fc&");
 /* harmony import */ var _QuoteProductCounter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./QuoteProductCounter.vue?vue&type=script&lang=js& */ "./resources/js/components/quotes/QuoteProductCounter.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _QuoteProductCounter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _QuoteProductCounter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -23370,7 +23463,7 @@ component.options.__file = "resources/js/components/quotes/QuoteProductCounter.v
 /*!*****************************************************************************************!*\
   !*** ./resources/js/components/quotes/QuoteProductCounter.vue?vue&type=script&lang=js& ***!
   \*****************************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23763,11 +23856,19 @@ var totals = {
   props: {
     productsInQuote: {
       type: Array,
-      required: true
+      required: true,
+      validator: function validator(value) {
+        return value.every(function (product) {
+          return product.hasOwnProperty('id') && product.hasOwnProperty('name') && product.hasOwnProperty('price_pence') && product.hasOwnProperty('count');
+        });
+      }
     },
     vatRate: {
       type: Number,
-      "default": 0.2
+      "default": 0.2,
+      validator: function validator(value) {
+        return value >= 0;
+      }
     }
   },
   computed: {

@@ -75,6 +75,7 @@ export default {
             try {
                 const response = await axios.get(`/api/quotes/${this.$route.params.id}/products`);
                 this.productsInQuote = response.data;
+                //TODO: convert product_id -> id
             } catch (error) {
                 console.warn(error);
             }

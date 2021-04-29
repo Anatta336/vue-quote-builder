@@ -20,7 +20,7 @@
         <td>
             <quote-product-remove
                 :quoteId="quoteId"
-                :productId="parseInt(product.product_id)"
+                :productId="parseInt(product.id)"
                 @remove-begin="$emit('remove-begin', product)"
                 @remove-success="$emit('remove-success', product)"
                 @remove-error="$emit('remove-error', product)"
@@ -42,10 +42,19 @@ export default {
         quoteId: {
             type: Number,
             required: true,
+            validator(value) {
+                return isInteger(value) && value >= 0;
+            }
         },
         product: {
             type: Object,
             required: true,
+            validator(value) {
+                return value.hasOwnProperty('id')
+                    && value.hasOwnProperty('name')
+                    && value.hasOwnProperty('price_pence')
+                    && value.hasOwnProperty('count');
+            }
         },
     },
     computed: {

@@ -22,6 +22,12 @@ export default {
         product: {
             type: Object,
             required: true,
+            validator(value) {
+                return value.hasOwnProperty('id')
+                    && value.hasOwnProperty('name')
+                    && value.hasOwnProperty('price_pence')
+                    && value.hasOwnProperty('count');
+            },
         },
     },
     components: {
@@ -37,7 +43,7 @@ export default {
             this.$emit('change-begin', newValue, oldValue);
             try {
                 await axios.patch(
-                    `/api/quotes/${this.quoteId}/products/${this.product.product_id}`,
+                    `/api/quotes/${this.quoteId}/products/${this.product.id}`,
                     { 'count': newValue }
                 );
                 this.$emit('change-success', newValue, oldValue);

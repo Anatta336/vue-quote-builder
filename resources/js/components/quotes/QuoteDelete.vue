@@ -12,6 +12,9 @@ export default {
         quote: {
             type: Object,
             required: true,
+            validator(value) {
+                return value.hasOwnProperty('id');
+            },
         },
     },
     emits: [

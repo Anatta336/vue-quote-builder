@@ -29,10 +29,14 @@ ProductInQuote:
     Count
 
 ## Done
-I fixed an issue related to v-for being used with a key that wasn't actually unique to each item in the iteration. That allowed components to be incorrectly reused.
-I created a dedicated component to handle changing the count of a product in a quóte, reducing the number of responsibilities that a single component has.
-I tested different arrangements for handling data that's passed as a prop to a child component changing. I found that when the child component makes a local copy of the data to work with, it can use the BeforeUpdate lifecycle event to refresh that local copy when the data is changed elsewhere.
+I added an extra check to avoid issues caused by the vue-select bug. A watcher checks if the selected product should be selectable, and if not unselects it.
+I learned about custom validators for props.
+I added custom validators to many of the components, mostly checking that a provided object isn't just any object, but has the properties that the component requires it to have.
 
+
+
+----
+I don't like having some products with .id and some with .product_id
 
 ## To Do
 For whole quote edit process, don't rely on the view itself to do the AJAX work.
@@ -44,7 +48,6 @@ Vue-select element for adding product when quote is empty is too small (fix in s
 * Frontend:
     * Review Vue recommended naming conventions, check work.
     * Use learned stuff to do more updates to whole thing.
-        * Use direct event retransmit with like `<button @click="$emit('delete')">Delete</button>` rather than bouncing through a method.
         * Find more places to use renderless components.
         * Show loading indicators?
     * Style project using Tailwind

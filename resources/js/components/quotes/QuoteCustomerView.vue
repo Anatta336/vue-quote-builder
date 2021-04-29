@@ -15,6 +15,11 @@ export default {
         quote: {
             type: Object,
             required: true,
+            validator(value) {
+                return value.hasOwnProperty('id')
+                    && value.hasOwnProperty('customer_name')
+                    && value.hasOwnProperty('customer_email');
+            },
         }
     },
 }

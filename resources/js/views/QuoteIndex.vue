@@ -7,7 +7,7 @@
                 <quote-summary-line-view
                     :quote="quote"
                     @delete-begin="quoteDeleted(quote)"
-                    @delete-error="quoteNotDeleted(quote)"
+                    @delete-error="fetchQuotes()"
                 ></quote-summary-line-view>
             </template>
 
@@ -48,11 +48,6 @@ export default {
         quoteDeleted(toRemove) {
             // remove from local list
             this.quotes = this.quotes.filter((quote) => quote.id !== toRemove.id);
-        },
-        quoteNotDeleted() {
-            // called when a quote deletion began, but then AJAX encountered an error.
-            // local list is likely to be out of sync with backend, so re-fetch
-            this.fetchQuotes();
         },
         quoteCreated() {
             this.fetchQuotes();

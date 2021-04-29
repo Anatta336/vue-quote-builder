@@ -10,10 +10,21 @@ const totals = {
         productsInQuote: {
             type: Array,
             required: true,
+            validator(value) {
+                return value.every((product) => {
+                    return product.hasOwnProperty('id')
+                        && product.hasOwnProperty('name')
+                        && product.hasOwnProperty('price_pence')
+                        && product.hasOwnProperty('count');
+                });
+            },
         },
         vatRate: {
             type: Number,
             default: 0.2,
+            validator(value) {
+                return value >= 0;
+            }
         },
     },
     computed: {

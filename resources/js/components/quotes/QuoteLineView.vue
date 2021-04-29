@@ -21,6 +21,12 @@ export default {
         product: {
             type: Object,
             required: true,
+            validator(value) {
+                return value.hasOwnProperty('id')
+                    && value.hasOwnProperty('name')
+                    && value.hasOwnProperty('price_pence')
+                    && value.hasOwnProperty('count');
+            }
         },
     },
     data() {

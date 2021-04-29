@@ -1,21 +1,11 @@
 <template>
     <tr>
         <td>
-            <!-- vanilla HTML option element
-            <select v-model="product">
-                <option :value="null">
-                    ----
-                </option>
-                <option v-for="product in productsCouldAdd" :key="product.id" :value="product">
-                    {{ product.name }}
-                </option>
-            </select>
-             -->
             <v-select
                 :options="allProducts"
                 label="name"
                 v-model="product"
-                :selectable="(option) => !(productsInQuote.some((inQuote) => option.id === inQuote.product_id))"
+                :selectable="(option) => isSelectable(option)"
             ></v-select>
         </td>
         <td class="count"><div>
@@ -38,13 +28,35 @@ export default {
     name: 'quote-line-add',
     components: {},
     props: {
+        quoteId: {
+            type: Number,
+            required: true,
+            validator(value) {
+                return isInteger(value) && value >= 0;
+            }
+        },
         allProducts: {
             type: Array,
             required: true,
+            validator(value) {
+                return value.every((product) => {
+                    return product.hasOwnProperty('id')
+                        && product.hasOwnProperty('name')
+                        && product.hasOwnProperty('price_pence');
+                });
+            },
         },
         productsInQuote: {
             type: Array,
             required: true,
+            validator(value) {
+                return value.every((product) => {
+                    return product.hasOwnProperty('id')
+                        && product.hasOwnProperty('name')
+                        && product.hasOwnProperty('price_pence')
+                        && product.hasOwnProperty('count');
+                });
+            },
         },
     },
     data() {
@@ -54,48 +66,61 @@ export default {
         };
     },
     computed: {
-        linePrice: function() {
+        linePrice() {
             if (!this.product) {
                 return 0;
             }
             return this.product.price_pence * this.count;
         },
-        /* as used by vanilla Select element
-        productsCouldAdd: function() {
-            return this.allProducts.filter((product) => {
-                return !this.productsInQuote.some((inQuote) => {
-                    return product.id === inQuote.product_id;
-                });
-            });
-        }
-        */
     },
     watch: {
-        count: function(value) {
-            // force to be integer
-            value = Math.round(value);
-
-            // force to be positive
-            if (value < 1) {
-                value = 1;
-            }
-
+        count(value) {
+            // force to be integer >= 1
+            value = Math.max(1, Math.round(value));
             this.count = value;
+        },
+        product(value) {
+            // this shouldn't ever happen, but there's at least one bug in vue-select that
+            // allows selecting an unselectable item. If that happens, unselect it.
+            if (!this.isSelectable(value)) {
+                this.product = null;
+            }
         }
     },
+    emits: [
+        'add-product-begin',   // (product, count)
+        'add-product-success', // (product, count)
+        'add-product-error',   // (product, count)
+    ],
     methods: {
-        addProduct: function() {
+        async addProduct() {
             if (!this.product) {
                 return;
             }
 
-            // send event
-            this.$emit('addProduct', this.product, this.count);
+            const productToAdd = this.product;
+            const countToAdd = this.count;
 
             // reset form
             this.product = null;
             this.count = 1;
+
+            this.$emit('add-product-begin', productToAdd, countToAdd);
+            try {
+                // request to add the product on backend
+                await axios.post(`/api/quotes/${this.quoteId}/products/${productToAdd.id}`, {
+                    'count': countToAdd,
+                });
+                this.$emit('add-product-success', productToAdd, countToAdd);
+            } catch (error) {
+                console.warn(error);
+                this.$emit('add-product-error', productToAdd, countToAdd);
+            }
         },
+        isSelectable(product) {
+            return product
+                && !(this.productsInQuote.some((inQuote) => product.id === inQuote.id));
+        }
     }
 }
 </script>
