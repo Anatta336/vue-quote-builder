@@ -1,4 +1,4 @@
-const totals = {
+const calculateTotals = {
     render() {
         return this.$scopedSlots.default({
             subTotal: this.subTotal,
@@ -41,4 +41,4 @@ const totals = {
         }
     }
 };
-export default totals;
+export default calculateTotals;

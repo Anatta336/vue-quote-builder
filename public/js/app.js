@@ -3446,7 +3446,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _totals_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./totals.js */ "./resources/js/components/quotes/totals.js");
+/* harmony import */ var _calculateTotals_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./calculateTotals.js */ "./resources/js/components/quotes/calculateTotals.js");
 //
 //
 //
@@ -3479,7 +3479,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'quote-totals',
   components: {
-    totals: _totals_js__WEBPACK_IMPORTED_MODULE_0__["default"]
+    calculateTotals: _calculateTotals_js__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: {
     productsInQuote: {
@@ -5736,7 +5736,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("button", [_vm._v("Update Customer")])
+      _c("button", [_vm._v("Update Customer Details")])
     ]
   )
 }
@@ -6435,7 +6435,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("totals", {
+  return _c("calculate-totals", {
     attrs: { productsInQuote: _vm.productsInQuote, vatRate: _vm.vatRate },
     scopedSlots: _vm._u([
       {
@@ -23626,6 +23626,59 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/quotes/calculateTotals.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/quotes/calculateTotals.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var calculateTotals = {
+  render: function render() {
+    return this.$scopedSlots["default"]({
+      subTotal: this.subTotal,
+      vatTotal: this.vatTotal,
+      grandTotal: this.grandTotal
+    });
+  },
+  props: {
+    productsInQuote: {
+      type: Array,
+      required: true,
+      validator: function validator(value) {
+        return value.every(function (product) {
+          return product.hasOwnProperty('id') && product.hasOwnProperty('name') && product.hasOwnProperty('price_pence') && product.hasOwnProperty('count');
+        });
+      }
+    },
+    vatRate: {
+      type: Number,
+      "default": 0.2,
+      validator: function validator(value) {
+        return value >= 0;
+      }
+    }
+  },
+  computed: {
+    subTotal: function subTotal() {
+      return this.productsInQuote.reduce(function (sum, product) {
+        return sum + product.price_pence * product.count;
+      }, 0);
+    },
+    vatTotal: function vatTotal() {
+      return this.subTotal * this.vatRate;
+    },
+    grandTotal: function grandTotal() {
+      return this.subTotal + this.vatTotal;
+    }
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = (calculateTotals);
+
+/***/ }),
+
 /***/ "./resources/js/components/quotes/fetchQuote.js":
 /*!******************************************************!*\
   !*** ./resources/js/components/quotes/fetchQuote.js ***!
@@ -23650,7 +23703,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 var fetchQuote = {
-  // this will be used by QuoteView and QuoteEdit to get the products in the quote
   render: function render() {
     return this.$scopedSlots["default"]({
       fetchQuote: this.fetchQuote,
@@ -23812,59 +23864,6 @@ var fetchQuote = {
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (fetchQuote);
-
-/***/ }),
-
-/***/ "./resources/js/components/quotes/totals.js":
-/*!**************************************************!*\
-  !*** ./resources/js/components/quotes/totals.js ***!
-  \**************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var totals = {
-  render: function render() {
-    return this.$scopedSlots["default"]({
-      subTotal: this.subTotal,
-      vatTotal: this.vatTotal,
-      grandTotal: this.grandTotal
-    });
-  },
-  props: {
-    productsInQuote: {
-      type: Array,
-      required: true,
-      validator: function validator(value) {
-        return value.every(function (product) {
-          return product.hasOwnProperty('id') && product.hasOwnProperty('name') && product.hasOwnProperty('price_pence') && product.hasOwnProperty('count');
-        });
-      }
-    },
-    vatRate: {
-      type: Number,
-      "default": 0.2,
-      validator: function validator(value) {
-        return value >= 0;
-      }
-    }
-  },
-  computed: {
-    subTotal: function subTotal() {
-      return this.productsInQuote.reduce(function (sum, product) {
-        return sum + product.price_pence * product.count;
-      }, 0);
-    },
-    vatTotal: function vatTotal() {
-      return this.subTotal * this.vatRate;
-    },
-    grandTotal: function grandTotal() {
-      return this.subTotal + this.vatTotal;
-    }
-  }
-};
-/* harmony default export */ __webpack_exports__["default"] = (totals);
 
 /***/ }),
 

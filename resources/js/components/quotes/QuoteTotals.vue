@@ -1,5 +1,5 @@
 <template>
-    <totals
+    <calculate-totals
         :productsInQuote="productsInQuote"
         :vatRate="vatRate"
         v-slot:default="{ subTotal, vatTotal, grandTotal }"
@@ -24,15 +24,15 @@
                 </span>
             </div>
         </div>
-    </totals>
+    </calculate-totals>
 </template>
 <script>
-import totals from './totals.js';
+import calculateTotals from './calculateTotals.js';
 
 export default {
     name: 'quote-totals',
     components: {
-        totals,
+        calculateTotals,
     },
     props: {
         productsInQuote: {

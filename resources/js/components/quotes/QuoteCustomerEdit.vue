@@ -14,7 +14,7 @@
                 </label>
                 <error-list v-if="errors" :errors="errors.customer_email"/>
             </div>
-            <button>Update Customer</button>
+            <button>Update Customer Details</button>
         </form>
 </template>
 <script>

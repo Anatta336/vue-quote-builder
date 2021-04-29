@@ -1,5 +1,4 @@
 const fetchQuote = {
-    // this will be used by QuoteView and QuoteEdit to get the products in the quote
     render() {
         return this.$scopedSlots.default({
             fetchQuote: this.fetchQuote,
