@@ -43,7 +43,7 @@ export default {
             type: Number,
             required: true,
             validator(value) {
-                return isInteger(value) && value >= 0;
+                return Number.isInteger(value) && value >= 0;
             }
         },
         product: {
