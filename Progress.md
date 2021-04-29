@@ -33,10 +33,10 @@ I added an extra check to avoid issues caused by the vue-select bug. A watcher c
 I learned about custom validators for props.
 I added custom validators to many of the components, mostly checking that a provided object isn't just any object, but has the properties that the component requires it to have.
 
-
+I created a renderless component to handle the fetch requests and processing of responses, which previously was repeated between editing and viewing.
 
 ----
-I don't like having some products with .id and some with .product_id
+Renderless component "totals" should be a two-word name
 
 ## To Do
 For whole quote edit process, don't rely on the view itself to do the AJAX work.

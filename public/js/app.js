@@ -2774,7 +2774,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       type: Number,
       required: true,
       validator: function validator(value) {
-        return isInteger(value) && value >= 0;
+        return Number.isInteger(value) && value >= 0;
       }
     },
     allProducts: {
@@ -2946,7 +2946,7 @@ __webpack_require__.r(__webpack_exports__);
       type: Number,
       required: true,
       validator: function validator(value) {
-        return isInteger(value) && value >= 0;
+        return Number.isInteger(value) && value >= 0;
       }
     },
     product: {
@@ -3680,72 +3680,71 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_quotes_fetchQuote_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/quotes/fetchQuote.js */ "./resources/js/components/quotes/fetchQuote.js");
 /* harmony import */ var _components_quotes_QuoteCustomerEdit_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/quotes/QuoteCustomerEdit.vue */ "./resources/js/components/quotes/QuoteCustomerEdit.vue");
 /* harmony import */ var _components_quotes_QuoteLineEdit_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/quotes/QuoteLineEdit.vue */ "./resources/js/components/quotes/QuoteLineEdit.vue");
 /* harmony import */ var _components_quotes_QuoteLineAdd_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/quotes/QuoteLineAdd.vue */ "./resources/js/components/quotes/QuoteLineAdd.vue");
 /* harmony import */ var _components_quotes_QuoteTotals_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/quotes/QuoteTotals.vue */ "./resources/js/components/quotes/QuoteTotals.vue");
 /* harmony import */ var _components_quotes_QuoteEmail_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/quotes/QuoteEmail.vue */ "./resources/js/components/quotes/QuoteEmail.vue");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -3754,159 +3753,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "quote-edit",
   components: {
+    fetchQuote: _components_quotes_fetchQuote_js__WEBPACK_IMPORTED_MODULE_0__["default"],
     QuoteCustomerEdit: _components_quotes_QuoteCustomerEdit_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     QuoteLineEdit: _components_quotes_QuoteLineEdit_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     QuoteLineAdd: _components_quotes_QuoteLineAdd_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     QuoteTotals: _components_quotes_QuoteTotals_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     QuoteEmail: _components_quotes_QuoteEmail_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
-  },
-  data: function data() {
-    return {
-      quote: null,
-      allProducts: [],
-      productsInQuote: [],
-      vatRate: 0.2
-    };
-  },
-  methods: {
-    fetchQuote: function fetchQuote() {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.prev = 0;
-                _context.next = 3;
-                return axios.get("/api/quotes/".concat(_this.$route.params.id));
-
-              case 3:
-                response = _context.sent;
-                _this.quote = response.data;
-                _context.next = 10;
-                break;
-
-              case 7:
-                _context.prev = 7;
-                _context.t0 = _context["catch"](0);
-                console.warn(_context.t0);
-
-              case 10:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, null, [[0, 7]]);
-      }))();
-    },
-    fetchAllProducts: function fetchAllProducts() {
-      var _this2 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.prev = 0;
-                _context2.next = 3;
-                return axios.get('/api/products');
-
-              case 3:
-                response = _context2.sent;
-                _this2.allProducts = response.data;
-                _context2.next = 10;
-                break;
-
-              case 7:
-                _context2.prev = 7;
-                _context2.t0 = _context2["catch"](0);
-                console.warn(_context2.t0);
-
-              case 10:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, null, [[0, 7]]);
-      }))();
-    },
-    fetchProductsInQuote: function fetchProductsInQuote() {
-      var _this3 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.prev = 0;
-                _context3.next = 3;
-                return axios.get("/api/quotes/".concat(_this3.$route.params.id, "/products"));
-
-              case 3:
-                response = _context3.sent;
-                _this3.productsInQuote = response.data.map(function (responseProduct) {
-                  // the response has:  .product_id, .name, .price_pence, .count
-                  // but want to store:         .id, .name, .price_pence, .count
-                  return _objectSpread(_objectSpread({}, responseProduct), {}, {
-                    id: responseProduct.product_id,
-                    product_id: undefined
-                  });
-                });
-                _this3.productsInQuote = response.data;
-                _context3.next = 11;
-                break;
-
-              case 8:
-                _context3.prev = 8;
-                _context3.t0 = _context3["catch"](0);
-                console.warn(_context3.t0);
-
-              case 11:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, null, [[0, 8]]);
-      }))();
-    },
-    addProductToLocal: function addProductToLocal(product, count) {
-      if (!product) {
-        return;
-      }
-
-      this.productsInQuote.push(_objectSpread(_objectSpread({}, product), {}, {
-        count: count
-      }));
-    },
-    changeCountInLocal: function changeCountInLocal(product, newCount) {
-      if (!product) {
-        return;
-      }
-
-      product.count = newCount;
-
-      if (newCount <= 0) {
-        this.removeProductFromLocal(product);
-      }
-    },
-    removeProductFromLocal: function removeProductFromLocal(product) {
-      if (!product) {
-        return;
-      }
-
-      this.productsInQuote = this.productsInQuote.filter(function (productInQuote) {
-        return productInQuote.id !== product.id;
-      });
-    }
-  },
-  mounted: function mounted() {
-    this.fetchQuote();
-    this.fetchAllProducts();
-    this.fetchProductsInQuote();
   }
 });
 
@@ -4027,61 +3879,61 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_quotes_fetchQuote_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/quotes/fetchQuote.js */ "./resources/js/components/quotes/fetchQuote.js");
 /* harmony import */ var _components_quotes_QuoteCustomerView_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/quotes/QuoteCustomerView.vue */ "./resources/js/components/quotes/QuoteCustomerView.vue");
 /* harmony import */ var _components_quotes_QuoteLineView_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/quotes/QuoteLineView.vue */ "./resources/js/components/quotes/QuoteLineView.vue");
 /* harmony import */ var _components_quotes_QuoteTotals_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/quotes/QuoteTotals.vue */ "./resources/js/components/quotes/QuoteTotals.vue");
 /* harmony import */ var _components_quotes_QuoteEmail_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/quotes/QuoteEmail.vue */ "./resources/js/components/quotes/QuoteEmail.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -4089,88 +3941,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "quote-view",
   components: {
+    fetchQuote: _components_quotes_fetchQuote_js__WEBPACK_IMPORTED_MODULE_0__["default"],
     QuoteCustomerView: _components_quotes_QuoteCustomerView_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     QuoteLineView: _components_quotes_QuoteLineView_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     QuoteTotals: _components_quotes_QuoteTotals_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     QuoteEmail: _components_quotes_QuoteEmail_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
-  },
-  data: function data() {
-    return {
-      quote: null,
-      productsInQuote: [],
-      vatRate: 0.2
-    };
-  },
-  methods: {
-    fetchQuote: function fetchQuote() {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.prev = 0;
-                _context.next = 3;
-                return axios.get("/api/quotes/".concat(_this.$route.params.id));
-
-              case 3:
-                response = _context.sent;
-                _this.quote = response.data;
-                _context.next = 10;
-                break;
-
-              case 7:
-                _context.prev = 7;
-                _context.t0 = _context["catch"](0);
-                console.warn(_context.t0);
-
-              case 10:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, null, [[0, 7]]);
-      }))();
-    },
-    fetchProductsInQuote: function fetchProductsInQuote() {
-      var _this2 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.prev = 0;
-                _context2.next = 3;
-                return axios.get("/api/quotes/".concat(_this2.$route.params.id, "/products"));
-
-              case 3:
-                response = _context2.sent;
-                _this2.productsInQuote = response.data; //TODO: convert product_id -> id
-
-                _context2.next = 10;
-                break;
-
-              case 7:
-                _context2.prev = 7;
-                _context2.t0 = _context2["catch"](0);
-                console.warn(_context2.t0);
-
-              case 10:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, null, [[0, 7]]);
-      }))();
-    }
-  },
-  mounted: function mounted() {
-    this.fetchQuote();
-    this.fetchProductsInQuote();
   }
 });
 
@@ -6852,102 +6627,112 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.quote
-    ? _c(
-        "div",
-        { staticClass: "quote-edit" },
-        [
-          _c("h1", [_vm._v("Edit Quote")]),
-          _vm._v(" "),
-          _c("quote-customer-edit", { attrs: { quote: _vm.quote } }),
-          _vm._v(" "),
-          _c(
-            "table",
-            [
-              _vm._m(0),
-              _vm._v(" "),
-              !_vm.productsInQuote
-                ? _c("tr", [_c("th", [_vm._v("No products in quote.")])])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm._l(_vm.productsInQuote, function(product) {
-                return [
-                  _c("quote-line-edit", {
-                    key: product.id,
-                    attrs: {
-                      quoteId: parseInt(_vm.quote.id),
-                      product: product
-                    },
-                    on: {
-                      "change-count-begin": function(
-                        product,
-                        newCount,
-                        oldCount
-                      ) {
-                        return _vm.changeCountInLocal(product, newCount)
-                      },
-                      "change-count-error": function($event) {
-                        return _vm.fetchProductsInQuote()
-                      },
-                      "remove-begin": function($event) {
-                        return _vm.removeProductFromLocal(product)
-                      },
-                      "remove-error": function($event) {
-                        return _vm.fetchProductsInQuote()
-                      }
-                    }
-                  })
-                ]
-              }),
-              _vm._v(" "),
-              _c("quote-line-add", {
-                attrs: {
-                  quoteId: parseInt(_vm.quote.id),
-                  allProducts: _vm.allProducts,
-                  productsInQuote: _vm.productsInQuote
-                },
-                on: {
-                  "add-product-begin": function(product, count) {
-                    return _vm.addProductToLocal(product, count)
-                  },
-                  "add-product-error": function($event) {
-                    return _vm.fetchProductsInQuote()
-                  }
-                }
-              })
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _c("quote-totals", {
-            attrs: {
-              productsInQuote: _vm.productsInQuote,
-              vatRate: _vm.vatRate
-            }
-          }),
-          _vm._v(" "),
-          _c("quote-email", { attrs: { quote: _vm.quote } })
-        ],
-        1
-      )
-    : _vm._e()
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("th", [_vm._v("Product")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Count")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Line Price")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Actions")])
+  return _c("fetch-quote", {
+    scopedSlots: _vm._u([
+      {
+        key: "default",
+        fn: function(ref) {
+          var fetchProductsInQuote = ref.fetchProductsInQuote
+          var quote = ref.quote
+          var allProducts = ref.allProducts
+          var productsInQuote = ref.productsInQuote
+          var addProductToLocal = ref.addProductToLocal
+          var changeCountInLocal = ref.changeCountInLocal
+          var removeProductFromLocal = ref.removeProductFromLocal
+          return [
+            quote
+              ? _c(
+                  "div",
+                  { staticClass: "quote-edit" },
+                  [
+                    _c("h1", [_vm._v("Edit Quote")]),
+                    _vm._v(" "),
+                    _c("quote-customer-edit", { attrs: { quote: quote } }),
+                    _vm._v(" "),
+                    _c(
+                      "table",
+                      [
+                        _c("tr", [
+                          _c("th", [_vm._v("Product")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Count")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Line Price")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Actions")])
+                        ]),
+                        _vm._v(" "),
+                        !productsInQuote
+                          ? _c("tr", [
+                              _c("th", [_vm._v("No products in quote.")])
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm._l(productsInQuote, function(product) {
+                          return [
+                            _c("quote-line-edit", {
+                              key: product.id,
+                              attrs: {
+                                quoteId: parseInt(quote.id),
+                                product: product
+                              },
+                              on: {
+                                "change-count-begin": function(
+                                  product,
+                                  newCount,
+                                  oldCount
+                                ) {
+                                  return changeCountInLocal(product, newCount)
+                                },
+                                "change-count-error": function($event) {
+                                  return fetchProductsInQuote()
+                                },
+                                "remove-begin": function($event) {
+                                  return removeProductFromLocal(product)
+                                },
+                                "remove-error": function($event) {
+                                  return fetchProductsInQuote()
+                                }
+                              }
+                            })
+                          ]
+                        }),
+                        _vm._v(" "),
+                        _c("quote-line-add", {
+                          attrs: {
+                            quoteId: parseInt(quote.id),
+                            allProducts: allProducts,
+                            productsInQuote: productsInQuote
+                          },
+                          on: {
+                            "add-product-begin": function(product, count) {
+                              return addProductToLocal(product, count)
+                            },
+                            "add-product-error": function($event) {
+                              return fetchProductsInQuote()
+                            }
+                          }
+                        })
+                      ],
+                      2
+                    ),
+                    _vm._v(" "),
+                    _c("quote-totals", {
+                      attrs: { productsInQuote: productsInQuote }
+                    }),
+                    _vm._v(" "),
+                    _c("quote-email", { attrs: { quote: quote } })
+                  ],
+                  1
+                )
+              : _vm._e()
+          ]
+        }
+      }
     ])
-  }
-]
+  })
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -7038,77 +6823,82 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.quote
-    ? _c(
-        "div",
-        { staticClass: "quote-view" },
-        [
-          _c("h1", [_vm._v("View Quote")]),
-          _vm._v(" "),
-          _c("quote-customer-view", { attrs: { quote: _vm.quote } }),
-          _vm._v(" "),
-          _c(
-            "table",
-            [
-              _vm._m(0),
-              _vm._v(" "),
-              !_vm.productsInQuote
-                ? _c("tr", [_c("th", [_vm._v("No products in quote.")])])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm._l(_vm.productsInQuote, function(product) {
-                return [
-                  _c("quote-line-view", {
-                    key: product.id,
-                    attrs: { product: product }
-                  })
-                ]
-              })
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _c("quote-totals", {
-            attrs: {
-              productsInQuote: _vm.productsInQuote,
-              vatRate: _vm.vatRate
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "router-link",
-            {
-              staticClass: "button",
-              attrs: {
-                to: {
-                  name: "quotes.edit",
-                  params: { id: _vm.quote.id }
-                }
-              }
-            },
-            [_vm._v("\n        Edit\n    ")]
-          ),
-          _vm._v(" "),
-          _c("quote-email", { attrs: { quote: _vm.quote } })
-        ],
-        1
-      )
-    : _vm._e()
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("th", [_vm._v("Product")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Count")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Line Price")])
+  return _c("fetch-quote", {
+    scopedSlots: _vm._u([
+      {
+        key: "default",
+        fn: function(ref) {
+          var quote = ref.quote
+          var productsInQuote = ref.productsInQuote
+          return [
+            quote
+              ? _c(
+                  "div",
+                  { staticClass: "quote-view" },
+                  [
+                    _c("h1", [_vm._v("View Quote")]),
+                    _vm._v(" "),
+                    _c("quote-customer-view", { attrs: { quote: quote } }),
+                    _vm._v(" "),
+                    _c(
+                      "table",
+                      [
+                        _c("tr", [
+                          _c("th", [_vm._v("Product")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Count")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Line Price")])
+                        ]),
+                        _vm._v(" "),
+                        !productsInQuote
+                          ? _c("tr", [
+                              _c("th", [_vm._v("No products in quote.")])
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm._l(productsInQuote, function(product) {
+                          return [
+                            _c("quote-line-view", {
+                              key: product.id,
+                              attrs: { product: product }
+                            })
+                          ]
+                        })
+                      ],
+                      2
+                    ),
+                    _vm._v(" "),
+                    _c("quote-totals", {
+                      attrs: { productsInQuote: productsInQuote }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "button",
+                        attrs: {
+                          to: {
+                            name: "quotes.edit",
+                            params: { id: quote.id }
+                          }
+                        }
+                      },
+                      [_vm._v("\n            Edit\n        ")]
+                    ),
+                    _vm._v(" "),
+                    _c("quote-email", { attrs: { quote: quote } })
+                  ],
+                  1
+                )
+              : _vm._e()
+          ]
+        }
+      }
     ])
-  }
-]
+  })
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -23833,6 +23623,195 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QuoteTotals_vue_vue_type_template_id_1a267ac4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/components/quotes/fetchQuote.js":
+/*!******************************************************!*\
+  !*** ./resources/js/components/quotes/fetchQuote.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var fetchQuote = {
+  // this will be used by QuoteView and QuoteEdit to get the products in the quote
+  render: function render() {
+    return this.$scopedSlots["default"]({
+      fetchQuote: this.fetchQuote,
+      fetchAllProducts: this.fetchAllProducts,
+      fetchProductsInQuote: this.fetchProductsInQuote,
+      quote: this.quote,
+      allProducts: this.allProducts,
+      productsInQuote: this.productsInQuote,
+      addProductToLocal: this.addProductToLocal,
+      changeCountInLocal: this.changeCountInLocal,
+      removeProductFromLocal: this.removeProductFromLocal
+    });
+  },
+  data: function data() {
+    return {
+      quote: null,
+      allProducts: [],
+      productsInQuote: []
+    };
+  },
+  methods: {
+    fetchQuote: function fetchQuote() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return axios.get("/api/quotes/".concat(_this.$route.params.id));
+
+              case 3:
+                response = _context.sent;
+                _this.quote = response.data;
+                _context.next = 10;
+                break;
+
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](0);
+                console.warn(_context.t0);
+
+              case 10:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[0, 7]]);
+      }))();
+    },
+    fetchAllProducts: function fetchAllProducts() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return axios.get('/api/products');
+
+              case 3:
+                response = _context2.sent;
+                _this2.allProducts = response.data;
+                _context2.next = 10;
+                break;
+
+              case 7:
+                _context2.prev = 7;
+                _context2.t0 = _context2["catch"](0);
+                console.warn(_context2.t0);
+
+              case 10:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[0, 7]]);
+      }))();
+    },
+    fetchProductsInQuote: function fetchProductsInQuote() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.prev = 0;
+                _context3.next = 3;
+                return axios.get("/api/quotes/".concat(_this3.$route.params.id, "/products"));
+
+              case 3:
+                response = _context3.sent;
+                _this3.productsInQuote = response.data.map(function (responseProduct) {
+                  // the response has:  .product_id, .name, .price_pence, .count
+                  // but want to store:         .id, .name, .price_pence, .count
+                  return _objectSpread(_objectSpread({}, responseProduct), {}, {
+                    id: responseProduct.product_id,
+                    product_id: undefined
+                  });
+                });
+                _context3.next = 10;
+                break;
+
+              case 7:
+                _context3.prev = 7;
+                _context3.t0 = _context3["catch"](0);
+                console.warn(_context3.t0);
+
+              case 10:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, null, [[0, 7]]);
+      }))();
+    },
+    addProductToLocal: function addProductToLocal(product, count) {
+      if (!product) {
+        return;
+      }
+
+      this.productsInQuote.push(_objectSpread(_objectSpread({}, product), {}, {
+        count: count
+      }));
+    },
+    changeCountInLocal: function changeCountInLocal(product, newCount) {
+      if (!product) {
+        return;
+      }
+
+      product.count = newCount;
+
+      if (newCount <= 0) {
+        this.removeProductFromLocal(product);
+      }
+    },
+    removeProductFromLocal: function removeProductFromLocal(product) {
+      if (!product) {
+        return;
+      }
+
+      this.productsInQuote = this.productsInQuote.filter(function (productInQuote) {
+        return productInQuote.id !== product.id;
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.fetchQuote();
+    this.fetchAllProducts();
+    this.fetchProductsInQuote();
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = (fetchQuote);
 
 /***/ }),
 
