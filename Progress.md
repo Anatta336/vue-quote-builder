@@ -29,11 +29,7 @@ ProductInQuote:
     Count
 
 ## Done
-I added an extra check to avoid issues caused by the vue-select bug. A watcher checks if the selected product should be selectable, and if not unselects it.
-I learned about custom validators for props.
-I added custom validators to many of the components, mostly checking that a provided object isn't just any object, but has the properties that the component requires it to have.
 
-I created a renderless component to handle the fetch requests and processing of responses, which previously was repeated between editing and viewing.
 
 ----
 Renderless component "totals" should be a two-word name

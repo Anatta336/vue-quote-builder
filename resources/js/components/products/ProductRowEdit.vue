@@ -1,20 +1,35 @@
 <template>
-    <tr>
-        <td>
-            <form @submit.prevent="storeProduct">
-                <input v-model="productName" type="text">
+    <tr class="h-10">
+        <td class="p-2"
+            style="text-align: left; vertical-align: middle;"
+        >
+            <form class="m-0" @submit.prevent="storeProduct">
+                <input
+                    v-model="productName"
+                    type="text"
+                    class="p-2 bg-blue-100 w-full"
+                >
                 <error-list :errors="errors.name"/>
             </form>
         </td>
-        <td>
-            <form @submit.prevent="storeProduct">
-                £<input v-model="pricePounds" type="text">
+        <td class="p-2"
+            style="text-align: center; vertical-align: middle;"
+        >
+            <form class="m-0" @submit.prevent="storeProduct">
+                £<input
+                    v-model="pricePounds"
+                    type="text"
+                    class="p-2 w-16 bg-blue-100"
+                >
                 <error-list :errors="errors.price_pence"/>
             </form>
         </td>
-        <td>
+        <td class="p-2"
+            style="text-align: center; vertical-align: middle;"
+        >
             <button
                 @click="storeProduct"
+                class="p-2 rounded-sm bg-green-400"
             >
                 Store
             </button>

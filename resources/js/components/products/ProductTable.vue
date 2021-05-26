@@ -1,5 +1,5 @@
 <template>
-    <table>
+    <table class="w-full">
         <tr>
             <th>Product</th>
             <th>Price</th>

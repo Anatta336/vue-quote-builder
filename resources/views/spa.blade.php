@@ -10,8 +10,21 @@
 
     <title>Quote Builder</title>
 </head>
-<body>
-    <div id="app">
+<body class="
+    bg-gray-300
+    flex
+    flex-col
+    items-center
+">
+    <div
+        id="app"
+        class="
+            bg-blue-200
+            m-4
+            rounded
+        "
+        style="width: 712px;"
+    >
         <app></app>
     </div>
 </body>

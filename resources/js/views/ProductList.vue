@@ -8,6 +8,7 @@
                     :product="product"
                     @edit="beginEdit(product)"
                     @delete="productDeleted(product.id)"
+                    class="odd:bg-blue-300"
                 ></product-row-view>
             </template>
 
@@ -17,6 +18,7 @@
                     :product="product"
                     @update="productUpdated"
                     @delete="productDeleted(product.id)"
+                    class="odd:bg-blue-300"
                 ></product-row-edit>
             </template>
 
@@ -24,6 +26,7 @@
             <template v-slot:after-table-rows>
                 <product-row-add
                     @add="productAdded"
+                    class="odd:bg-blue-300"
                 ></product-row-add>
             </template>
         </product-table>

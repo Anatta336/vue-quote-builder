@@ -1,16 +1,27 @@
 <template>
-    <tr>
-        <td>
+    <tr class="h-10">
+        <td class="p-2"
+            style="text-align: left; vertical-align: middle;"
+        >
             {{ product.name }}
         </td>
-        <td>
+        <td class="p-2"
+            style="text-align: center; vertical-align: middle;"
+        >
             <span class="money">
                 {{ product.price_pence | penceAsPounds }}
             </span>
         </td>
-        <td>
+        <td class="p-2"
+            style="text-align: center; vertical-align: middle;"
+        >
             <button
                 @click="$emit('edit')"
+                class="
+                    bg-yellow-300
+                    rounded-sm
+                    p-2
+                "
             >
                 Edit
             </button>

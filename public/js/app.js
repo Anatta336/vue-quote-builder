@@ -2023,6 +2023,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'product-delete',
   props: {
@@ -2094,6 +2101,26 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2225,6 +2252,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2323,6 +2365,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ProductDelete_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProductDelete.vue */ "./resources/js/components/products/ProductDelete.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3529,6 +3582,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
@@ -3554,6 +3631,9 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
 //
 //
 //
@@ -22480,7 +22560,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "button",
-    { staticClass: "danger", on: { click: _vm.deleteProduct } },
+    {
+      staticClass:
+        "\n        bg-red-500\n        rounded-sm\n        p-2\n    ",
+      on: { click: _vm.deleteProduct }
+    },
     [_vm._t("default", [_vm._v("\n        Delete\n    ")])],
     2
   )
@@ -22507,87 +22591,121 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("tr", [
-    _c("td", [
-      _c(
-        "form",
-        {
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.addProduct($event)
-            }
-          }
-        },
-        [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.productName,
-                expression: "productName"
-              }
-            ],
-            attrs: { type: "text", placeholder: "New Product Name" },
-            domProps: { value: _vm.productName },
+  return _c("tr", { staticClass: "h-10" }, [
+    _c(
+      "td",
+      {
+        staticClass: "p-2",
+        staticStyle: { "text-align": "left", "vertical-align": "middle" }
+      },
+      [
+        _c(
+          "form",
+          {
+            staticClass: "m-0",
             on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.addProduct($event)
+              }
+            }
+          },
+          [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.productName,
+                  expression: "productName"
                 }
-                _vm.productName = $event.target.value
+              ],
+              staticClass: "p-2 bg-blue-100 w-full",
+              attrs: { type: "text", placeholder: "New Product Name" },
+              domProps: { value: _vm.productName },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.productName = $event.target.value
+                }
               }
-            }
-          }),
-          _vm._v(" "),
-          _c("error-list", { attrs: { errors: _vm.errors.name } })
-        ],
-        1
-      )
-    ]),
+            }),
+            _vm._v(" "),
+            _c("error-list", { attrs: { errors: _vm.errors.name } })
+          ],
+          1
+        )
+      ]
+    ),
     _vm._v(" "),
-    _c("td", [
-      _c(
-        "form",
-        {
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.addProduct($event)
-            }
-          }
-        },
-        [
-          _vm._v("\n            £"),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.pricePounds,
-                expression: "pricePounds"
-              }
-            ],
-            attrs: { type: "text" },
-            domProps: { value: _vm.pricePounds },
+    _c(
+      "td",
+      {
+        staticClass: "p-2",
+        staticStyle: { "text-align": "center", "vertical-align": "middle" }
+      },
+      [
+        _c(
+          "form",
+          {
+            staticClass: "m-0",
             on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.pricePounds = $event.target.value
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.addProduct($event)
               }
             }
-          }),
-          _vm._v(" "),
-          _c("error-list", { attrs: { errors: _vm.errors.price_pence } })
-        ],
-        1
-      )
-    ]),
+          },
+          [
+            _vm._v("\n            £"),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.pricePounds,
+                  expression: "pricePounds"
+                }
+              ],
+              staticClass: "p-2 w-16 bg-blue-100",
+              attrs: { type: "text" },
+              domProps: { value: _vm.pricePounds },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.pricePounds = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("error-list", { attrs: { errors: _vm.errors.price_pence } })
+          ],
+          1
+        )
+      ]
+    ),
     _vm._v(" "),
-    _c("td", [_c("button", { on: { click: _vm.addProduct } }, [_vm._v("Add")])])
+    _c(
+      "td",
+      {
+        staticClass: "p-2",
+        staticStyle: { "text-align": "center", "vertical-align": "middle" }
+      },
+      [
+        _c(
+          "button",
+          {
+            staticClass: "p-2 rounded-sm bg-green-400",
+            on: { click: _vm.addProduct }
+          },
+          [_vm._v("\n            Add\n        ")]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -22612,92 +22730,119 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("tr", [
-    _c("td", [
-      _c(
-        "form",
-        {
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.storeProduct($event)
-            }
-          }
-        },
-        [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.productName,
-                expression: "productName"
-              }
-            ],
-            attrs: { type: "text" },
-            domProps: { value: _vm.productName },
+  return _c("tr", { staticClass: "h-10" }, [
+    _c(
+      "td",
+      {
+        staticClass: "p-2",
+        staticStyle: { "text-align": "left", "vertical-align": "middle" }
+      },
+      [
+        _c(
+          "form",
+          {
+            staticClass: "m-0",
             on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.storeProduct($event)
+              }
+            }
+          },
+          [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.productName,
+                  expression: "productName"
                 }
-                _vm.productName = $event.target.value
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("error-list", { attrs: { errors: _vm.errors.name } })
-        ],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c("td", [
-      _c(
-        "form",
-        {
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.storeProduct($event)
-            }
-          }
-        },
-        [
-          _vm._v("\n            £"),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.pricePounds,
-                expression: "pricePounds"
-              }
-            ],
-            attrs: { type: "text" },
-            domProps: { value: _vm.pricePounds },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+              ],
+              staticClass: "p-2 bg-blue-100 w-full",
+              attrs: { type: "text" },
+              domProps: { value: _vm.productName },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.productName = $event.target.value
                 }
-                _vm.pricePounds = $event.target.value
               }
-            }
-          }),
-          _vm._v(" "),
-          _c("error-list", { attrs: { errors: _vm.errors.price_pence } })
-        ],
-        1
-      )
-    ]),
+            }),
+            _vm._v(" "),
+            _c("error-list", { attrs: { errors: _vm.errors.name } })
+          ],
+          1
+        )
+      ]
+    ),
     _vm._v(" "),
     _c(
       "td",
+      {
+        staticClass: "p-2",
+        staticStyle: { "text-align": "center", "vertical-align": "middle" }
+      },
       [
-        _c("button", { on: { click: _vm.storeProduct } }, [
-          _vm._v("\n            Store\n        ")
-        ]),
+        _c(
+          "form",
+          {
+            staticClass: "m-0",
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.storeProduct($event)
+              }
+            }
+          },
+          [
+            _vm._v("\n            £"),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.pricePounds,
+                  expression: "pricePounds"
+                }
+              ],
+              staticClass: "p-2 w-16 bg-blue-100",
+              attrs: { type: "text" },
+              domProps: { value: _vm.pricePounds },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.pricePounds = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("error-list", { attrs: { errors: _vm.errors.price_pence } })
+          ],
+          1
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "td",
+      {
+        staticClass: "p-2",
+        staticStyle: { "text-align": "center", "vertical-align": "middle" }
+      },
+      [
+        _c(
+          "button",
+          {
+            staticClass: "p-2 rounded-sm bg-green-400",
+            on: { click: _vm.storeProduct }
+          },
+          [_vm._v("\n            Store\n        ")]
+        ),
         _vm._v(" "),
         _c("product-delete", {
           attrs: { product: _vm.product },
@@ -22734,25 +22879,45 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("tr", [
-    _c("td", [_vm._v("\n        " + _vm._s(_vm.product.name) + "\n    ")]),
-    _vm._v(" "),
-    _c("td", [
-      _c("span", { staticClass: "money" }, [
-        _vm._v(
-          "\n            " +
-            _vm._s(_vm._f("penceAsPounds")(_vm.product.price_pence)) +
-            "\n        "
-        )
-      ])
-    ]),
+  return _c("tr", { staticClass: "h-10" }, [
+    _c(
+      "td",
+      {
+        staticClass: "p-2",
+        staticStyle: { "text-align": "left", "vertical-align": "middle" }
+      },
+      [_vm._v("\n        " + _vm._s(_vm.product.name) + "\n    ")]
+    ),
     _vm._v(" "),
     _c(
       "td",
+      {
+        staticClass: "p-2",
+        staticStyle: { "text-align": "center", "vertical-align": "middle" }
+      },
+      [
+        _c("span", { staticClass: "money" }, [
+          _vm._v(
+            "\n            " +
+              _vm._s(_vm._f("penceAsPounds")(_vm.product.price_pence)) +
+              "\n        "
+          )
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "td",
+      {
+        staticClass: "p-2",
+        staticStyle: { "text-align": "center", "vertical-align": "middle" }
+      },
       [
         _c(
           "button",
           {
+            staticClass:
+              "\n                bg-yellow-300\n                rounded-sm\n                p-2\n            ",
             on: {
               click: function($event) {
                 return _vm.$emit("edit")
@@ -22805,6 +22970,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "table",
+    { staticClass: "w-full" },
     [
       _vm._m(0),
       _vm._v(" "),
@@ -23720,18 +23886,40 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "w-full" }, [
     _c("header", [
       _c(
         "nav",
+        {
+          staticClass:
+            "\n            flex\n            w-full\n            justify-center\n            gap-6\n            pt-6\n        "
+        },
         [
-          _c("router-link", { attrs: { to: { name: "products.index" } } }, [
-            _vm._v("\n            Products\n            ")
-          ]),
+          _c(
+            "router-link",
+            {
+              staticClass:
+                "\n                    bg-blue-400\n                    p-2\n                    rounded-sm\n                    border-orange-300\n                ",
+              attrs: {
+                to: { name: "products.index" },
+                "active-class": "border-b-4"
+              }
+            },
+            [_vm._v("\n            Products\n            ")]
+          ),
           _vm._v(" "),
-          _c("router-link", { attrs: { to: { name: "quotes.index" } } }, [
-            _vm._v("\n            Quotes\n            ")
-          ])
+          _c(
+            "router-link",
+            {
+              staticClass:
+                "\n                    bg-blue-400\n                    p-2\n                    rounded-sm\n                    border-orange-300\n                ",
+              attrs: {
+                to: { name: "quotes.index" },
+                "active-class": "border-b-4"
+              }
+            },
+            [_vm._v("\n            Quotes\n            ")]
+          )
         ],
         1
       )
@@ -23775,6 +23963,7 @@ var render = function() {
               var product = ref.product
               return [
                 _c("product-row-view", {
+                  staticClass: "odd:bg-blue-300",
                   attrs: { product: product },
                   on: {
                     edit: function($event) {
@@ -23794,6 +23983,7 @@ var render = function() {
               var product = ref.product
               return [
                 _c("product-row-edit", {
+                  staticClass: "odd:bg-blue-300",
                   attrs: { product: product },
                   on: {
                     update: _vm.productUpdated,
@@ -23808,7 +23998,12 @@ var render = function() {
           {
             key: "after-table-rows",
             fn: function() {
-              return [_c("product-row-add", { on: { add: _vm.productAdded } })]
+              return [
+                _c("product-row-add", {
+                  staticClass: "odd:bg-blue-300",
+                  on: { add: _vm.productAdded }
+                })
+              ]
             },
             proxy: true
           }
@@ -39508,17 +39703,6 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
 /***/ (function(module, exports, __webpack_require__) {
 
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/**
- * We'll load jQuery and the Bootstrap jQuery plugin which provides support
- * for JavaScript based Bootstrap features such as modals and tabs. This
- * code may be modified to fit the specific needs of your application.
- */
-// try {
-//     window.Popper = require('popper.js').default;
-//     window.$ = window.jQuery = require('jquery');
-//     require('bootstrap');
-// } catch (e) {}
-
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the

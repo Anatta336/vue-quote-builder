@@ -3,11 +3,11 @@ module.exports = {
     './resources/views/**/*.blade.php',
     './resources/css/**/*.css',
   ],
-  theme: {
-    extend: {}
+  variants: {
+    backgroundColor: ['group-hover', 'focus-within', 'hover', 'focus', 'odd', 'even'],
+    // extend: {
+    //   backgroundColor: ['odd'],
+    // }
   },
-  variants: {},
-  plugins: [
-    require('@tailwindcss/ui'),
-  ]
+  plugins: []
 }

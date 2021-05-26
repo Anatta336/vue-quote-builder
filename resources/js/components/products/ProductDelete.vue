@@ -1,5 +1,12 @@
 <template>
-    <button class="danger" @click="deleteProduct">
+    <button
+        @click="deleteProduct"
+        class="
+            bg-red-500
+            rounded-sm
+            p-2
+        "
+    >
         <slot>
             Delete
         </slot>
